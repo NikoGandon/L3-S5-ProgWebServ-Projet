@@ -1,5 +1,6 @@
 # Nom du site
 ... est un site de chat en ligne.
+Le lien sur l'UI du site est sur <a href='https://www.figma.com/file/gwKGXk7BtrUWY6cqT5967l/Projet-Programmation-Web-Serveur?type=design&node-id=0%3A1&mode=design&t=26XmL1K2aWntGeQz-1'>figma</a>
 # Organisation du code
 Il y a 4 dossiers :
 - Le dossier <u>Client</u> contenant le code côté client
