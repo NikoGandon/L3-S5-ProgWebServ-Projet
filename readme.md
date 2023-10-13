@@ -18,12 +18,14 @@ Ce dossier contient deux sous-dossiers : <u>Client</u> et <u>Serveur</u>
 Ces sous-dossiers contiennent les tests des programmes
 
 # Idée :
-|Idée|Description|Status|
-|Gestion de fichier|Upload d'image et de document|En cours|
-|Gestion de groupe / salon||En cours|
-|Chat en direct||En cours|
-|Gestion admin|Ban/Deban et gestion des salons|En cours|
-|Page de profil|Une image, un pseudo et la possibilité de changer d'username/MDP|En cours|
-|Chiffrement différent entre les MPs et salons||Idée|
-|Tableau de bord pour les super admin||Idée|
-|Accès à certains salons si on a l'autorisation||Idée|
+| Idée                                           | Description                                                      | Status   |
+| ---------------------------------------------- | ---------------------------------------------------------------- | -------- |
+| Gestion de fichier                             | Upload d'image et de document                                    | En cours |
+| Gestion de groupe / salon                      |                                                                  | En cours |
+| Chat en direct                                 |                                                                  | En cours |
+| Gestion admin                                  | Ban/Deban et gestion des salons                                  | En cours |
+| Page de profil                                 | Une image, un pseudo et la possibilité de changer d'username/MDP | En cours |
+| Chiffrement différent entre les MPs et salons  |                                                                  | Idée     |
+| Tableau de bord pour les super admin           |                                                                  | Idée     |
+| Accès à certains salons si on a l'autorisation |                                                                  | Idée     |
+
