@@ -17,6 +17,10 @@ Pour gérer la partie serveur, nous avons décidé d'utiliser .... en (JS/PHP)
 Ce dossier contient deux sous-dossiers : <u>Client</u> et <u>Serveur</u>
 Ces sous-dossiers contiennent les tests des programmes
 
+[!todo] - Important
+
+
+
 # Idée :
 | Idée                                           | Description                                                      | Status   |
 | ---------------------------------------------- | ---------------------------------------------------------------- | -------- |
