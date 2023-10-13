@@ -10,7 +10,7 @@ Il y a 4 dossiers :
 ## Le dossier Client
 Pour gérer la partie cliente, nous avons décidé d'utiliser .... en (JS/PHP)
 ## Le dossier Documentation
-Contient les fichiers PDF du manuel utilisateur et technique, mais également les schémas des sites, structure de la base de données
+Contient les fichiers PDF du manuel utilisateur et technique, mais également les schémas des sites, structure de la base de données et le schéma de l'API.
 ## Le dossier Serveur
 Pour gérer la partie serveur, nous avons décidé d'utiliser .... en (JS/PHP)
 ## Le dossier test
