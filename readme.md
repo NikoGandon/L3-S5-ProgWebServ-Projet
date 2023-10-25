@@ -26,8 +26,9 @@ Ces sous-dossiers contiennent les tests des programmes
 | Gestion admin                        | Ban/Deban et gestion des salons                              | En cours |
 | Page de profil                       | Une image, un pseudo et la possibilité de changer pseudo/MDP | En cours |
 | Créer / enregistrer un profil        |                                                              | En cours |
-| Authentification via service         | Google, Facebook ou Discord                                  | En cours         |
+| Authentification via service         | Google, Facebook ou Discord                                  | En cours |
 | Chiffrement                          | MP, Groupe et serveur                                        | Idée     |
 | Tableau de bord pour les super admin |                                                              | Idée     |
 | Permission                           |                                                              | Idée     |
+| Feed                                 | Regroupement par centre d'intêret (selon type de serveur)    | Idée     |
 
