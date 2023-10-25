@@ -30,5 +30,7 @@ Ces sous-dossiers contiennent les tests des programmes
 | Chiffrement                          | MP, Groupe et serveur                                        | Idée     |
 | Tableau de bord pour les super admin |                                                              | Idée     |
 | Permission                           |                                                              | Idée     |
-| Feed                                 | Regroupement par centre d'intêret (selon type de serveur)    | Idée     |
+| Feed                                 | Regroupement par centre d'intérêt (selon type de serveur)    | Idée     |
+| Proposition                          | Propose des serveurs selon les C.I. de l'utilisateur         | Idée     |
+| Centre Intérêt                       | Centre des intérêts de l'utilisateur                         | Idée         |
 
