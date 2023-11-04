@@ -1,6 +1,7 @@
 Accueil 
 - Si utilisateur connecté : page accueil des utilisateurs
-- Sinon, page d'inscription/connexion
+- Sinon, page de présentation du site
+	- page d'inscription ou de connexion
 Message privé
 Groupe
 Paramètre
