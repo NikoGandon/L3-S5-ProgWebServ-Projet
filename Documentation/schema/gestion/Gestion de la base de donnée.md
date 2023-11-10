@@ -1,0 +1,2 @@
+La base de donnée est stocké en ligne. Pour cela, nous avons utilisé le service XXXX et le SGBD MySQL.
+Nous utilisons le SQL pour la cohérence des données et la complexités des requêtes. Une approche avec NoSQL est possible, mais dans le cas du projet, nous devons gérer peu d'informations en même temps, le SQL fait donc parfaitement l'affaire.
