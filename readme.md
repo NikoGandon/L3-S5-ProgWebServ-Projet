@@ -8,7 +8,7 @@ Il y a 4 dossiers :
 - Le dossier <u>Serveur</u> contenant le code côté serveur
 - Le dossier <u>test</u> contenant les tests unitaires côté client et serveur
 ## Le dossier Client
-Pour gérer la partie cliente, nous avons décidé d'utiliser .... en (JS/PHP)
+Pour gérer la partie cliente, nous avons décidé d'utiliser React.
 ## Le dossier Documentation
 Contient les fichiers PDF du manuel utilisateur et technique, mais également les schémas des sites, structure de la base de données et le schéma de l'API.
 ## Le dossier Serveur
