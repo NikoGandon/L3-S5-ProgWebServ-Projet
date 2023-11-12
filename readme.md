@@ -32,5 +32,7 @@ Ces sous-dossiers contiennent les tests des programmes
 | Permission                           |                                                              | Idée     |
 | Feed                                 | Regroupement par centre d'intérêt (selon type de serveur)    | Idée     |
 | Proposition                          | Propose des serveurs selon les C.I. de l'utilisateur         | Idée     |
-| Centre Intérêt                       | Centre des intérêts de l'utilisateur                         | Idée         |
+| Centre Intérêt                       | Centre des intérêts de l'utilisateur                         | Idée     |
+| Utilisation de robot                 | Possibilité de créer un robot pour les serveurs              | Idée     |
+
 
