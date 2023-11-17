@@ -189,6 +189,13 @@ Site
 API as "API/GROUP"
 @Database DB as Database
 
+User->Site."Veut voir le groupe"{
+  Site->API."GET/GROUP"{
+    API->DB:"SELECT"
+    API->Site:"Interface du groupe"
+  }
+}
+
 User->Site."Veut créer un groupe"{
   Site->API."POST/GROUP/Create"{
     API->DB:"INSERT"
