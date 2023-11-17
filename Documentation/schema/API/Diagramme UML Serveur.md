@@ -2,6 +2,7 @@ Généré sur [zenuml](https://app.zenuml.com)
 # Diagramme du service User
 
 ```
+title Service User
 @actor User
 Site
 API as "API/USER"
@@ -81,6 +82,7 @@ User->Site."Veut enlever un ami"{
 # Diagramme du service Serveur
 
 ```
+title Service Serveur
 @actor User
 Site
 API as "API/SERVER"
@@ -184,6 +186,7 @@ User->Site."Veut se désinscrire d'un serveur"{
 # Diagramme du service Groupe
 
 ```
+title Service Groupe
 @actor User
 Site
 API as "API/GROUP"
@@ -249,6 +252,7 @@ User->Site."Veut se désinscrire"{
 # Diagramme du service Message
 
 ```
+title Service Message Privée
 @actor User
 Site
 API as "API/PrvMsg"
@@ -279,4 +283,3 @@ User->Site."Recoit des messages"{
   }
 }
 ```
-
