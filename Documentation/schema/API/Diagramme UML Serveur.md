@@ -254,6 +254,13 @@ Site
 API as "API/PrvMsg"
 @Database DB as Database
 
+User->Site."Veut voir la conversation privée"{
+  Site->API."GET/PrvMsg"{
+    API->DB:"SELECT"
+    API->Site:"Interface de message privée"
+  }
+}
+
 User->Site."Veut envoyer un message"{
   Site->API."POST/PrvMsg"{
     API->DB:"INSERT"
