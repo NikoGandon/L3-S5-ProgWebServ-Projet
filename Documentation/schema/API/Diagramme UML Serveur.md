@@ -27,6 +27,12 @@ User->Site."Veut se connecter"{
   }
 }
 
+User->Site."Veut voir son compte"{
+  Site->API."GET/USER"{
+    API->DB:"SELECT"
+    API->Site:"Affiche le profil de l'utilisateur"
+  }
+}
 
 User->Site."Veut modifier son compte"{
   Site->API."PUT/USER/Compte"{
@@ -37,6 +43,13 @@ User->Site."Veut modifier son compte"{
 User->Site."Veut modifier ses paramètres"{
   Site->API."PUT/USER/Param"{
     API->DB:"UPDATE"
+  }
+}
+
+User->Site."Veut voir un compte"{
+  Site->API."GET/USER/Search"{
+    API->DB:"SELECT"
+    API->Site:"Affiche le profil de l'utilisateur"
   }
 }
 
