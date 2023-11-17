@@ -86,8 +86,15 @@ Site
 API as "API/SERVER"
 @Database DB as Database
 
+User->Site."Veut voir le serveur"{
+  Site->API."GET/SERVER/"{
+    API->DB:"SELECT"
+    API->Site:"Interface du serveur"
+  }
+}
+
 User->Site."Veut créer un serveur"{
-  Site->API."POST/SERVER/Create"{
+  Site->API."POST/SERVER/"{
     API->DB:"INSERT"
     DB->API:"Création du serveur"
     API->Site:"Interface du serveur"
@@ -95,13 +102,51 @@ User->Site."Veut créer un serveur"{
 }
 
 User->Site."Veut modifier son serveur"{
-  Site->API."POST/SERVER/Update"{
+  Site->API."PUT/SERVER/"{
     API->DB:"UPDATE"
   }
 }
 
 User->Site."Veut supprimer son serveur"{
-  Site->API."DELETE/SERVER"
+  Site->API."DELETE/SERVER"{
+    API->DB:"DELETE"
+  }
+}
+
+User->Site."Veut bannir un membre"{
+  Site->API."POST/SERVER/Ban"{
+	API->DB:"INSERT"
+  }
+}
+
+User->Site."Veut débannir un membre"{
+  Site->API."DELETE/SERVER/Ban"{
+    API->DB:"DELETE"
+  }
+}
+
+User->Site."Veut créer un salon"{
+  Site->API."POST/SERVER/Salon"{
+    API->DB:"INSERT"
+  }
+}
+
+User->Site."Veut modifier un salon"{
+  Site->API."PUT/SERVER/Salon"{
+    API->DB:"UPDATE"
+  }
+}
+
+User->Site."Veut supprimer un salon"{
+  Site->API."DELETE/SERVER/Salon"{
+    API->DB:"DELETE"
+  }
+}
+
+User->Site."Veut enlever un membre"{
+  Site->API."DELETE/SERVER"{
+    API->DB:"DELETE"
+  }
 }
 
 User->Site."Veut envoyer un message sur le serveur"{
