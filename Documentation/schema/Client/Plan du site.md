@@ -18,5 +18,5 @@ Utilisateur :
 - Tout ce qu'a Utilisateur
 ! Si robot:
 - Accueil -> son tableau de bord
-- Paramètre
-- Aide
+- Paramètre du robot
+- Aide au développement du robot
