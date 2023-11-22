@@ -6,8 +6,10 @@ build-node:
   image: node:latest
   stage: build
   script:
-    - npm install
-    - node --check *.js
+    - npm install ServeurSide
+    - npm install ClientSide
+    - node --check ServeurSide/*.js
+    - node --check ClientSide/*.js
 
 
 sonarqube-check:
