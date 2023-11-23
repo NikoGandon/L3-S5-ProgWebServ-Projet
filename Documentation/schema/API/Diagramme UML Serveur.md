@@ -200,26 +200,26 @@ User->Site."Veut voir le groupe"{
 }
 
 User->Site."Veut créer un groupe"{
-  Site->API."POST/GROUP/Create"{
+  Site->API."POST/GROUP"{
     API->DB:"INSERT"
     API->Site:"Interface du groupe"
   }
 }
 
 User->Site."Veut modifier les paramètres"{
-  Site->API."PUT/GROUP/Param"{
+  Site->API."PUT/GROUP"{
     API->DB:"UPDATE"
   }
 }
 
 User->Site."Veut ajouter un membre"{
-  Site->API."POST/GROUP/Add"{
+  Site->API."POST/GROUP/Member"{
     API->DB:"INSERT"
   }
 }
 
-User->Site."Veut bannir un membre"{
-  Site->API."DELETE/GROUP/Ban"{
+User->Site."Veut exclure un membre"{
+  Site->API."DELETE/GROUP/Member"{
     API->DB:"DELETE"
   }
 }
