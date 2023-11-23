@@ -212,6 +212,12 @@ User->Site."Veut modifier les paramètres"{
   }
 }
 
+User->Site."Veut supprimer un groupe"{
+  Site->API."DELETE/GROUP"{
+    API->DB:"DELETE"
+  }
+}
+
 User->Site."Veut ajouter un membre"{
   Site->API."POST/GROUP/Member"{
     API->DB:"INSERT"
