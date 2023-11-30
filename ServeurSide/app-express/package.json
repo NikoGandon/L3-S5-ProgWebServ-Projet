@@ -4,6 +4,7 @@
   "description": "API d'un chat en ligne, projet de 3ème année de licence informatique",
   "main": "main.js",
   "scripts": {
+    "dev" : "nodemon src/main.js",
     "start": "node src/main.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
