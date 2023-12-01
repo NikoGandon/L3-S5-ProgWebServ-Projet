@@ -3,6 +3,7 @@ const LocalStrategy = require("passport-local").Strategy;
 const { Op } = require("sequelize");
 
 const UserModel = require("../../Models/User.model");
+const AdminModel = require("../../Models/SuperAdmin.model");
 
 /**
  * @desc    Passport Login
@@ -32,6 +33,12 @@ passport.use(
       if (!validate) {
         return passport(null, false, { message: "Mauvais mots de passe" });
       }
+
+      const estAdmin = await AdminModel.findOne({
+        where: { idUser: existsUser.id },
+      });
+
+      existsUser.estAdmin = estAdmin ? true : false;
 
       return passport(null, existsUser, { message: "Connexion réussi" });
     } catch (error) {
