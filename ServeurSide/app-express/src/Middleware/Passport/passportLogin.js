@@ -2,7 +2,7 @@ const passport = require("passport");
 const LocalStrategy = require("passport-local").Strategy;
 const { Op } = require("sequelize");
 
-const User = require("../../Models/User");
+const UserModel = require("../../Models/User");
 
 /**
  * @desc    Passport Login
@@ -17,7 +17,7 @@ passport.use(
   "passportLogin",
   new LocalStrategy(async (identidier, passport) => {
     try {
-      const existsUser = await User.findOne({
+      const existsUser = await UserModel.findOne({
         where: { [Op.or]: [{ username: identidier }, { email: identidier }] },
       });
 
