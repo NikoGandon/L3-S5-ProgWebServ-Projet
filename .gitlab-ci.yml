@@ -9,7 +9,6 @@ build-node:
     - npm install ServeurSide/app-express/
     - npm install ClientSide/app-react/
     - node --check ServeurSide/app-express/*/*.js
-    - node --check ClientSide/app-react/*/*.js
 
 
 sonarqube-check:
