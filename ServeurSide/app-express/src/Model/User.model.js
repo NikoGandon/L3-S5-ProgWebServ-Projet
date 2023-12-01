@@ -51,10 +51,13 @@ const User = sequelize.define(
       type: DataTypes.STRING,
       allowNull: true,
     }
-    }, {
-        tableName: 'user',
-        timestamps: false
-});
+  },
+  {
+    tableName: "user",
+    timestamps: false,
+  }
+);
+
 User.prototype.validPassword = function (password) {
   return bcrypt.compareSync(password, this.password);
 };
