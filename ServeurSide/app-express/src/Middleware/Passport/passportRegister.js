@@ -3,6 +3,7 @@ const LocalStrategy = require("passport-local").Strategy;
 const { Op } = require("sequelize");
 
 const User = require("../../Models/User");
+const { hash } = require("bcrypt");
 
 /**
  * @desc    Passport Register
@@ -11,7 +12,7 @@ const User = require("../../Models/User");
  * @param   {String} password mot de passe de l'utilisateur
  *
  * @return  {Object} passport
- * 
+ *
  */
 
 passport.use(
@@ -26,10 +27,12 @@ passport.use(
         return next(null, false, { message: "Cet utilisateur existe déjà" });
       }
 
+      const hashPassword = await existUser.hashPassword(password);
+
       const newUser = await User.create({
         username: username,
         email: email,
-        password: password
+        password: hashPassword,
       });
 
       return next(null, newUser);

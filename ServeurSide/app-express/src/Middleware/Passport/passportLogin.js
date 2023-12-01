@@ -27,8 +27,8 @@ passport.use(
         });
       }
 
-      const validate = await existsUser.isValidPassword(passport);
-      
+      const validate = await existsUser.validPassword(passport);
+
       if (!validate) {
         return passport(null, false, { message: "Mauvais mots de passe" });
       }
