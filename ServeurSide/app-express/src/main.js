@@ -19,6 +19,8 @@ https.createServer(optionsSSL, app).listen(process.env.PORT, () => {
 const homeRoute = require("./Route/home")
 const registerRoute = require("./Route/User/Authentification/register")
 const loginRoute = require("./Route/User/Authentification/login")
+const GoogleOAuthRoute = require("./Route/User/Authentification/OAuth2/Google.OAuth2")
+
 
 
 app.use(express.json());
@@ -27,3 +29,4 @@ app.use(express.urlencoded({ extended: true }));
 app.use("/", homeRoute);
 app.use("/register", registerRoute);
 app.use("/login", loginRoute);
+app.use("/auth/google", GoogleOAuthRoute);
