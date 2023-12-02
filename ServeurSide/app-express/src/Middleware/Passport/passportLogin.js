@@ -16,14 +16,14 @@ const AdminModel = require("../../Model/SuperAdmin.model");
 
 passport.use(
   "passportLogin",
-  new LocalStrategy(async (identidier, passport) => {
+  new LocalStrategy(async (username, password, done) => {
     try {
       const existsUser = await UserModel.findOne({
-        where: { [Op.or]: [{ username: identidier }, { email: identidier }] },
+        where: { [Op.or]: [{ username: username }, { email: username }] },
       });
 
       if (!existsUser) {
-        return passport(null, false, {
+        return done(null, false, {
           message: "Cet utilisateur n'existe pas",
         });
       }
@@ -31,7 +31,7 @@ passport.use(
       const validate = await existsUser.validPassword(passport);
 
       if (!validate) {
-        return passport(null, false, { message: "Mauvais mots de passe" });
+        return done(null, false, { message: "Mauvais mots de passe" });
       }
 
       const estAdmin = await AdminModel.findOne({
