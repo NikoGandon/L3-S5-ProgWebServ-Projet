@@ -28,7 +28,7 @@ passport.use(
         });
       }
 
-      const validate = await existsUser.validPassword(passport);
+      const validate = await existsUser.validPassword(password);
 
       if (!validate) {
         return done(null, false, { message: "Mauvais mots de passe" });
@@ -40,9 +40,9 @@ passport.use(
 
       existsUser.estAdmin = estAdmin ? true : false;
 
-      return passport(null, existsUser, { message: "Connexion réussi" });
+      return done(null, existsUser, { message: "Connexion réussi" });
     } catch (error) {
-      return passport(error);
+      return done(error);
     }
   })
 );
