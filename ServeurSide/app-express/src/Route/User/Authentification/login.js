@@ -3,8 +3,8 @@ const routerLogin = express.Router();
 
 const passportLogin = require("../../../Middleware/Passport/passportLogin");
 
-routerLogin.post("/", (req, res) => {
-  if (!req.body.identifier || !req.body.password) {
+routerLogin.post("/", (req, res, next) => {
+  if (!req.body.username || !req.body.password) {
     res.status(400).json({
       message: "Veuillez remplir tous les champs",
     });
@@ -13,7 +13,7 @@ routerLogin.post("/", (req, res) => {
     passportLogin.authenticate(
       "passportLogin",
       {
-        identifier: req.body.identifier,
+        username: req.body.username,
         password: req.body.password,
       },
       (err, user, info) => {
