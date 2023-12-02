@@ -16,6 +16,14 @@ https.createServer(optionsSSL, app).listen(process.env.PORT, () => {
     }
 );
 
+app.use(session({
+    secret: 'coucou',
+    resave: false,
+    saveUninitialized: false
+}));
+
+app.use(passport.initialize());
+app.use(passport.session());
 
 // routes
 const homeRoute = require("./Route/home")
