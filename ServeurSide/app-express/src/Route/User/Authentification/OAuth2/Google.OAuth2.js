@@ -1,6 +1,6 @@
 const routerGoogleAuth = require("express").Router();
 
-const passportGoogleAuth = require("../../../Middleware/Passport/passportOAuth2");
+const passportGoogleAuth = require("../../../../Middleware/Passport/passportOAuth2");
 
 routerGoogleAuth.get(
   "/",
@@ -12,12 +12,12 @@ routerGoogleAuth.get(
 routerGoogleAuth.get(
   "/callback",
   passportGoogleAuth.authenticate("googleOAuth", {
-    failureRedirect: "/failed",
-    successRedirect: "/connected",
+    failureRedirect: "/auth/google/failed",
+    successRedirect: "/auth/google/connected",
   })
 );
 
-rooterGoogleAuth.get("/failed", (req, res) => {
+routerGoogleAuth.get("/auth/google/failed", (req, res) => {
   res.status(401).json({
     message: "Echec de l'authentification",
   });
