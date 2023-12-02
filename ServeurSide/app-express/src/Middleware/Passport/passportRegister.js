@@ -17,8 +17,11 @@ const { hash } = require("bcrypt");
 
 passport.use(
   "passportRegister",
-  new LocalStrategy(async (username, email, password, next) => {
+  new LocalStrategy({
+    passReqToCallback: true
+  }, async (req, username, password, done) => {
     try {
+      const email = req.body.email;
       const existUser = await User.findOne({
         where: { [Op.or]: [{ username: username }, { email: email }] },
       });
