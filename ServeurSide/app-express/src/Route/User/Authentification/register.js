@@ -13,11 +13,6 @@ routerRegister.post("/", (req, res, next) => {
   try {
     passportRegister.authenticate(
       "passportRegister",
-      {
-        username: req.body.username,
-        email: req.body.email,
-        password: req.body.password,
-      },
       (err, user, info) => {
         if (err) {
           return next(err);
