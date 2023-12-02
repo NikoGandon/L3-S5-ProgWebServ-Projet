@@ -3,6 +3,8 @@ const express = require("express")
 const app = express()
 const https = require("https")
 const fs = require("fs")
+const session = require("express-session")
+const passport = require("passport")
 
 const optionsSSL = {
     key: fs.readFileSync("./ServeurFolder/SSL_Certificat/private-key.pem"),
