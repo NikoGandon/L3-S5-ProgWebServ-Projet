@@ -1,6 +1,6 @@
-const { sequelize } = require("sequelize");
+const { Sequelize } = require("sequelize");
 
-const db = new sequelize(
+const db = new Sequelize(
   process.env.DB_NAME,
   process.env.DB_USER,
   process.env.DB_PASS,
@@ -17,3 +17,5 @@ db.authenticate()
   .catch((err) => {
     console.log("Impossible de se connecter à la base de données", err);
 });
+
+module.exports = db;

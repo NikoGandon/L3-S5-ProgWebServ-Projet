@@ -2,8 +2,8 @@ const passport = require("passport");
 const LocalStrategy = require("passport-local").Strategy;
 const { Op } = require("sequelize");
 
-const UserModel = require("../../Models/User.model");
-const AdminModel = require("../../Models/SuperAdmin.model");
+const UserModel = require("../../Model/User.model");
+const AdminModel = require("../../Model/SuperAdmin.model");
 
 /**
  * @desc    Passport Login
