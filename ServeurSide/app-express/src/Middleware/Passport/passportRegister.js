@@ -24,7 +24,7 @@ passport.use(
       });
 
       if (existUser) {
-        return next(null, false, { message: "Cet utilisateur existe déjà" });
+        return done(null, false, { message: "Cet utilisateur existe déjà" });
       }
 
       const hashPassword = await existUser.hashPassword(password);
@@ -35,9 +35,9 @@ passport.use(
         password: hashPassword,
       });
 
-      return next(null, newUser);
+      return done(null, newUser);
     } catch (error) {
-      return next(error);
+      return done(error);
     }
   })
 );
