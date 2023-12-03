@@ -10,12 +10,16 @@ const bodyParser = require("body-parser");
 const optionsSSL = {
   key: fs.readFileSync("./ServeurFolder/SSL_Certificat/private-key.pem"),
   cert: fs.readFileSync("./ServeurFolder/SSL_Certificat/certificate.pem"),
+  ca: fs.readFileSync("./ServeurFolder/SSL_Certificat/csr.pem"),
 };
 
-const httpsServer = https.createServer(optionsSSL, app);
+app.enable("trust proxy");
 
-httpsServer.listen(process.env.PORT, () => {
-  console.log("HTTPS Server running on port " + process.env.PORT);
+app.use(function (req, res, next) {
+  if (!req.secure) {
+    return res.redirect("https://" + req.headers.host + req.url);
+  }
+  next();
 });
 
 app.use(
@@ -42,3 +46,14 @@ app.use("/", homeRoute);
 app.use("/register", registerRoute);
 app.use("/login", loginRoute);
 app.use("/auth/google", GoogleOAuthRoute);
+
+const httpsServer = https.createServer(optionsSSL, app);
+const HTTPS_PORT = process.env.PORT;
+
+httpsServer.listen(HTTPS_PORT, () => {
+  console.log("HTTPS Server running on port " + HTTPS_PORT);
+});
+
+httpsServer.on("error", (error) => {
+  console.error("Erreur du serveur HTTPS:", error);
+});
