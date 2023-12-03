@@ -2,7 +2,8 @@ const passport = require("passport");
 const LocalStrategy = require("passport-local").Strategy;
 const { Op } = require("sequelize");
 
-const User = require("../../Models/User");
+const User = require("../../Model/User.model");
+const { hash } = require("bcrypt");
 
 /**
  * @desc    Passport Register
@@ -11,30 +12,35 @@ const User = require("../../Models/User");
  * @param   {String} password mot de passe de l'utilisateur
  *
  * @return  {Object} passport
- * 
+ *
  */
 
 passport.use(
   "passportRegister",
-  new LocalStrategy(async (username, email, password, next) => {
+  new LocalStrategy({
+    passReqToCallback: true
+  }, async (req, username, password, done) => {
     try {
+      const email = req.body.email;
       const existUser = await User.findOne({
         where: { [Op.or]: [{ username: username }, { email: email }] },
       });
 
       if (existUser) {
-        return next(null, false, { message: "Cet utilisateur existe déjà" });
+        return done(null, false, { message: "Cet utilisateur existe déjà" });
       }
+
+      const hashPassword = await existUser.hashPassword(password);
 
       const newUser = await User.create({
         username: username,
         email: email,
-        password: password
+        password: hashPassword,
       });
 
-      return next(null, newUser);
+      return done(null, newUser);
     } catch (error) {
-      return next(error);
+      return done(error);
     }
   })
 );
