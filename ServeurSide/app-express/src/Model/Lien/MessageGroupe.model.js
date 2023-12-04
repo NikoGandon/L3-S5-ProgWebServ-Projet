@@ -28,4 +28,4 @@ const MessageGroupe = sequelize.define(
 );
 
 UserModel.belongsToMany(GroupeModel, { through: MessageGroupe });
-GroupeModel.belongsToMany(UserModel, { through: MessageGroupe });
+GroupeModel.HasMany(UserModel, { through: MessageGroupe });

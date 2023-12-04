@@ -1,7 +1,7 @@
 const sequelize = require("../../Config/db");
 const { DataTypes } = require("sequelize");
 
-const UserModel = require("../User.model");
+const MessageModel = require("../Message/Message.model");
 const SalonModel = require("../Salon.model");
 
 /**
@@ -32,4 +32,4 @@ const MessageSalon = sequelize.define(
   }
 );
 
-SalonModel.belongsToMany(UserModel, { through: MessageSalon });
+SalonModel.hasMany(MessageModel, { through: MessageSalon });

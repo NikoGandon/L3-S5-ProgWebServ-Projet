@@ -30,3 +30,4 @@ const CodeServeur = sequelize.define(
 );
 
 ServeurModel.hasMany(CodeServeur);
+CodeServeur.belongsTo(ServeurModel);

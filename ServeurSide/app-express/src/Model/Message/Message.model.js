@@ -1,6 +1,8 @@
 const sequelize = require("../Config/db");
 const { DataTypes } = require("sequelize");
 
+const UserModel = require("./User.model");
+
 /**
  * @desc Modele des messages
  * @typedef Message
@@ -9,7 +11,7 @@ const { DataTypes } = require("sequelize");
  * @property {date} date.required - Date d'envoi du message
  * @property {date} updateAt - Date de la dernière modification du message
  * @property {integer} Userid.required - Identifiant de l'utilisateur ayant envoyé le message
- *  
+ *
  */
 
 const Message = sequelize.define(
@@ -24,21 +26,11 @@ const Message = sequelize.define(
       type: DataTypes.STRING,
       allowNull: false,
     },
-    date: {
-      type: DataTypes.DATE,
-      allowNull: false,
-    },
-    updateAt: {
-      type: DataTypes.DATE,
-      allowNull: true,
-    },
-    Userid: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-    },
   },
   {
-    tableName: "message",
-    timestamps: false,
+    freezeTableName: true,
   }
 );
+
+Message.belongsTo(UserModel, { through: Message });
+UserModel.hasMany(Message, { through: Message });

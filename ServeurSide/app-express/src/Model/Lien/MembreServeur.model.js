@@ -27,4 +27,4 @@ const MembreServeur = sequelize.define(
 );
 
 UserModel.belongsToMany(ServeurModel, { through: MembreServeur });
-ServeurModel.belongsToMany(UserModel, { through: MembreServeur });
+ServeurModel.hasMany(UserModel, { through: MembreServeur });
