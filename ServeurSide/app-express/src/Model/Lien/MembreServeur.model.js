@@ -8,21 +8,23 @@ const UserModel = require("../User.model");
  * @desc Modele de la table membre_serveur liant les utilisateurs aux serveurs
  * @property {integer} Userid - Identifiant unique de l'utilisateur
  * @property {integer} Serveurid - Identifiant unique du serveur
- * 
+ * @property {date} dateInscription - Date d'inscription de l'utilisateur au serveur
+ *
  */
 
-const MembreServeur = sequelize.define("membreServeur", {
-    Userid: {
-        type: DataTypes.INTEGER,
-        primaryKey: true,
-        autoIncrement: true,
+const MembreServeur = sequelize.define(
+  "membreServeur",
+  {
+    dateInscription: {
+      type: DataTypes.DATE,
+      allowNull: false,
     },
-    Serveurid: {
-        type: DataTypes.INTEGER,
-        primaryKey: true,
-        autoIncrement: true,
-    }
-});
+  },
+  {
+    freezeTableName: true,
+    timestamps: false,
+  }
+);
 
 UserModel.belongsToMany(ServeurModel, { through: MembreServeur });
 ServeurModel.belongsToMany(UserModel, { through: MembreServeur });
