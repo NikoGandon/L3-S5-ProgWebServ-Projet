@@ -11,7 +11,7 @@ const admin = sequelize.define(
     },
   },
   {
-    tableName: "admin",
+    freezeTableName: true,
     timestamps: false,
   }
 );

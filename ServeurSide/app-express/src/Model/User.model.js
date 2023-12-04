@@ -15,7 +15,7 @@ const bcrypt = require("bcrypt");
  *
  */
 
-const Utilisateur = sequelize.define(
+const User = sequelize.define(
   "user",
   {
     id: {
@@ -58,10 +58,10 @@ const Utilisateur = sequelize.define(
         return "ressources/Parametre/User/" + id + ".json";
       },
       allowNull: true,
-    }
+    },
   },
   {
-    tableName: "user",
+    freezeTableName: true,
     timestamps: false,
   }
 );
