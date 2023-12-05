@@ -3,6 +3,7 @@ const { DataTypes } = require("sequelize");
 
 const MessageModel = require("../Message/Message.model");
 const SalonModel = require("../Salon.model");
+const UserModel = require("../User.model");
 
 /**
  * @desc Modele de la table messageSalon liant les messages aux salons
@@ -35,3 +36,6 @@ const MessageSalon = sequelize.define(
 );
 
 SalonModel.hasMany(MessageModel, { through: MessageSalon });
+UserModel.hasMany(MessageModel, { through: MessageSalon });
+MessageModel.belongsTo(SalonModel, { through: MessageSalon });
+MessageModel.belongsTo(UserModel, { through: MessageSalon });
