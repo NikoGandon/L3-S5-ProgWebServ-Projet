@@ -7,6 +7,8 @@ const SalonModel = require("../Salon.model");
 /**
  * @desc Modele de la table messageSalon liant les messages aux salons
  * @property {integer} Userid - Identifiant unique du message
+ * @property {STRING} texte - Texte du message
+ * @property {DATE} date - Date du message
  */
 
 const MessageSalon = sequelize.define(
