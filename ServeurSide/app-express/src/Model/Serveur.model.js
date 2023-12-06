@@ -28,23 +28,36 @@ const Serveur = sequelize.define(
     },
     description: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: true,
     },
     lienImage: {
       type: DataTypes.STRING,
       allowNull: false,
+      defaultValue: function () {
+        const rand = Math.floor(Math.random() * 3) + 1;
+        return "ressources/serveur/" + rand + ".png";
+      },
     },
     lienParametre: {
       type: DataTypes.STRING,
       allowNull: false,
+      defaultValue: function () {
+        return "ressources/serveur/" + this.id + "_PARAM.json";
+      },
     },
     lienLog: {
       type: DataTypes.STRING,
-      allowNull: true,
+      allowNull: false,
+      defaultValue: function () {
+        return "ressources/serveur/" + this.id + "_LOG.json";
+      },
     },
     lienFichierConfiguration: {
       type: DataTypes.STRING,
-      allowNull: true,
+      allowNull: false,
+      defaultValue: function () {
+        return "ressources/serveur/" + this.id + "_CONF.json";
+      },
     },
   },
   {
