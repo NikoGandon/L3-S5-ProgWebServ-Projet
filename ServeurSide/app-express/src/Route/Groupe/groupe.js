@@ -60,7 +60,7 @@ routerGroupe.delete("/", (req, res) => {
  * @swagger
  * /groupe:
  * delete:
- * description: Utilisé pour supprimer un groupe
+ * description: Utilisé pour ajouter un membre
  * responses:
  * 
  * 
@@ -74,7 +74,7 @@ routerGroupe.post("/", (req, res) => {
  * @swagger
  * /groupe:
  * delete:
- * description: Utilisé pour supprimer un groupe
+ * description: Utilisé pour exclure un membre
  * responses:
  * 
  * 
@@ -88,7 +88,7 @@ routerGroupe.delete("/", (req, res) => {
  * @swagger
  * /groupe:
  * delete:
- * description: Utilisé pour supprimer un groupe
+ * description: Utilisé pour envoyer un message dans le groupe
  * responses:
  * 
  * 
@@ -102,7 +102,7 @@ routerGroupe.post("/", (req, res) => {
  * @swagger
  * /groupe:
  * delete:
- * description: Utilisé pour supprimer un groupe
+ * description: Utilisé pour supprimer un message
  * responses:
  * 
  * 
@@ -116,7 +116,7 @@ routerGroupe.delete("/", (req, res) => {
  * @swagger
  * /groupe:
  * delete:
- * description: Utilisé pour supprimer un groupe
+ * description: Utilisé pour recevoir un message
  * responses:
  * 
  * 
@@ -130,8 +130,7 @@ routerGroupe.get("/", (req, res) => {
  * @swagger
  * /groupe:
  * delete:
- * description: Utilisé pour supprimer un groupe
- * responses:
+ * description: Utilisé pour quitter un groupe
  * 
  * 
  */
