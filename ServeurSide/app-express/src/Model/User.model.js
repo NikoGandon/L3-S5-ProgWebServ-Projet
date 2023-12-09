@@ -5,6 +5,7 @@ const bcrypt = require("bcrypt");
 
 /**
  * @desc Modele de la table user
+ * @typedef Utilisateur
  * @property {integer} id - Identifiant unique (automatiquement généré)
  * @property {string} username.required - Nom d'utilisateur
  * @property {string} email.required - Adresse email
@@ -50,10 +51,17 @@ const User = sequelize.define(
     bio: {
       type: DataTypes.STRING,
       allowNull: true,
-    }
+    },
+    lienParametre: {
+      type: DataTypes.STRING,
+      defaultValue: function () {
+        return "ressources/Parametre/User/" + id + ".json";
+      },
+      allowNull: true,
+    },
   },
   {
-    tableName: "user",
+    freezeTableName: true,
     timestamps: false,
   }
 );

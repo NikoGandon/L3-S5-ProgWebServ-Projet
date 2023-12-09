@@ -38,14 +38,14 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 // routes
 const homeRoute = require("./Route/home");
-const registerRoute = require("./Route/User/Authentification/register");
-const loginRoute = require("./Route/User/Authentification/login");
-const GoogleOAuthRoute = require("./Route/User/Authentification/OAuth2/Google.OAuth2");
+const UserRoute = require("./Route/User/User");
+const ServeurRoute = require("./Route/Serveur/Serveur");
+const GroupeRoute = require("./Route/Groupe/Groupe");
 
 app.use("/", homeRoute);
-app.use("/register", registerRoute);
-app.use("/login", loginRoute);
-app.use("/auth/google", GoogleOAuthRoute);
+app.use("/User", UserRoute);
+app.use("/Serveur", ServeurRoute);
+app.use("/Groupe", GroupeRoute);
 
 const httpsServer = https.createServer(optionsSSL, app);
 const HTTPS_PORT = process.env.PORT;
