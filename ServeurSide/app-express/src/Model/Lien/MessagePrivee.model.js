@@ -15,7 +15,7 @@ const UtilisateurModel = require("../Utilisateur.model");
  */
 
 const MessagePrivee = sequelize.define(
-  "messagePrivee",
+  "MessagePrivee",
   {
     id: {
       type: DataTypes.INTEGER,

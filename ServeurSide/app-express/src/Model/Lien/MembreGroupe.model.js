@@ -12,7 +12,7 @@ const UserModel = require("../User.model");
  */
 
 const MembreGroupe = sequelize.define(
-  "membreGroupe",
+  "MembreGroupe",
   {},
   {
     freezeTableName: true,

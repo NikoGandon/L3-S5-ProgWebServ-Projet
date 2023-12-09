@@ -13,7 +13,7 @@ const UserModel = require("../User.model");
  */
 
 const MembreServeur = sequelize.define(
-  "membreServeur",
+  "MembreServeur",
   {
     dateInscription: {
       type: DataTypes.DATE,
