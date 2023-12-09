@@ -22,3 +22,7 @@ const MembreGroupe = sequelize.define(
 
 UserModel.belongsToMany(GroupeModel, { through: MembreGroupe });
 GroupeModel.hasMany(UserModel, { through: MembreGroupe });
+
+MembreGroupe.sync();
+
+module.exports = MembreGroupe;

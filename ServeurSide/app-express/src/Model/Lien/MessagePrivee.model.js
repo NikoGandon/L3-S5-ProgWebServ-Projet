@@ -39,3 +39,5 @@ const MessagePrivee = sequelize.define(
 
 MessagePrivee.belongsTo(UtilisateurModel, { through: MessageModel });
 UtilisateurModel.hasMany(MessagePrivee, { through: MessageModel });
+
+module.exports = MessagePrivee;

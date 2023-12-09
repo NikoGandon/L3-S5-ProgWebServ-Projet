@@ -32,3 +32,11 @@ const Salon = sequelize.define(
     timestamps: false,
   }
 );
+
+Salon.sync({ force: true}).then(() => {
+  console.log("Table Salon created");
+}).catch((err) => {
+  console.log(err);
+});
+
+module.exports = Salon;
