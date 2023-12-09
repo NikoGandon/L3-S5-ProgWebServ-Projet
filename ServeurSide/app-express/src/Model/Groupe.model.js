@@ -40,7 +40,11 @@ const Groupe = sequelize.define(
     },
   },
   {
-    tableName: "groupe",
+    freezeTableName: true,
     timestamps: false,
   }
 );
+
+Groupe.sync();
+
+module.exports = Groupe;
