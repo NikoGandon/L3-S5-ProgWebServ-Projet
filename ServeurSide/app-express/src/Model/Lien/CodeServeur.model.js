@@ -31,3 +31,7 @@ const CodeServeur = sequelize.define(
 
 ServeurModel.hasMany(CodeServeur);
 CodeServeur.belongsTo(ServeurModel);
+
+CodeServeur.sync();
+
+module.exports = CodeServeur;

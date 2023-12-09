@@ -39,3 +39,6 @@ SalonModel.hasMany(MessageModel, { through: MessageSalon });
 UserModel.hasMany(MessageModel, { through: MessageSalon });
 MessageModel.belongsTo(SalonModel, { through: MessageSalon });
 MessageModel.belongsTo(UserModel, { through: MessageSalon });
+
+
+module.exports = MessageSalon;

@@ -44,3 +44,7 @@ const Groupe = sequelize.define(
     timestamps: false,
   }
 );
+
+Groupe.sync();
+
+module.exports = Groupe;

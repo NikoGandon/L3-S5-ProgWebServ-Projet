@@ -29,3 +29,5 @@ const MessageGroupe = sequelize.define(
 
 UserModel.belongsToMany(GroupeModel, { through: MessageGroupe });
 GroupeModel.HasMany(UserModel, { through: MessageGroupe });
+
+module.exports = MessageGroupe;
