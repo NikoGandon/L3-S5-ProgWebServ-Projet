@@ -51,14 +51,7 @@ const Serveur = sequelize.define(
       defaultValue: function () {
         return "ressources/serveur/" + this.id + "_LOG.json";
       },
-    },
-    lienFichierConfiguration: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      defaultValue: function () {
-        return "ressources/serveur/" + this.id + "_CONF.json";
-      },
-    },
+    }
   },
   {
     freezeTableName: true,
