@@ -5,6 +5,9 @@ const login = require("./Authentification/login");
 const register = require("./Authentification/register");
 const OAuth = require("./Authentification/OAuth2/Google.OAuth2");
 
+const AmiRoute = require("./Ami/friendUser");
+const BlocklistRoute = require("./Blocklist/blockListUser");
+
 routeurUser.post("/login", login);
 routeurUser.post("/register", register);
 // ? - - routerUser.get('/OAuth/Google', OAuth);
@@ -61,7 +64,7 @@ routeurUser.put("/param", () => {});
  *
  */
 
-routeurUser.post("/friend", () => {});
+routeurUser.post("/friend", AmiRoute);
 
 /**
  * @swagger
@@ -72,7 +75,7 @@ routeurUser.post("/friend", () => {});
  *
  */
 
-routeurUser.get("/friend", () => {});
+routeurUser.get("/friend", AmiRoute);
 
 /**
  * @swagger
@@ -83,7 +86,7 @@ routeurUser.get("/friend", () => {});
  *
  */
 
-routeurUser.delete("/friend", () => {});
+routeurUser.delete("/friend", AmiRoute);
 
 /**
  * @swagger
