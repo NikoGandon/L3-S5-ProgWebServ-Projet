@@ -66,7 +66,7 @@ routerGroupe.delete("/", (req, res) => {
  * 
  */
 
-routerGroupe.post("/", (req, res) => {
+routerGroupe.post("/Member", (req, res) => {
   res.send("Ajout de membre");
 });
 
@@ -80,7 +80,7 @@ routerGroupe.post("/", (req, res) => {
  * 
  */
 
-routerGroupe.delete("/", (req, res) => {
+routerGroupe.delete("/Member", (req, res) => {
   res.send("exclusion de membre");
 });
 
