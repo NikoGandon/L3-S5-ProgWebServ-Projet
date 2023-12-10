@@ -1,16 +1,35 @@
 const express = require("express");
 const blocklistRouteur = express.Router();
 
-blocklistRouteur.get("/", (req, res) => {
-  res.send("blocklist page");
-});
+/**
+ * @swagger
+ * /User/blocklist:
+ * get:
+ * description: Récupère la blocklist
+ * responses:
+ *
+ */
 
-blocklistRouteur.post("/", (req, res) => {
-  res.send("Blocage d'un utilisateur");
-});
+routeurUser.get("/blocklist", () => {});
 
-blocklistRouteur.delete("/", (req, res) => {
-  res.send("Déblocage d'un utilisateur");
-});
+/**
+ * @swagger
+ * /User/blocklist:
+ * post:
+ * description: Ajoute un utilisateur à sa blocklist
+ * responses:
+ *
+ */
+
+routeurUser.post("/blocklist", () => {});
+
+/**
+ * @swagger
+ * /User/search:
+ * get:
+ * description: Recherche un utilisateur
+ * responses:
+ *
+ */
 
 module.exports = blocklistRouteur;

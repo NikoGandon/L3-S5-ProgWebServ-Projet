@@ -55,69 +55,9 @@ routeurUser.delete("/", () => {});
 
 routeurUser.put("/param", () => {});
 
-/**
- * @swagger
- * /User/friend:
- * post:
- * description: Ajoute un ami
- * responses:
- *
- */
+routeurUser.use("/friend", AmiRoute);
 
-routeurUser.post("/friend", AmiRoute);
-
-/**
- * @swagger
- * /User/friend:
- * get:
- * description: Récupère la liste des amis
- * responses:
- *
- */
-
-routeurUser.get("/friend", AmiRoute);
-
-/**
- * @swagger
- * /User/friend:
- * delete:
- * description: Supprime un ami
- * responses:
- *
- */
-
-routeurUser.delete("/friend", AmiRoute);
-
-/**
- * @swagger
- * /User/blocklist:
- * post:
- * description: Ajoute un utilisateur à sa blocklist
- * responses:
- *
- */
-
-routeurUser.post("/blocklist", () => {});
-
-/**
- * @swagger
- * /User/blocklist:
- * get:
- * description: Récupère la blocklist
- * responses:
- *
- */
-
-routeurUser.get("/blocklist", () => {});
-
-/**
- * @swagger
- * /User/search:
- * get:
- * description: Recherche un utilisateur
- * responses:
- *
- */
+routeurUser.use("/blocklist", BlocklistRoute);
 
 routeurUser.get("/search", () => {});
 

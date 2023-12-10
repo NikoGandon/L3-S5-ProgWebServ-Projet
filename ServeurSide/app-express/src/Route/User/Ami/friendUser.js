@@ -1,16 +1,37 @@
 const express = require("express");
 const friendRouteur = express.Router();
 
-friendRouteur.get("/", (req, res) => {
-  res.send("friend page");
-});
+/**
+ * @swagger
+ * /User/friend:
+ * get:
+ * description: Récupère la liste des amis
+ * responses:
+ *
+ */
 
-friendRouteur.post("/", (req, res) => {
-  res.send("Création d'un ami");
-});
+routeurUser.get("/friend", AmiRoute);
 
-friendRouteur.delete("/", (req, res) => {
-  res.send("Suppression d'un ami");
-});
+/**
+ * @swagger
+ * /User/friend:
+ * post:
+ * description: Ajoute un ami
+ * responses:
+ *
+ */
+
+routeurUser.post("/friend", AmiRoute);
+
+/**
+ * @swagger
+ * /User/friend:
+ * delete:
+ * description: Supprime un ami
+ * responses:
+ *
+ */
+
+routeurUser.delete("/friend", AmiRoute);
 
 module.exports = friendRouteur;
