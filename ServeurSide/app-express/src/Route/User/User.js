@@ -1,13 +1,13 @@
 const express = require("express");
-const routerUser = express();
+const routeurUser = express();
 
 const login = require("./Authentification/login");
 const register = require("./Authentification/register");
 const OAuth = require("./Authentification/OAuth2/Google.OAuth2");
 
-routerUser.post("/login", login);
-routerUser.post("/register", register);
-// ? - - routerUser.get('/OAuth/Google', OAuth);
+routeurUser.post("/login", login);
+routeurUser.post("/register", register);
+// ? - - routeurUser.get('/OAuth/Google', OAuth);
 
 /**
  * @swagger
@@ -118,4 +118,4 @@ routeurUser.get("/blocklist", () => {});
 
 routeurUser.get("/search", () => {});
 
-module.exports = routerUser;
+module.exports = routeurUser;
