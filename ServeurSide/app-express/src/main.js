@@ -6,6 +6,7 @@ const fs = require("fs");
 const session = require("express-session");
 const passport = require("passport");
 const bodyParser = require("body-parser");
+const socketIO = require("socket.io");
 
 const optionsSSL = {
   key: fs.readFileSync("./ServeurFolder/SSL_Certificat/private-key.pem"),
@@ -49,6 +50,16 @@ app.use("/Groupe", GroupeRoute);
 
 const httpsServer = https.createServer(optionsSSL, app);
 const HTTPS_PORT = process.env.PORT;
+
+const io = socketIO(httpsServer);
+
+io.on("connection", (socket) => {
+  console.log("New client connected");
+
+  socket.on("disconnect", () => {
+    console.log("Client disconnected");
+  });
+});
 
 httpsServer.listen(HTTPS_PORT, () => {
   console.log("HTTPS Server running on port " + HTTPS_PORT);
