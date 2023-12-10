@@ -126,17 +126,5 @@ routerGroupe.get("/", (req, res) => {
   res.send("recoit les messages");
 });
 
-/**
- * @swagger
- * /groupe:
- * delete:
- * description: Utilisé pour quitter un groupe
- * 
- * 
- */
-
-routerGroupe.delete("/", (req, res) => {
-  res.send("quitter le groupe");
-});
 
 module.exports = routerGroupe;
