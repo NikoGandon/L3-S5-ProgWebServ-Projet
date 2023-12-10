@@ -39,8 +39,8 @@ app.use(bodyParser.urlencoded({ extended: true }));
 // routes
 const homeRoute = require("./Route/home");
 const UserRoute = require("./Route/User/User");
-const ServeurRoute = require("./Route/Serveur/Serveur");
-const GroupeRoute = require("./Route/Groupe/Groupe");
+const ServeurRoute = require("./Route/Serveur/serveur");
+const GroupeRoute = require("./Route/Groupe/groupe");
 
 app.use("/", homeRoute);
 app.use("/User", UserRoute);
