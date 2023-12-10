@@ -1,7 +1,7 @@
 const sequelize = require("../Config/db");
 const { DataTypes } = require("sequelize");
 
-const admin = sequelize.define(
+const Admin = sequelize.define(
   "admin",
   {
     id: {
@@ -11,9 +11,11 @@ const admin = sequelize.define(
     },
   },
   {
-    tableName: "admin",
+    freezeTableName: true,
     timestamps: false,
   }
 );
 
-module.exports = admin;
+Admin.sync();
+
+module.exports = Admin;
