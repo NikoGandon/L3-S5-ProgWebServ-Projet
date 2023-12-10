@@ -97,7 +97,7 @@ routerGroupe.delete("/Member", (req, res) => {
  * 
  */
 
-routerGroupe.post("/", (req, res) => {
+routerGroupe.post("/Message", (req, res) => {
   res.send("envoi de message");
 });
 
@@ -111,7 +111,7 @@ routerGroupe.post("/", (req, res) => {
  * 
  */
 
-routerGroupe.delete("/", (req, res) => {
+routerGroupe.delete("/Message", (req, res) => {
   res.send("suppression de message");
 });
 
@@ -125,7 +125,7 @@ routerGroupe.delete("/", (req, res) => {
  * 
  */
 
-routerGroupe.get("/", (req, res) => {
+routerGroupe.get("/Message", (req, res) => {
   res.send("recoit les messages");
 });
 
