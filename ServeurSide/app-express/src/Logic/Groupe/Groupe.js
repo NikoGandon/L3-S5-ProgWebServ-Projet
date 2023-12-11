@@ -45,6 +45,7 @@ function modifgroupe(req, res){
         if (idGroupe) {
             Groupe.update({
                 nom: nom,
+                lienImage: photo
                 
             }, {
                 where: {

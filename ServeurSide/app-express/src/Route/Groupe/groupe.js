@@ -16,6 +16,7 @@ const functionGroupe = require("../../Logic/Groupe/Groupe");
  */
 
 routerGroupe.get("/", (req, res) => {
+  functionGroupe.pagegroupe(req, res);
   res.send("Groupe page");
 });
 
@@ -30,6 +31,12 @@ routerGroupe.get("/", (req, res) => {
  */
 
 routerGroupe.post("/", (req, res) => {
+  if (!req.body.nom) {
+    res.status(400).json({
+      message: "Veuillez ajouter un nom",
+    });
+  }
+  functionGroupe.creergroupe(req, res);
   res.send("Création du groupe");
 });
 
@@ -44,6 +51,7 @@ routerGroupe.post("/", (req, res) => {
  * 
  */
 routerGroupe.put("/", (req, res) => {
+  functionGroupe.modifgroupe(req, res);
   res.send("Modification du groupe");
 });
 
@@ -58,13 +66,14 @@ routerGroupe.put("/", (req, res) => {
  */
 
 routerGroupe.delete("/", (req, res) => {
+  functionGroupe.suprimegroupe(req, res);
   res.send("Suppression de groupe");
 });
 
 /**
  * @swagger
  * /groupe:
- * delete:
+ * post:
  * description: Utilisé pour ajouter un membre
  * responses:
  * 
@@ -72,6 +81,7 @@ routerGroupe.delete("/", (req, res) => {
  */
 
 routerGroupe.post("/Member", (req, res) => {
+  functionGroupe.addmembre(req, res);
   res.send("Ajout de membre");
 });
 
@@ -86,13 +96,14 @@ routerGroupe.post("/Member", (req, res) => {
  */
 
 routerGroupe.delete("/Member", (req, res) => {
+  functionGroupe.deletemembre(req, res);
   res.send("exclusion de membre");
 });
 
 /**
  * @swagger
  * /groupe:
- * delete:
+ * post:
  * description: Utilisé pour envoyer un message dans le groupe
  * responses:
  * 
@@ -100,6 +111,7 @@ routerGroupe.delete("/Member", (req, res) => {
  */
 
 routerGroupe.post("/Message", (req, res) => {
+  functionGroupe.envoimessage(req, res);
   res.send("envoi de message");
 });
 
@@ -114,13 +126,14 @@ routerGroupe.post("/Message", (req, res) => {
  */
 
 routerGroupe.delete("/Message", (req, res) => {
+  functionGroupe.deletemessage(req, res);
   res.send("suppression de message");
 });
 
 /**
  * @swagger
  * /groupe:
- * delete:
+ * get:
  * description: Utilisé pour recevoir un message
  * responses:
  * 
@@ -128,6 +141,7 @@ routerGroupe.delete("/Message", (req, res) => {
  */
 
 routerGroupe.get("/Message", (req, res) => {
+  functionGroupe.recevoirmessage(req, res);
   res.send("recoit les messages");
 });
 
