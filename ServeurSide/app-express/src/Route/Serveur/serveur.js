@@ -5,6 +5,8 @@ const banRoute = require("./ban");
 const salonRoute = require("./salon");
 const inviteRoute = require("./invite");
 
+const CreateServeur = require("../../logic/Serveur/CreateServeur");
+
 /**
  * @swagger
  * /serveur:
@@ -15,7 +17,7 @@ const inviteRoute = require("./invite");
  */
 
 routerServeur.get("/", (req, res) => {
-  res.send("serveur page");
+  res.send("Interface du serveur");
 });
 
 /**
@@ -29,7 +31,12 @@ routerServeur.get("/", (req, res) => {
  */
 
 routerServeur.post("/", (req, res) => {
-  res.send("Création du serveur");
+    if (!req.body.nom || !req.body.description || !req.body.lienImage) {
+      res.status(400).json({
+      message: "Veuillez remplir tous les champs",
+    });
+  }
+  CreateServeur;
 });
 
 /**
