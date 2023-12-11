@@ -6,6 +6,7 @@ const salonRoute = require("./salon");
 const inviteRoute = require("./invite");
 
 const {CreateServeur} = require("../../logic/Serveur/CreateServeur");
+const {GetServeur} = require("../../logic/Serveur/GetServeur");
 
 /**
  * @swagger
@@ -17,7 +18,12 @@ const {CreateServeur} = require("../../logic/Serveur/CreateServeur");
  */
 
 routerServeur.get("/", (req, res) => {
-  res.send("Interface du serveur");
+  if (!req.body.id) {
+      res.status(400).json({
+      message: "Veuillez remplir tous les champs",
+    });
+  }
+  GetServeur(req, res);
 });
 
 /**
