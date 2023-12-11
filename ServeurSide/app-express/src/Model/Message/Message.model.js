@@ -1,7 +1,7 @@
-const sequelize = require("../Config/db");
+const sequelize = require("../../Config/db");
 const { DataTypes } = require("sequelize");
 
-const UserModel = require("./User.model");
+const UserModel = require("../User.model");
 
 /**
  * @desc Modele des messages

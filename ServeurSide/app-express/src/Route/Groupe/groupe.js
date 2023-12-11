@@ -4,6 +4,8 @@ const routerGroupe = express.Router();
 const groupeModel = require("../../Model/Groupe.model");
 const MembreGroupeModel = require("../../Model/Lien/MembreGroupe.model");
 
+const functionGroupe = require("../../Logic/Groupe/Groupe");
+
 /**
  * @swagger
  * /groupe:
