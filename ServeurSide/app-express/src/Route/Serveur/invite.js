@@ -11,7 +11,7 @@ const InviteRoute = express();
  *
  */
 
-routerServeur.post("/", (req, res) => {
+InviteRoute.post("/", (req, res) => {
   res.send("Création d'un lien d'invitation");
 });
 
@@ -25,7 +25,7 @@ routerServeur.post("/", (req, res) => {
  *
  */
 
-routerServeur.get("/", (req, res) => {
+InviteRoute.get("/", (req, res) => {
   res.send("Récupération de tous les liens d'invitations");
 });
 
@@ -39,7 +39,7 @@ routerServeur.get("/", (req, res) => {
  *
  */
 
-routerServeur.delete("/", (req, res) => {
+InviteRoute.delete("/", (req, res) => {
   res.send("Suppression d'un lien d'invitation");
 });
 

@@ -1,5 +1,5 @@
 const express = require("express");
-const routerServeur = express.Router();
+const routerServeur = express;
 
 const banRoute = require("./ban");
 const salonRoute = require("./salon");

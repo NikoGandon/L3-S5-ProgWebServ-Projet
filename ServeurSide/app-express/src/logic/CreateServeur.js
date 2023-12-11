@@ -1,3 +1,4 @@
+const app = express();
 const Serveur = require("../../Model/Serveur.model");
 
 app.post("/serveur", async (req, res) => {
