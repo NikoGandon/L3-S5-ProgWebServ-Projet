@@ -5,7 +5,7 @@ const banRoute = require("./ban");
 const salonRoute = require("./salon");
 const inviteRoute = require("./invite");
 
-const CreateServeur = require("../../logic/Serveur/CreateServeur");
+const {CreateServeur} = require("../../logic/Serveur/CreateServeur");
 
 /**
  * @swagger
@@ -36,7 +36,7 @@ routerServeur.post("/", (req, res) => {
       message: "Veuillez remplir tous les champs",
     });
   }
-  CreateServeur;
+  CreateServeur(req, res);
 });
 
 /**

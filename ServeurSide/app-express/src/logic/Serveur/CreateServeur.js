@@ -1,8 +1,6 @@
-const express = require("express");
-const app = express();
 const Serveur = require("../../Model/Serveur.model");
 
-app.post("/serveur", async (req, res) => {
+async function CreateServeur(req, res) {
   try {
     const nom = req.body.nom;
     const description = req.body.description;
@@ -19,6 +17,6 @@ app.post("/serveur", async (req, res) => {
   } catch (error) {
     return res.status(500).json({ error: "Ca marche pas." });
   }
-});
+}
 
-module.exports = app;
+module.exports = {CreateServeur};
