@@ -1,10 +1,9 @@
 const express = require("express");
-const routerServeur = express;
+const routerServeur = express.Router(); // Créez un nouvel objet routeur
 
 const banRoute = require("./ban");
 const salonRoute = require("./salon");
 const inviteRoute = require("./invite");
-
 
 /**
  * @swagger
@@ -61,10 +60,19 @@ routerServeur.delete("/", (req, res) => {
   res.send("Suppression de serveur");
 });
 
+/**
+ * @swagger
+ * /serveur:
+ * delete:
+ * description: Utilisé pour supprimer un serveur
+ * responses:
+ *
+ *
+ */
+
+// Utilisation des routes externes
 routerServeur.use("/ban", banRoute);
-
 routerServeur.use("/salon", salonRoute);
-
 routerServeur.use("/invite", inviteRoute);
 
-module.exports = routerServeur;
+module.exports = routerServeur; // Exportez votre routeur correctement
