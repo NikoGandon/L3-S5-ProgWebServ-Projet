@@ -10,7 +10,7 @@ const blocklistRouteur = express.Router();
  *
  */
 
-routeurUser.get("/blocklist", () => {});
+blocklistRouteur.get("/", () => {});
 
 /**
  * @swagger
@@ -21,15 +21,17 @@ routeurUser.get("/blocklist", () => {});
  *
  */
 
-routeurUser.post("/blocklist", () => {});
+blocklistRouteur.post("/", () => {});
 
 /**
  * @swagger
- * /User/search:
- * get:
- * description: Recherche un utilisateur
+ * /User/blocklist:
+ * delete:
+ * description: Débloque un utilisateur de sa blocklist
  * responses:
  *
  */
+
+blocklistRouteur.delete("/", () => {});
 
 module.exports = blocklistRouteur;
