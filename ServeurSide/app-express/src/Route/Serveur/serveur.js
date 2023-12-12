@@ -18,8 +18,8 @@ const {GetServeur} = require("../../logic/Serveur/GetServeur");
  */
 
 routerServeur.get("/", (req, res) => {
-  if (!req.body.id) {
-      res.status(400).json({
+  if (!req.body.idServeur) {
+      return res.status(400).json({
       message: "Veuillez remplir tous les champs",
     });
   }
