@@ -2,7 +2,7 @@ const Serveur = require("../../Model/Serveur.model");
 
 async function GetServeur(req, res) {
     try {
-      const idServeur = req.params.id;
+      const idServeur = req.body.idServeur;
       const serveur = await Serveur.findOne({
         where: { id: idServeur },
       });
