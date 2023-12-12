@@ -1,6 +1,8 @@
 const sequelize = require("../Config/db");
 const { DataTypes } = require("sequelize");
 
+const UserModel = require("./User.model");
+
 /**
  * @desc Modele de la table groupe
  * @typedef Groupe
@@ -31,11 +33,8 @@ const Groupe = sequelize.define(
       },
       allowNull: false,
     },
-    lienParametre: {
-      type: DataTypes.STRING,
-      defaultValue: function () {
-        return "ressources/parametreGroupe/" + id + ".json";
-      },
+    idCreateur: {
+      type: DataTypes.INTEGER,
       allowNull: false,
     },
   },
@@ -44,6 +43,8 @@ const Groupe = sequelize.define(
     timestamps: false,
   }
 );
+
+Groupe.belongsTo(UserModel, { foreignKey: "idCreateur" });
 
 Groupe.sync();
 
