@@ -10,7 +10,7 @@ const friendRouteur = express.Router();
  *
  */
 
-friendRouteur.get("/friend", () => {});
+friendRouteur.get("/", () => {});
 
 /**
  * @swagger
@@ -21,7 +21,7 @@ friendRouteur.get("/friend", () => {});
  *
  */
 
-friendRouteur.post("/friend", () => {});
+friendRouteur.post("/", () => {});
 
 /**
  * @swagger
@@ -32,6 +32,6 @@ friendRouteur.post("/friend", () => {});
  *
  */
 
-friendRouteur.delete("/friend", () => {});
+friendRouteur.delete("/", () => {});
 
 module.exports = friendRouteur;
