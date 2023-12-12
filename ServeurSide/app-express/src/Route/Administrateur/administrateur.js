@@ -20,6 +20,6 @@ AdministrateurRoute.get("/", (req, res) => {
 
 AdministrateurRoute.use("/ban", BanRoute);
 
-AdministrateurRoute.get("/stats", )
+AdministrateurRoute.get("/stats", statsRoute);
 
 module.exports = AdministrateurRoute;
