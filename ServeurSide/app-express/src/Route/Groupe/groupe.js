@@ -32,7 +32,7 @@ routerGroupe.get("/", (req, res) => {
 
 routerGroupe.post("/", (req, res) => {
   if (!req.body.nom) {
-    res.status(400).json({
+    return res.status(400).json({
       message: "Veuillez ajouter un nom",
     });
   }
@@ -51,6 +51,11 @@ routerGroupe.post("/", (req, res) => {
  * 
  */
 routerGroupe.put("/", (req, res) => {
+  if (!req.body.nom) {
+    return res.status(400).json({
+      message: "Veuillez ajouter un nom",
+    });
+  }
   functionGroupe.modifgroupe(req, res);
   res.send("Modification du groupe");
 });
@@ -66,6 +71,11 @@ routerGroupe.put("/", (req, res) => {
  */
 
 routerGroupe.delete("/", (req, res) => {
+  if (!req.body.nom) {
+    return res.status(400).json({
+      message: "Veuillez ajouter un nom",
+    });
+  }
   functionGroupe.suprimegroupe(req, res);
   res.send("Suppression de groupe");
 });
