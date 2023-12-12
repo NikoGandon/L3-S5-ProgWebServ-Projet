@@ -3,6 +3,7 @@ const router = express.Router();
 const Groupe = require('../../Model/Groupe.model');
 const Membre = require('../../Model/Lien/MembreGroupe.model');
 const Message = require('../../Model/Message/Message.model');
+const MessageGroupe = require('../../Model/Lien/MessageGroupe.model');
 
 // GROUPE PAGE
 
@@ -133,6 +134,11 @@ function envoimessage(req, res){
             date : req.body.date,
             updateAt : req.body.updateAt,
             userId : req.body.userId,
+        });
+
+        MessageGroupe.create({
+            Messageid : newMessage.id,
+            Groupeid : req.body.Groupeid,
         });
 
         return res.status(201).json(newMessage);
