@@ -16,6 +16,11 @@ const functionGroupe = require("../../Logic/Groupe/Groupe");
  */
 
 routerGroupe.get("/", (req, res) => {
+  if (!req.body.nom) {
+    return res.status(400).json({
+      message: "Veuillez ajouter un nom",
+    });
+  }
   functionGroupe.pagegroupe(req, res);
   res.send("Groupe page");
 });
