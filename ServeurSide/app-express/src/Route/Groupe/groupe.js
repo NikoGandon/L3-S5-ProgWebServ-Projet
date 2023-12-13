@@ -16,13 +16,12 @@ const functionGroupe = require("../../Logic/Groupe/Groupe");
  */
 
 routerGroupe.get("/", (req, res) => {
-  if (!req.body.nom) {
+  if (!req.body.idGroupe) {
     return res.status(400).json({
-      message: "Veuillez ajouter un nom",
+      message: "Veuillez ajouter un id",
     });
   }
   functionGroupe.pagegroupe(req, res);
-  res.send("Groupe page");
 });
 
 /**
@@ -42,7 +41,6 @@ routerGroupe.post("/", (req, res) => {
     });
   }
   functionGroupe.creergroupe(req, res);
-  res.send("Création du groupe");
 });
 
 
@@ -56,13 +54,17 @@ routerGroupe.post("/", (req, res) => {
  * 
  */
 routerGroupe.put("/", (req, res) => {
+  if (!req.body.idGroupe) {
+    return res.status(400).json({
+      message: "Veuillez ajouter un id",
+    });
+  }
   if (!req.body.nom) {
     return res.status(400).json({
       message: "Veuillez ajouter un nom",
     });
   }
   functionGroupe.modifgroupe(req, res);
-  res.send("Modification du groupe");
 });
 
 /**
@@ -76,13 +78,12 @@ routerGroupe.put("/", (req, res) => {
  */
 
 routerGroupe.delete("/", (req, res) => {
-  if (!req.body.nom) {
+  if (!req.body.idGroupe) {
     return res.status(400).json({
-      message: "Veuillez ajouter un nom",
+      message: "Veuillez ajouter un id",
     });
   }
   functionGroupe.suprimegroupe(req, res);
-  res.send("Suppression de groupe");
 });
 
 /**
@@ -96,8 +97,17 @@ routerGroupe.delete("/", (req, res) => {
  */
 
 routerGroupe.post("/Member", (req, res) => {
+  if (!req.body.idGroupe) {
+    return res.status(400).json({
+      message: "Veuillez ajouter un idGroupe",
+    });
+  }
+  if (!req.body.idUser) {
+    return res.status(400).json({
+      message: "Veuillez ajouter un idUser",
+    });
+  }
   functionGroupe.addmembre(req, res);
-  res.send("Ajout de membre");
 });
 
 /**
@@ -111,8 +121,17 @@ routerGroupe.post("/Member", (req, res) => {
  */
 
 routerGroupe.delete("/Member", (req, res) => {
+  if (!req.body.idGroupe) {
+    return res.status(400).json({
+      message: "Veuillez ajouter un idGroupe",
+    });
+  }
+  if (!req.body.idUser) {
+    return res.status(400).json({
+      message: "Veuillez ajouter un idUser",
+    });
+  }
   functionGroupe.deletemembre(req, res);
-  res.send("exclusion de membre");
 });
 
 /**
@@ -127,7 +146,6 @@ routerGroupe.delete("/Member", (req, res) => {
 
 routerGroupe.post("/Message", (req, res) => {
   functionGroupe.envoimessage(req, res);
-  res.send("envoi de message");
 });
 
 /**
@@ -141,8 +159,12 @@ routerGroupe.post("/Message", (req, res) => {
  */
 
 routerGroupe.delete("/Message", (req, res) => {
+  if (!req.body.idMessage) {
+    return res.status(400).json({
+      message: "Veuillez ajouter un idMessage",
+    });
+  }
   functionGroupe.deletemessage(req, res);
-  res.send("suppression de message");
 });
 
 /**
@@ -156,8 +178,12 @@ routerGroupe.delete("/Message", (req, res) => {
  */
 
 routerGroupe.get("/Message", (req, res) => {
+  if (!req.body.idGroupe) {
+    return res.status(400).json({
+      message: "Veuillez ajouter un idGroupe",
+    });
+  }
   functionGroupe.recevoirmessage(req, res);
-  res.send("recoit les messages");
 });
 
 

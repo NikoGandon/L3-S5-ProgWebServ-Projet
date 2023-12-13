@@ -7,16 +7,16 @@ const MessageGroupe = require('../../Model/Lien/MessageGroupe.model');
 
 // GROUPE PAGE
 
-function pagegroupe(req, res){
+async function pagegroupe(req, res){
     try {
         const idGroupe = req.body.idGroupe;
-        const LeGroupe = Groupe.findByPk(idGroupe);
+        const LeGroupe = await Groupe.findByPk(idGroupe);
 
-        if (LeGroupe) {
-            return res.status(200).json(LeGroupe);
-        } else {
+        if (!LeGroupe) {
             return res.status(404).json({ error: 'Groupe non trouvé' });
         }
+        return res.status(201).json(LeGroupe);
+        
     } catch (error) {
         return res.status(500).json({ error: 'Erreur lors de la récupération de groupe'});
     }
@@ -24,10 +24,11 @@ function pagegroupe(req, res){
 
  // CREATE GROUPE
 
-function creergroupe(req, res){
+async function creergroupe(req, res){
     try {
-        const newGroup = Groupe.create({
+        const newGroup = await Groupe.create({
             nom: req.body.nom,
+            idCreateur: req.body.idCreateur
         });
         return res.status(201).json(newGroup);
     } catch (error) {
@@ -89,8 +90,8 @@ function suprimegroupe(req, res){
 function addmembre(req, res){
     try {
         const newMembre = Membre.create({
-            Userid : req.body.Userid,
-            Groupeid : req.body.Groupeid,
+            Userid : req.body.idUser,
+            Groupeid : req.body.idGroupe,
         });
 
         return res.status(201).json(newMembre);
@@ -129,7 +130,6 @@ function deletemembre(req, res){
 function envoimessage(req, res){
     try {
         const newMessage = Message.create({
-            idMessage : req.body.idMessage,
             contenu : req.body.contenu,
             date : req.body.date,
             updateAt : req.body.updateAt,
