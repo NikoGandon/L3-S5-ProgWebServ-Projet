@@ -46,6 +46,6 @@ const Groupe = sequelize.define(
 
 Groupe.belongsTo(UserModel, { foreignKey: "idCreateur" });
 
-Groupe.sync();
+Groupe.sync({alter: true});
 
 module.exports = Groupe;
