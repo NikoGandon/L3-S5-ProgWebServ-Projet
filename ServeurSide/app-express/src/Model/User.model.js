@@ -55,7 +55,7 @@ const User = sequelize.define(
     lienParametre: {
       type: DataTypes.STRING,
       defaultValue: function () {
-        return "ressources/Parametre/User/" + id + ".json";
+        return "ressources/Parametre/User/";
       },
       allowNull: true,
     },
@@ -66,13 +66,10 @@ const User = sequelize.define(
   }
 );
 
-User.prototype.validPassword = function (password) {
-  return bcrypt.compareSync(password, this.password);
-};
-
-User.prototype.hashPassword = function (password) {
-  return bcrypt.hashSync(password, bcrypt.genSaltSync(10), null);
-};
+User.beforeCreate(async (user, options) => {
+  const generatedId = await user.getDataValue("id");
+  user.lienParametre = "ressources/Parametre/User/" + generatedId + ".json";
+});
 
 User.sync();
 
