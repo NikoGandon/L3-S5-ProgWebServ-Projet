@@ -59,6 +59,6 @@ const Serveur = sequelize.define(
   }
 );
 
-Serveur.sync();
+Serveur.sync({alter: true});
 
 module.exports = Serveur;

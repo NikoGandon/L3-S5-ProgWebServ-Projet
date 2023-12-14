@@ -22,6 +22,8 @@ const Admin = sequelize.define(
 );
 
 
-Admin.sync();
+Admin.hasOne(UserModel);
+
+Admin.sync({ alter: true });
 
 module.exports = Admin;

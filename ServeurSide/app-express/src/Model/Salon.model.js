@@ -33,7 +33,7 @@ const Salon = sequelize.define(
   }
 );
 
-Salon.sync({ force: true}).then(() => {
+Salon.sync({ alter: true}).then(() => {
   console.log("Table Salon created");
 }).catch((err) => {
   console.log(err);
