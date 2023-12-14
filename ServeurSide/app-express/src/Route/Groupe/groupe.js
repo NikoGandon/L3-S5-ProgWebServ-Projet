@@ -1,6 +1,11 @@
 const express = require("express");
 const routerGroupe = express.Router();
 
+const groupeModel = require("../../Model/Groupe.model");
+const MembreGroupeModel = require("../../Model/Lien/MembreGroupe.model");
+
+const functionGroupe = require("../../Logic/Groupe/Groupe");
+
 /**
  * @swagger
  * /groupe:
@@ -11,7 +16,12 @@ const routerGroupe = express.Router();
  */
 
 routerGroupe.get("/", (req, res) => {
-  res.send("Groupe page");
+  if (!req.body.idGroupe) {
+    return res.status(400).json({
+      message: "Veuillez ajouter un id",
+    });
+  }
+  functionGroupe.pagegroupe(req, res);
 });
 
 /**
@@ -25,7 +35,12 @@ routerGroupe.get("/", (req, res) => {
  */
 
 routerGroupe.post("/", (req, res) => {
-  res.send("Création du groupe");
+  if (!req.body.nom) {
+    return res.status(400).json({
+      message: "Veuillez ajouter un nom",
+    });
+  }
+  functionGroupe.creergroupe(req, res);
 });
 
 
@@ -39,7 +54,17 @@ routerGroupe.post("/", (req, res) => {
  * 
  */
 routerGroupe.put("/", (req, res) => {
-  res.send("Modification du groupe");
+  if (!req.body.idGroupe) {
+    return res.status(400).json({
+      message: "Veuillez ajouter un id",
+    });
+  }
+  if (!req.body.nom) {
+    return res.status(400).json({
+      message: "Veuillez ajouter un nom",
+    });
+  }
+  functionGroupe.modifgroupe(req, res);
 });
 
 /**
@@ -53,21 +78,36 @@ routerGroupe.put("/", (req, res) => {
  */
 
 routerGroupe.delete("/", (req, res) => {
-  res.send("Suppression de groupe");
+  if (!req.body.idGroupe) {
+    return res.status(400).json({
+      message: "Veuillez ajouter un id",
+    });
+  }
+  functionGroupe.suprimegroupe(req, res);
 });
 
 /**
  * @swagger
  * /groupe:
- * delete:
+ * post:
  * description: Utilisé pour ajouter un membre
  * responses:
  * 
  * 
  */
 
-routerGroupe.post("/", (req, res) => {
-  res.send("Ajout de membre");
+routerGroupe.post("/Member", (req, res) => {
+  if (!req.body.idGroupe) {
+    return res.status(400).json({
+      message: "Veuillez ajouter un idGroupe",
+    });
+  }
+  if (!req.body.idUser) {
+    return res.status(400).json({
+      message: "Veuillez ajouter un idUser",
+    });
+  }
+  functionGroupe.addmembre(req, res);
 });
 
 /**
@@ -80,22 +120,32 @@ routerGroupe.post("/", (req, res) => {
  * 
  */
 
-routerGroupe.delete("/", (req, res) => {
-  res.send("exclusion de membre");
+routerGroupe.delete("/Member", (req, res) => {
+  if (!req.body.idGroupe) {
+    return res.status(400).json({
+      message: "Veuillez ajouter un idGroupe",
+    });
+  }
+  if (!req.body.idUser) {
+    return res.status(400).json({
+      message: "Veuillez ajouter un idUser",
+    });
+  }
+  functionGroupe.deletemembre(req, res);
 });
 
 /**
  * @swagger
  * /groupe:
- * delete:
+ * post:
  * description: Utilisé pour envoyer un message dans le groupe
  * responses:
  * 
  * 
  */
 
-routerGroupe.post("/", (req, res) => {
-  res.send("envoi de message");
+routerGroupe.post("/Message", (req, res) => {
+  functionGroupe.envoimessage(req, res);
 });
 
 /**
@@ -108,33 +158,33 @@ routerGroupe.post("/", (req, res) => {
  * 
  */
 
-routerGroupe.delete("/", (req, res) => {
-  res.send("suppression de message");
+routerGroupe.delete("/Message", (req, res) => {
+  if (!req.body.idMessage) {
+    return res.status(400).json({
+      message: "Veuillez ajouter un idMessage",
+    });
+  }
+  functionGroupe.deletemessage(req, res);
 });
 
 /**
  * @swagger
  * /groupe:
- * delete:
+ * get:
  * description: Utilisé pour recevoir un message
  * responses:
  * 
  * 
  */
 
-routerGroupe.get("/", (req, res) => {
-  res.send("recoit les messages");
+routerGroupe.get("/Message", (req, res) => {
+  if (!req.body.idGroupe) {
+    return res.status(400).json({
+      message: "Veuillez ajouter un idGroupe",
+    });
+  }
+  functionGroupe.recevoirmessage(req, res);
 });
 
-/**
- * @swagger
- * /groupe:
- * delete:
- * description: Utilisé pour quitter un groupe
- * 
- * 
- */
 
-routerGroupe.delete("/", (req, res) => {
-  res.send("quitter le groupe");
-});
+module.exports = routerGroupe;
