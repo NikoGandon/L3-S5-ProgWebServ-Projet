@@ -11,58 +11,52 @@ function createToken(user) {
     },
     secretKey,
     {
-        expiresIn: "24h",
+      expiresIn: "24h",
     }
   );
 }
 
-function verifyToken(req, res, next) {
+function checkToken(req, res) {
   const token = req.headers.authorization
     ? req.headers.authorization.split(" ")[1]
     : null;
-
   if (!token) {
+    return -1;
+  }
+  try {
+    const decoded = JWT.verify(token, secretKey);
+    if (decoded.admin) {
+      return 1;
+    }
+    return 0;
+  } catch (err) {
+    return -1;
+  }
+}
+
+function verifyToken(req, res, next) {
+  const token = checkToken(req, res);
+  if (token === -1) {
     return res
       .status(401)
       .json({ message: "Accès non autorisé aux non-connectés." });
   }
-
-  try {
-    const decoded = jwt.verify(token, secretKey);
-    req.user = decoded;
-    next();
-  } catch (err) {
-    return res
-      .status(401)
-      .json({ message: "Accès non autorisé : identification impossible." });
-  }
+  next();
 }
 
 function verifyAdminToken(req, res, next) {
-  const token = req.headers.authorization
-    ? req.headers.authorization.split(" ")[1]
-    : null;
-
-  if (!token) {
+  const token = checkToken(req, res);
+  if (token === -1) {
     return res
       .status(401)
       .json({ message: "Accès non autorisé aux non-connectés." });
   }
-  try {
-    const decoded = jwt.verify(token, secretKey);
-    req.user = decoded;
-    if (!req.user.admin) {
-      return res.status(401).json({
-        message:
-          "Accès non autorisé. Vous ne possédez pas les droits pour accéder à ce service",
-      });
-    }
-    next();
-  } catch (err) {
-    return res.status(401).json({
-      message: "Accès non autorisé : identification impossible : " + err,
-    });
+  if (token === 0) {
+    return res
+      .status(401)
+      .json({ message: "Accès non autorisé aux non-administrateurs." });
   }
+  next();
 }
 
-module.exports = { createToken, verifyToken, verifyAdminToken };
+module.exports = { createToken, checkToken, verifyToken, verifyAdminToken };
