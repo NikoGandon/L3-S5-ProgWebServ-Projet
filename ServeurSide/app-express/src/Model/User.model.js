@@ -74,6 +74,6 @@ User.prototype.hashPassword = function (password) {
   return bcrypt.hashSync(password, bcrypt.genSaltSync(10), null);
 };
 
-User.sync();
+User.sync({alter: true});
 
 module.exports = User;
