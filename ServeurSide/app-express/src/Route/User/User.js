@@ -7,6 +7,7 @@ const OAuth = require("./Authentification/OAuth2/Google.OAuth2");
 
 const AmiRoute = require("./Ami/friendUser");
 const BlocklistRoute = require("./Blocklist/blockListUser");
+const { verifyToken } = require("../../Middleware/AuthToken");
 
 routeurUser.use("/login", login);
 routeurUser.use("/register", register);
@@ -20,7 +21,7 @@ routeurUser.use("/register", register);
  * responses:
  *
  */
-routeurUser.get("/", () => {});
+routeurUser.get("/", verifyToken, () => {});
 
 /**
  * @swagger
@@ -31,7 +32,7 @@ routeurUser.get("/", () => {});
  *
  */
 
-routeurUser.put("/", () => {});
+routeurUser.put("/", verifyToken, () => {});
 
 /**
  * @swagger
@@ -42,7 +43,7 @@ routeurUser.put("/", () => {});
  *
  */
 
-routeurUser.delete("/", () => {});
+routeurUser.delete("/", verifyToken, () => {});
 
 /**
  * @swagger
@@ -53,12 +54,12 @@ routeurUser.delete("/", () => {});
  *
  */
 
-routeurUser.put("/param", () => {});
+routeurUser.put("/param", verifyToken, () => {});
 
-routeurUser.use("/friend", AmiRoute);
+routeurUser.use("/friend", verifyToken, AmiRoute);
 
-routeurUser.use("/blocklist", BlocklistRoute);
+routeurUser.use("/blocklist", verifyToken, BlocklistRoute);
 
-routeurUser.get("/search", () => {});
+routeurUser.get("/search", verifyToken, () => {});
 
 module.exports = routeurUser;

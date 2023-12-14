@@ -7,6 +7,8 @@ const session = require("express-session");
 const passport = require("passport");
 const bodyParser = require("body-parser");
 
+const { verifyToken, verifyAdminToken } = require("./Middleware/AuthToken");
+
 const optionsSSL = {
   key: fs.readFileSync("./ServeurFolder/SSL_Certificat/private-key.pem"),
   cert: fs.readFileSync("./ServeurFolder/SSL_Certificat/certificate.pem"),
@@ -44,8 +46,8 @@ const GroupeRoute = require("./Route/Groupe/Groupe");
 
 app.use("/", homeRoute);
 app.use("/User", UserRoute);
-app.use("/Serveur", ServeurRoute);
-app.use("/Groupe", GroupeRoute);
+app.use("/Serveur", verifyAdminToken, ServeurRoute);
+app.use("/Groupe", verifyAdminToken, GroupeRoute);
 
 const httpsServer = https.createServer(optionsSSL, app);
 const HTTPS_PORT = process.env.PORT;
