@@ -92,7 +92,16 @@ routerServeur.delete("/", (req, res) => {
 
 // Utilisation des routes externes
 routerServeur.post("/ban", (req, res) => {
-  if (!req.body.idUser || !req.body.idUser || !req.body.date) {
+  if (!req.body.idUser || !req.body.idServeur || !req.body.date) {
+    res.status(400).json({
+    message: "Veuillez remplir tous les champs",
+  });
+  }
+  BanMembre(req, res);
+});
+
+routerServeur.delete("/ban", (req, res) => {
+  if (!req.body.idUser) {
     res.status(400).json({
     message: "Veuillez remplir tous les champs",
   });

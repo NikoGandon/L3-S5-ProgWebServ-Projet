@@ -2,21 +2,22 @@ const BanniServeur = require("../../Model/BanniServeur.model");
 
 async function BanMembre(req, res) {
   try {
+    const idUser = req.body.idUser;
     const idServeur = req.body.idServeur;
-    const idMembre = req.body.idMembre;
-    const raison = req.body.raison;
     const date = req.body.date;
+    const raison = req.body.raison;
 
-    const newBanniServeur = await BanniServeur.create({
+    const NewBanniServeur = await BanniServeur.create({
+      idUser: idUser,
       idServeur: idServeur,
-      idMembre: idMembre,
-      raison: raison,
-      date: date
+      date: date,
+      raison: raison
     });
 
-    return res.status(201).json(newBanniServeur);
+    return res.status(201).json(NewBanniServeur);
+
   } catch (error) {
-    return res.status(500).json({ error: "Ca marche pas." });
+    return res.status(500).json({ error: "Ca marche pas." + error});
   }
     
 }

@@ -24,7 +24,6 @@ const BanniServeur = sequelize.define(
       allowNull: false,
       primaryKey: true
     },
-
     date: {
       type: DataTypes.DATE,
       allowNull: false,
@@ -43,7 +42,6 @@ const BanniServeur = sequelize.define(
 BanniServeur.belongsTo(UserModel, {
   foreignKey: "idUser",
   as: "user",
-  primaryKey: true,
 });
 
 BanniServeur.belongsTo(ServeurModel, {
@@ -51,6 +49,6 @@ BanniServeur.belongsTo(ServeurModel, {
   as: "serveur",
 });
 
-BanniServeur.sync();
+BanniServeur.sync({ alter: true});
 
 module.exports = BanniServeur;
