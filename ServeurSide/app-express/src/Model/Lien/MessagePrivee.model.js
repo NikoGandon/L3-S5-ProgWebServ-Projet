@@ -1,8 +1,6 @@
 const sequelize = require("../Config/db");
-const { DataTypes } = require("sequelize");
 
 const MessageModel = require("../Message.model");
-const UtilisateurModel = require("../Utilisateur.model");
 
 /**
  * @desc Modele de la table messagePrivee
@@ -16,28 +14,14 @@ const UtilisateurModel = require("../Utilisateur.model");
 
 const MessagePrivee = sequelize.define(
   "MessagePrivee",
-  {
-    id: {
-      type: DataTypes.INTEGER,
-      autoIncrement: true,
-      primaryKey: true,
-    },
-    contenu: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
-    date: {
-      type: DataTypes.DATE,
-      allowNull: false,
-    },
-  },
+  {},
   {
     freezeTableName: true,
     timestamps: false,
   }
 );
 
-MessagePrivee.belongsTo(UtilisateurModel, { through: MessageModel });
-UtilisateurModel.hasMany(MessagePrivee, { through: MessageModel });
+MessagePrivee.belongsToMany(GroupeModel, { through: MessageGroupe });
+GroupePrivee.belongsToMany(MessageModel, { through: MessageGroupe });
 
 module.exports = MessagePrivee;
