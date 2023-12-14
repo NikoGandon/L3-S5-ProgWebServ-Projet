@@ -39,16 +39,12 @@ const Salon = sequelize.define(
   }
 );
 
-<<<<<<< e069523a71842b8596089ff2bc22124206ace957
 Salon.belongsTo(ServeurModel, {
   foreignKey: "idServeur",
   as: "serveur",
 });
 
 Salon.sync({ force: false}).then(() => {
-=======
-Salon.sync({ alter: true}).then(() => {
->>>>>>> 1c8e9910666a9bfd5086f1f2f1017d5cf021cc74
   console.log("Table Salon created");
 }).catch((err) => {
   console.log(err);
