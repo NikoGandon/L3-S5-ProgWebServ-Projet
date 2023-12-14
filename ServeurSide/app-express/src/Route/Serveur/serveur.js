@@ -86,7 +86,6 @@ routerServeur.delete("/", (req, res) => {
   DeleteServeur(req, res);
 });
 
-<<<<<<< e069523a71842b8596089ff2bc22124206ace957
 /**
  * @swagger
  * /serveur:
@@ -162,8 +161,3 @@ routerServeur.delete("/ban", (req, res) => {
 routerServeur.use("/invite", inviteRoute);
 
 module.exports = routerServeur;
-=======
-module.exports = routerServeur;
-
-
->>>>>>> 1c8e9910666a9bfd5086f1f2f1017d5cf021cc74

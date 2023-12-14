@@ -6,9 +6,7 @@ const BlocklistRoute = require("./Blocklist/blockListUser");
 const { verifyToken } = require("../../Middleware/AuthToken");
 
 const userLogic = require("../../logic/Utilisateur/user");
-routeurUser.post("/login", login);
-routeurUser.post("/register", register);
-// ? - - routeurUser.get('/OAuth/Google', OAuth);
+
 
 /**
  * @swagger
