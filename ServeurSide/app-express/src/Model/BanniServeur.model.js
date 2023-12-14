@@ -49,6 +49,6 @@ BanniServeur.belongsTo(ServeurModel, {
   as: "serveur",
 });
 
-BanniServeur.sync({ alter: true});
+BanniServeur.sync();
 
 module.exports = BanniServeur;

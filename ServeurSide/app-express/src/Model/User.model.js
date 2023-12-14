@@ -71,6 +71,6 @@ User.beforeCreate(async (user, options) => {
   user.lienParametre = "ressources/Parametre/User/" + generatedId + ".json";
 });
 
-User.sync({alter: true});
+User.sync();
 
 module.exports = User;

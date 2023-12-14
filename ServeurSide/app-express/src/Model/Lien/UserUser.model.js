@@ -30,6 +30,6 @@ const UserUser = sequelize.define(
 UserModel.belongsToMany(UserModel, { through: UserUser, as: 'User1', foreignKey: 'id_user1' });
 UserModel.belongsToMany(UserModel, { through: UserUser, as: 'User2', foreignKey: 'id_user2' });
 
-UserUser.sync({alter: true});
+UserUser.sync();
 
 module.exports = UserUser;

@@ -24,6 +24,6 @@ const SalonServeur = sequelize.define(
 SalonModel.belongsTo(ServeurModel, { through: SalonServeur });
 ServeurModel.hasMany(SalonModel, { through: SalonServeur });
 
-SalonServeur.sync({alter: true});
+SalonServeur.sync();
 
 module.exports = SalonServeur;

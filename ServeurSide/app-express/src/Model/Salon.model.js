@@ -44,10 +44,6 @@ Salon.belongsTo(ServeurModel, {
   as: "serveur",
 });
 
-Salon.sync({ force: false}).then(() => {
-  console.log("Table Salon created");
-}).catch((err) => {
-  console.log(err);
-});
+Salon.sync();
 
 module.exports = Salon;
