@@ -1,19 +1,29 @@
 const sequelize = require("../Config/db");
 const { DataTypes } = require("sequelize");
 
-const admin = sequelize.define(
+const UserModel = require("./User.model");
+
+const Admin = sequelize.define(
   "admin",
   {
-    id: {
+    userId: {
       type: DataTypes.INTEGER,
-      autoIncrement: true,
+      references: {
+        model: UserModel,
+        key: "id",
+      },
       primaryKey: true,
     },
   },
   {
-    tableName: "admin",
+    freezeTableName: true,
     timestamps: false,
   }
 );
 
-module.exports = admin;
+
+Admin.belongsTo(UserModel, { foreignKey: "userId" });
+
+Admin.sync({ alter: true });
+
+module.exports = Admin;

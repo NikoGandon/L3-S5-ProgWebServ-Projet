@@ -7,6 +7,8 @@ const session = require("express-session");
 const passport = require("passport");
 const bodyParser = require("body-parser");
 
+const { verifyToken, verifyAdminToken } = require("./Middleware/AuthToken");
+
 const optionsSSL = {
   key: fs.readFileSync("./ServeurFolder/SSL_Certificat/private-key.pem"),
   cert: fs.readFileSync("./ServeurFolder/SSL_Certificat/certificate.pem"),
@@ -38,14 +40,16 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 // routes
 const homeRoute = require("./Route/home");
-const registerRoute = require("./Route/User/Authentification/register");
-const loginRoute = require("./Route/User/Authentification/login");
-const GoogleOAuthRoute = require("./Route/User/Authentification/OAuth2/Google.OAuth2");
+const AuthRoute = require("./Route/Auth/Auth");
+const UserRoute = require("./Route/User/User");
+const ServeurRoute = require("./Route/Serveur/serveur");
+const GroupeRoute = require("./Route/Groupe/Groupe");
 
 app.use("/", homeRoute);
-app.use("/register", registerRoute);
-app.use("/login", loginRoute);
-app.use("/auth/google", GoogleOAuthRoute);
+app.use("/Auth", AuthRoute)
+app.use("/User", verifyToken, UserRoute);
+app.use("/Serveur", verifyToken, ServeurRoute);
+app.use("/Groupe", verifyToken, GroupeRoute);
 
 const httpsServer = https.createServer(optionsSSL, app);
 const HTTPS_PORT = process.env.PORT;

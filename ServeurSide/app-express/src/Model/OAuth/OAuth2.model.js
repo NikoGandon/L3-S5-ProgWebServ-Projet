@@ -35,7 +35,7 @@ const OAuth2 = sequelize.define(
     }
   },
   {
-    tableName: "OAuth2",
+    freezeTableName: true,
     timestamps: false,
   }
 )
