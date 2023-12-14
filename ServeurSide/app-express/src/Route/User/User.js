@@ -1,29 +1,23 @@
 const express = require("express");
 const routeurUser = express();
 
-const login = require("./Authentification/login");
-const register = require("./Authentification/register");
-const OAuth = require("./Authentification/OAuth2/Google.OAuth2");
-const logout = require("./Authentification/logout");
-
 const AmiRoute = require("./Ami/friendUser");
 const BlocklistRoute = require("./Blocklist/blockListUser");
 const { verifyToken } = require("../../Middleware/AuthToken");
 
-routeurUser.use("/login", login);
-routeurUser.use("/register", register);
-// ? - - routerUser.get('/OAuth/Google', OAuth);
-routeurUser.use("/logout", verifyToken, logout);
+const userLogic = require("../../logic/Utilisateur/user");
 
 /**
  * @swagger
  * /User:
  * get:
- * description:
+ * description: Récupère les informations de l'utilisateur
  * responses:
  *
  */
-routeurUser.get("/", verifyToken, () => {});
+routeurUser.get("/", (req, res) => {
+  userLogic.getInformation(req, res);
+});
 
 /**
  * @swagger
@@ -34,7 +28,9 @@ routeurUser.get("/", verifyToken, () => {});
  *
  */
 
-routeurUser.put("/", verifyToken, () => {});
+routeurUser.put("/", (req, res) => {
+  userLogic.updateInformation(req, res);
+});
 
 /**
  * @swagger
@@ -45,7 +41,9 @@ routeurUser.put("/", verifyToken, () => {});
  *
  */
 
-routeurUser.delete("/", verifyToken, () => {});
+routeurUser.delete("/", (req, res) => {
+  userLogic.deleteUser(req, res);
+});
 
 /**
  * @swagger
@@ -56,12 +54,16 @@ routeurUser.delete("/", verifyToken, () => {});
  *
  */
 
-routeurUser.put("/param", verifyToken, () => {});
+routeurUser.put("/param", () => {
+  return res.status(200).json({ message: "Route non terminée." });
+});
 
-routeurUser.use("/friend", verifyToken, AmiRoute);
+routeurUser.use("/friend", AmiRoute);
 
-routeurUser.use("/blocklist", verifyToken, BlocklistRoute);
+routeurUser.use("/blocklist", BlocklistRoute);
 
-routeurUser.get("/search", verifyToken, () => {});
+routeurUser.get("/search", () => {
+  return res.status(200).json({ message: "Route non terminée." });
+});
 
 module.exports = routeurUser;
