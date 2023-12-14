@@ -7,6 +7,7 @@ const inviteRoute = require("./invite");
 
 const {CreateServeur} = require("../../logic/Serveur/CreateServeur");
 const {GetServeur} = require("../../logic/Serveur/GetServeur");
+const {DeleteServeur} = require("../../logic/Serveur/DeleteServeur");
 
 /**
  * @swagger
@@ -70,7 +71,12 @@ routerServeur.put("/", (req, res) => {
  */
 
 routerServeur.delete("/", (req, res) => {
-  res.send("Suppression de serveur");
+  if (!req.body.idServeur) {
+    res.status(400).json({
+    message: "Veuillez remplir tous les champs",
+  });
+  }
+  DeleteServeur(req, res);
 });
 
 /**
@@ -84,7 +90,15 @@ routerServeur.delete("/", (req, res) => {
  */
 
 // Utilisation des routes externes
-routerServeur.use("/ban", banRoute);
+routerServeur.post("/ban", (req, res) => {
+  if (!req.body.idUser) {
+    res.status(400).json({
+    message: "Veuillez remplir tous les champs",
+  });
+  }
+  BanServeur(req, res);
+});
+
 routerServeur.use("/salon", salonRoute);
 routerServeur.use("/invite", inviteRoute);
 

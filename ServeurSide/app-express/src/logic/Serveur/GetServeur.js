@@ -17,6 +17,8 @@ async function GetServeur(req, res) {
         description: serveur.description,
         lienParametre: serveur.lienParametre,
         lienLog: serveur.lienLog,
+
+        
       });
   
     } catch (error) {
