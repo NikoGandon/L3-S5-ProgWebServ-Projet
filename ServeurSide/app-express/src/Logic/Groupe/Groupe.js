@@ -90,8 +90,8 @@ function suprimegroupe(req, res){
 function addmembre(req, res){
     try {
         const newMembre = Membre.create({
-            Userid : req.body.idUser,
-            Groupeid : req.body.idGroupe,
+            userId : req.body.idUser,
+            groupeId : req.body.idGroupe,
         });
 
         return res.status(201).json(newMembre);
@@ -131,14 +131,12 @@ function envoimessage(req, res){
     try {
         const newMessage = Message.create({
             contenu : req.body.contenu,
-            date : req.body.date,
-            updateAt : req.body.updateAt,
             userId : req.body.userId,
         });
-
+        
         MessageGroupe.create({
-            Messageid : newMessage.id,
-            Groupeid : req.body.Groupeid,
+            messageId : newMessage.id,
+            groupeId : req.body.Groupeid,
         });
 
         return res.status(201).json(newMessage);
@@ -170,22 +168,29 @@ function deletemessage(req, res){
 
 // RECEVOIR MESSAGE
 
-function recevoirmessage(req, res){
+async function recevoirmessage(req, res){
     try {
         const idGroupe = req.body.idGroupe;
-        const LeMessage = Message.findAll({
+        const messageGroupe = await MessageGroupe.findAll({
             where: {
-                Groupeid: idGroupe,
+                groupeId: idGroupe,
             }
         });
 
-        if (LeMessage) {
-            return res.status(200).json(LeMessage);
+        const messages = [];
+        for (message in messageGroupe) {
+            const messageid = messageGroupe[message].messageId;
+            const messageContenu = await Message.findByPk(messageid);
+            messages.push(messageContenu);
+        }
+
+        if (messages.length != 0) {
+            return res.status(200).json(messages);
         } else {
             return res.status(404).json({ error: 'Message non trouvé' });
         }
     } catch (error) {
-        return res.status(500).json({ error: 'Erreur lors de la récupération de message'});
+        return res.status(500).json({ error: 'Erreur lors de la récupération de message'+error});
     }
 }
 
