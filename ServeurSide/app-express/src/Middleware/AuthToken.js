@@ -1,5 +1,7 @@
 const JWT = require("jsonwebtoken");
+
 const secretKey = process.env.JWT_SECRET;
+
 function createToken(user) {
   return JWT.sign(
     {
@@ -10,9 +12,7 @@ function createToken(user) {
       exp: new Date().setDate(new Date().getDate() + 1),
     },
     secretKey,
-    {
-      expiresIn: "24h",
-    }
+    {}
   );
 }
 
@@ -30,7 +30,7 @@ function checkToken(req, res) {
     }
     return 0;
   } catch (err) {
-    return -1;
+    return res.status(401).json({ message: "Token invalide." });
   }
 }
 
@@ -45,7 +45,7 @@ function infoToken(req, res) {
     const decoded = JWT.verify(token, secretKey);
     return decoded;
   } catch (err) {
-    return -1;
+    return res.status(401).json({ message: "Token invalide." + err });
   }
 }
 
@@ -74,4 +74,4 @@ function verifyAdminToken(req, res, next) {
   next();
 }
 
-module.exports = { createToken, checkToken, verifyToken, verifyAdminToken };
+module.exports = { createToken, checkToken, infoToken, verifyToken, verifyAdminToken };
