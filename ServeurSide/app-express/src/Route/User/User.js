@@ -8,8 +8,8 @@ const OAuth = require("./Authentification/OAuth2/Google.OAuth2");
 const AmiRoute = require("./Ami/friendUser");
 const BlocklistRoute = require("./Blocklist/blockListUser");
 
-routeurUser.post("/login", login);
-routeurUser.post("/register", register);
+routeurUser.use("/login", login);
+routeurUser.use("/register", register);
 // ? - - routerUser.get('/OAuth/Google', OAuth);
 
 /**
