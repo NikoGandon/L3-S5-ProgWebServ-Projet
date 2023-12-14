@@ -38,9 +38,9 @@ passport.use(
         password: hashedPassword,
       });
 
-      return done(null, newUser);
+      return done(null, newUser, { message: "Inscription réussi" });
     } catch (error) {
-      return done(error);
+      return done(error, false, { message: "Erreur lors de l'inscription" });
     }
   })
 );
