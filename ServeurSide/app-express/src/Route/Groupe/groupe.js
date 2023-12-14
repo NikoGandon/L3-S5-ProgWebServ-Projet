@@ -138,5 +138,3 @@ routerGroupe.get("/", (req, res) => {
 routerGroupe.delete("/", (req, res) => {
   res.send("quitter le groupe");
 });
-
-module.exports = routerGroupe;
