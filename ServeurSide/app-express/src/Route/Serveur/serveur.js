@@ -12,6 +12,7 @@ const { BanMembre } = require("../../logic/Serveur/BanMembre");
 const { UnbanMembre } = require("../../logic/Serveur/UnbanMembre");
 const { CreateSalon } = require("../../logic/Serveur/CreateSalon");
 const { DeleteSalon } = require("../../logic/Serveur/DeleteSalon");
+const { InviteMembre } = require("../../logic/Serveur/InviteMembre");
 
 /**
  * @swagger
@@ -92,7 +93,7 @@ routerServeur.delete("/", (req, res) => {
  *
  *
  */
-routerServeur.delete("/invite", (req, res) => {
+routerServeur.post("/invite", (req, res) => {
   if (!req.body.idUser || !req.body.idServeur) {
     res.status(400).json({
     message: "Veuillez remplir tous les champs",

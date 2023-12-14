@@ -1,16 +1,12 @@
-const InviteMembreModel = require("../../Model/InviteMembreModel.model");
+const MembreServeur = require("../../Model/MembreServeur.model");
 
 async function InviteMembre(req, res) {
   try {
-    const id = req.body.id;
-    const nom = req.body.nom;
-    const description = req.body.description;
+    const idUser = req.body.idUser;
     const idServeur = req.body.idServeur;
 
-    const invMembre = await InviteMembreModel.create({
-      id: id,
-      nom: nom,
-      description: description,
+    const invMembre = await MembreServeur.create({
+      idUser: idUser,
       idServeur: idServeur,
     });
 
