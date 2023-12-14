@@ -4,6 +4,7 @@ const routeurUser = express();
 const login = require("./Authentification/login");
 const register = require("./Authentification/register");
 const OAuth = require("./Authentification/OAuth2/Google.OAuth2");
+const logout = require("./Authentification/logout");
 
 const AmiRoute = require("./Ami/friendUser");
 const BlocklistRoute = require("./Blocklist/blockListUser");
@@ -12,6 +13,7 @@ const { verifyToken } = require("../../Middleware/AuthToken");
 routeurUser.use("/login", login);
 routeurUser.use("/register", register);
 // ? - - routerUser.get('/OAuth/Google', OAuth);
+routeurUser.use("/logout", verifyToken, logout);
 
 /**
  * @swagger

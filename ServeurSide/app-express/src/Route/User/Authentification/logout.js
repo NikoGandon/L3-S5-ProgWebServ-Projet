@@ -10,7 +10,7 @@ const logoutRouteur = express.Router();
  * 
  */
 
-logoutRouteur.post("/logout", (req, res, next) => {
+logoutRouteur.get("/", (req, res, next) => {
     req.logout((err) => {
         if (err) {
             return next(err);
@@ -18,3 +18,5 @@ logoutRouteur.post("/logout", (req, res, next) => {
         res.redirect("/");
         });
 });
+
+module.exports = logoutRouteur;
