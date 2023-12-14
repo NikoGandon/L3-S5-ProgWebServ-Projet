@@ -1,5 +1,5 @@
 const express = require("express");
-const routerRegister = express.Router();
+const routerRegister = express();
 
 const passportRegister = require("../../../Middleware/Passport/passportRegister");
 
