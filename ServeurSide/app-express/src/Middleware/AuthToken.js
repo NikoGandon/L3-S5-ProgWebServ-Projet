@@ -34,6 +34,21 @@ function checkToken(req, res) {
   }
 }
 
+function infoToken(req, res) {
+  const token = checkToken(req, res);
+  if (token == -1) {
+    return res
+      .status(401)
+      .json({ message: "Accès non autorisé aux non-connectés." });
+  }
+  try {
+    const decoded = JWT.verify(token, secretKey);
+    return decoded;
+  } catch (err) {
+    return -1;
+  }
+}
+
 function verifyToken(req, res, next) {
   const token = checkToken(req, res);
   if (token === -1) {
