@@ -22,7 +22,7 @@ const Admin = sequelize.define(
 );
 
 
-Admin.hasOne(UserModel);
+Admin.belongsTo(UserModel, { foreignKey: "userId" });
 
 Admin.sync({ alter: true });
 
