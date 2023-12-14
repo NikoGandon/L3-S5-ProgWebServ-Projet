@@ -178,7 +178,7 @@ async function recevoirmessage(req, res){
         });
 
         const messages = [];
-        for (message in messageGroupe) {
+        for (let message in messageGroupe) {
             const messageid = messageGroupe[message].messageId;
             const messageContenu = await Message.findByPk(messageid);
             messages.push(messageContenu);

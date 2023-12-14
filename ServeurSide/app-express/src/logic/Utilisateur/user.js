@@ -4,7 +4,7 @@ const { infoToken } = require("../../Middleware/AuthToken");
 
 async function getInformation(req, res) {
     const token = infoToken(req, res);
-    id = token.id;
+    const id = token.id;
 
     const infos = UserModel.findOne({ id: id }, (err, user) => {
         if (err) {
@@ -27,7 +27,7 @@ async function getInformation(req, res) {
 async function updateInformation(req, res) {
     const { username, email, password } = req.body;
     const token = infoToken(req, res);
-    id = token.id;
+    const id = token.id;
     const user = await UserModel.findOne({ id: id });
     if (!user) {
         return res.status(401).json({ message: "Utilisateur non trouvé." });
@@ -47,7 +47,7 @@ async function updateInformation(req, res) {
 
 async function deleteUser(req, res) {
     const token = infoToken(req, res);
-    id = token.id;
+    const id = token.id;
     const user = await UserModel.findOne({ id: id });
     if (!user) {
         return res.status(401).json({ message: "Utilisateur non trouvé." });
