@@ -1,10 +1,11 @@
 const express = require("express");
 const routeurUser = express();
 
-const login = require("./Authentification/login");
-const register = require("./Authentification/register");
-const OAuth = require("./Authentification/OAuth2/Google.OAuth2");
+const AmiRoute = require("./Ami/friendUser");
+const BlocklistRoute = require("./Blocklist/blockListUser");
+const { verifyToken } = require("../../Middleware/AuthToken");
 
+const userLogic = require("../../logic/Utilisateur/user");
 routeurUser.post("/login", login);
 routeurUser.post("/register", register);
 // ? - - routeurUser.get('/OAuth/Google', OAuth);
@@ -13,11 +14,13 @@ routeurUser.post("/register", register);
  * @swagger
  * /User:
  * get:
- * description:
+ * description: Récupère les informations de l'utilisateur
  * responses:
  *
  */
-routeurUser.get("/", () => {});
+routeurUser.get("/", (req, res) => {
+  userLogic.getInformation(req, res);
+});
 
 /**
  * @swagger
@@ -28,7 +31,9 @@ routeurUser.get("/", () => {});
  *
  */
 
-routeurUser.put("/", () => {});
+routeurUser.put("/", (req, res) => {
+  userLogic.updateInformation(req, res);
+});
 
 /**
  * @swagger
@@ -39,7 +44,9 @@ routeurUser.put("/", () => {});
  *
  */
 
-routeurUser.delete("/", () => {});
+routeurUser.delete("/", (req, res) => {
+  userLogic.deleteUser(req, res);
+});
 
 /**
  * @swagger
@@ -50,72 +57,17 @@ routeurUser.delete("/", () => {});
  *
  */
 
-routeurUser.put("/param", () => {});
+routeurUser.put("/param", () => {
+  return res.status(200).json({ message: "Route non terminée." });
+});
 
-/**
- * @swagger
- * /User/friend:
- * post:
- * description: Ajoute un ami
- * responses:
- *
- */
+routeurUser.use("/friend", AmiRoute);
 
-routeurUser.post("/friend", () => {});
+routeurUser.use("/blocklist", BlocklistRoute);
 
-/**
- * @swagger
- * /User/friend:
- * get:
- * description: Récupère la liste des amis
- * responses:
- *
- */
+routeurUser.get("/search", () => {
+  return res.status(200).json({ message: "Route non terminée." });
+});
 
-routeurUser.get("/friend", () => {});
-
-/**
- * @swagger
- * /User/friend:
- * delete:
- * description: Supprime un ami
- * responses:
- *
- */
-
-routeurUser.delete("/friend", () => {});
-
-/**
- * @swagger
- * /User/blocklist:
- * post:
- * description: Ajoute un utilisateur à sa blocklist
- * responses:
- *
- */
-
-routeurUser.post("/blocklist", () => {});
-
-/**
- * @swagger
- * /User/blocklist:
- * get:
- * description: Récupère la blocklist
- * responses:
- *
- */
-
-routeurUser.get("/blocklist", () => {});
-
-/**
- * @swagger
- * /User/search:
- * get:
- * description: Recherche un utilisateur
- * responses:
- *
- */
-
-routeurUser.get("/search", () => {});
 
 module.exports = routeurUser;

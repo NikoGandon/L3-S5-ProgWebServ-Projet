@@ -1,7 +1,8 @@
 const express = require("express");
 const routerLogin = express.Router();
 
-const passportLogin = require("../../../Middleware/Passport/passportLogin");
+const passportLogin = require("../../Middleware/Passport/PassportLogin");
+const { createToken } = require("../../Middleware/AuthToken");
 
 routerLogin.post("/", (req, res, next) => {
   if (!req.body.username || !req.body.password) {
@@ -27,9 +28,9 @@ routerLogin.post("/", (req, res, next) => {
           });
         }
 
-        return res.status(200).json({
-          message: info.message,
-        });
+        const token = createToken(user);
+
+        return res.status(200).json({token});
       }
     )(req, res, next);
   } catch (error) {
