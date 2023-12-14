@@ -14,6 +14,7 @@ const { CreateSalon } = require("../../logic/Serveur/CreateSalon");
 const { DeleteSalon } = require("../../logic/Serveur/DeleteSalon");
 const { InviteMembre } = require("../../logic/Serveur/InviteMembre");
 const { DeleteMembre } = require("../../logic/Serveur/DeleteMembre");
+const { ModifySalon } = require("../../logic/Serveur/ModifySalon");
 
 /**
  * @swagger
@@ -128,6 +129,15 @@ routerServeur.post("/salon", (req, res) => {
   });
   }
   CreateSalon(req, res);
+});
+
+routerServeur.put("/salon", (req, res) => {
+  if (!req.body.idSalon || !req.body.nom && !req.body.description) {
+    res.status(400).json({
+    message: "Veuillez remplir tous les champs",
+  });
+  }
+  ModifySalon(req, res);
 });
 
 routerServeur.post("/ban", (req, res) => {
