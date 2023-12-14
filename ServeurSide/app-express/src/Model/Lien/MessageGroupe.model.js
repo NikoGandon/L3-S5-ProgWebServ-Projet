@@ -16,6 +16,6 @@ const MessageGroupe = sequelize.define(
 MessageModel.belongsToMany(GroupeModel, { through: MessageGroupe });
 GroupeModel.belongsToMany(MessageModel, { through: MessageGroupe });
 
-MessageGroupe.sync();
+MessageGroupe.sync({alter: true});
 
 module.exports = MessageGroupe;
