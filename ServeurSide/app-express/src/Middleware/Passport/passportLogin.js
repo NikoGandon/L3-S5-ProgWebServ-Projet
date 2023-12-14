@@ -5,6 +5,8 @@ const { Op } = require("sequelize");
 const UserModel = require("../../Model/User.model");
 const AdminModel = require("../../Model/SuperAdmin.model");
 
+const { compare } = require("../../Utils/hasher");
+
 /**
  * @desc    Passport Login
  * @param   {String} identifier identifiant de l'utilisateur (email ou username)
@@ -28,17 +30,20 @@ passport.use(
         });
       }
 
-      const validate = await existsUser.validPassword(password);
+      const validate = await compare(password, existsUser.password);
 
       if (!validate) {
         return done(null, false, { message: "Mauvais mots de passe" });
       }
 
       const estAdmin = await AdminModel.findOne({
-        where: { idUser: existsUser.id },
+        where: { userId: existsUser.id },
       });
 
-      existsUser.estAdmin = estAdmin ? true : false;
+      existsUser.admin = false;
+      if (estAdmin) {
+        existsUser.admin = true;
+      }
 
       return done(null, existsUser, { message: "Connexion réussi" });
     } catch (error) {

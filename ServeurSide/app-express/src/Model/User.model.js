@@ -5,6 +5,7 @@ const bcrypt = require("bcrypt");
 
 /**
  * @desc Modele de la table user
+ * @typedef Utilisateur
  * @property {integer} id - Identifiant unique (automatiquement généré)
  * @property {string} username.required - Nom d'utilisateur
  * @property {string} email.required - Adresse email
@@ -50,20 +51,26 @@ const User = sequelize.define(
     bio: {
       type: DataTypes.STRING,
       allowNull: true,
-    }
+    },
+    lienParametre: {
+      type: DataTypes.STRING,
+      defaultValue: function () {
+        return "ressources/Parametre/User/";
+      },
+      allowNull: true,
+    },
   },
   {
-    tableName: "user",
+    freezeTableName: true,
     timestamps: false,
   }
 );
 
-User.prototype.validPassword = function (password) {
-  return bcrypt.compareSync(password, this.password);
-};
+User.beforeCreate(async (user, options) => {
+  const generatedId = await user.getDataValue("id");
+  user.lienParametre = "ressources/Parametre/User/" + generatedId + ".json";
+});
 
-User.prototype.hashPassword = function (password) {
-  return bcrypt.hashSync(password, bcrypt.genSaltSync(10), null);
-};
+User.sync({alter: true});
 
 module.exports = User;

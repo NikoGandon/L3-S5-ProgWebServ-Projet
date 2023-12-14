@@ -1,5 +1,5 @@
-const sequelize = require('../Config/db');
-const { DataTypes } = require('sequelize');
+const sequelize = require("../Config/db");
+const { DataTypes } = require("sequelize");
 
 /**
  * @desc Modele de la table serveur
@@ -11,40 +11,54 @@ const { DataTypes } = require('sequelize');
  * @property {string} lienParametre.required - Lien du fichier de configuration du serveur (automatiquement généré)
  * @property {string} lienLog - Lien du fichier de log du serveur (automatiquement généré)
  * @property {string} lienFichierConfiguration - Lien du fichier de configuration du serveur (automatiquement généré)
- * 
+ *
  */
 
-const Serveur = sequelize.define('serveur', {
-    id : {
-        type: DataTypes.INTEGER,
-        autoIncrement: true,
-        primaryKey: true
+const Serveur = sequelize.define(
+  "serveur",
+  {
+    id: {
+      type: DataTypes.INTEGER,
+      autoIncrement: true,
+      primaryKey: true,
     },
-    nom : {
-        type: DataTypes.STRING,
-        allowNull: false
+    nom: {
+      type: DataTypes.STRING,
+      allowNull: false,
     },
-    description : {
-        type: DataTypes.STRING,
-        allowNull: false
+    description: {
+      type: DataTypes.STRING,
+      allowNull: true,
     },
-    lienImage : {
-        type: DataTypes.STRING,
-        allowNull: false
+    lienImage: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      defaultValue: function () {
+        const rand = Math.floor(Math.random() * 3) + 1;
+        return "ressources/serveur/" + rand + ".png";
+      },
     },
-    lienParametre : {
-        type: DataTypes.STRING,
-        allowNull: false
+    lienParametre: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      defaultValue: function () {
+        return "ressources/serveur/" + this.id + "_PARAM.json";
+      },
     },
     lienLog: {
-        type: DataTypes.STRING,
-        allowNull: true
-    },
-    lienFichierConfiguration: {
-        type: DataTypes.STRING,
-        allowNull: true
+      type: DataTypes.STRING,
+      allowNull: false,
+      defaultValue: function () {
+        return "ressources/serveur/" + this.id + "_LOG.json";
+      },
     }
-    }, {
-        tableName: 'serveur',
-        timestamps: false
-});
+  },
+  {
+    freezeTableName: true,
+    timestamps: false,
+  }
+);
+
+Serveur.sync({alter: true});
+
+module.exports = Serveur;
