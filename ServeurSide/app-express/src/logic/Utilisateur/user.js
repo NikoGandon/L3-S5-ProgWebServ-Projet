@@ -1,4 +1,4 @@
-const UserModel = require('../../models/Utilisateur/user');
+const UserModel = require('../../Model/User.model');
 
 const { infoToken } = require("../../Middleware/AuthToken");
 
@@ -13,7 +13,12 @@ async function getInformation(req, res) {
         if (!user) {
             return res.status(401).json({ message: "Utilisateur non trouvé." });
         }
-        return res.status(200).json({ user });
+        return res.status(200).json({ 
+            id: user.id,
+            username: user.username,
+            email: user.email,
+            lienImage: user.lienImage,
+         });
     });
 
     return res.status(200).json({ infos });

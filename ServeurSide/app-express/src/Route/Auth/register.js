@@ -1,7 +1,7 @@
 const express = require("express");
 const routerRegister = express();
 
-const passportRegister = require("../../../Middleware/Passport/passportRegister");
+const passportRegister = require("../../Middleware/Passport/passportRegister");
 
 routerRegister.post("/", (req, res, next) => {
   if (!req.body.username || !req.body.email || !req.body.password) {

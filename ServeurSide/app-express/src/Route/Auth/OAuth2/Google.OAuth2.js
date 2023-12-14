@@ -1,6 +1,6 @@
 const routerGoogleAuth = require("express").Router();
 
-const passportGoogleAuth = require("../../../../Middleware/Passport/passportOAuth2");
+const passportGoogleAuth = require("../../../Middleware/Passport/passportOAuth2");
 
 routerGoogleAuth.get(
   "/",
