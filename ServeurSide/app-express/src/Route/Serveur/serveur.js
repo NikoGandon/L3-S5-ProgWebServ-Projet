@@ -9,6 +9,7 @@ const {CreateServeur} = require("../../logic/Serveur/CreateServeur");
 const {GetServeur} = require("../../logic/Serveur/GetServeur");
 const {DeleteServeur} = require("../../logic/Serveur/DeleteServeur");
 const { BanMembre } = require("../../logic/Serveur/BanMembre");
+const { UnbanMembre } = require("../../logic/Serveur/UnbanMembre");
 
 /**
  * @swagger
@@ -106,10 +107,10 @@ routerServeur.delete("/ban", (req, res) => {
     message: "Veuillez remplir tous les champs",
   });
   }
-  BanMembre(req, res);
+  UnbanMembre(req, res);
 });
 
 routerServeur.use("/salon", salonRoute);
 routerServeur.use("/invite", inviteRoute);
 
-module.exports = routerServeur; // Exportez votre routeur correctement
+module.exports = routerServeur;
