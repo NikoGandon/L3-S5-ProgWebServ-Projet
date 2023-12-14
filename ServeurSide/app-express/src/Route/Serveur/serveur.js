@@ -92,6 +92,15 @@ routerServeur.delete("/", (req, res) => {
  *
  *
  */
+routerServeur.delete("/invite", (req, res) => {
+  if (!req.body.idUser || !req.body.idServeur) {
+    res.status(400).json({
+    message: "Veuillez remplir tous les champs",
+  });
+  }
+  InviteMembre(req, res);
+});
+
 routerServeur.delete("/salon", (req, res) => {
   if (!req.body.idSalon) {
     res.status(400).json({
@@ -128,7 +137,6 @@ routerServeur.delete("/ban", (req, res) => {
   UnbanMembre(req, res);
 });
 
-routerServeur.use("/salon", salonRoute);
 routerServeur.use("/invite", inviteRoute);
 
 module.exports = routerServeur;
