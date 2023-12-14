@@ -1,12 +1,17 @@
 const sequelize = require("../Config/db");
 const { DataTypes } = require("sequelize");
 
+const UserModel = require("./User.model");
+
 const Admin = sequelize.define(
   "admin",
   {
-    id: {
+    userId: {
       type: DataTypes.INTEGER,
-      autoIncrement: true,
+      references: {
+        model: UserModel,
+        key: "id",
+      },
       primaryKey: true,
     },
   },
@@ -15,6 +20,7 @@ const Admin = sequelize.define(
     timestamps: false,
   }
 );
+
 
 Admin.sync();
 
