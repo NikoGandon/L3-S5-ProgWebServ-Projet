@@ -1,5 +1,7 @@
 const UserModels = require('../../models/UserModels');
 
+const BlocklistModels = require('../../Model/Lien/BlockListUser.model');
+
 /**
  * Récupère la blocklist de l'utilisateur
  * @param {*} req 
@@ -8,7 +10,7 @@ const UserModels = require('../../models/UserModels');
  */
 const getBlocklist = async (req, res) => {
     try {
-        const user = await UserModels.findById(req.user._id);
+        const user = await BlocklistModels.findById({ where: { userId: req.user._id } });
         if (!user) {
             return res.status(404).json({ message: "Utilisateur introuvable" });
         }
