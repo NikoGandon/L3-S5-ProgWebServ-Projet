@@ -1,6 +1,7 @@
 const sequelize = require("../Config/db");
 const { DataTypes } = require("sequelize");
 
+const ServeurModel = require("./Serveur.model");
 /**
  * @desc Modele de la table salon
  * @typedef Salon
@@ -26,12 +27,22 @@ const Salon = sequelize.define(
       type: DataTypes.STRING,
       allowNull: true,
     },
+    idServeur: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      primaryKey: true,
+    },
   },
   {
     freezeTableName: true,
     timestamps: false,
   }
 );
+
+Salon.belongsTo(ServeurModel, {
+  foreignKey: "idServeur",
+  as: "serveur",
+});
 
 Salon.sync({ force: true}).then(() => {
   console.log("Table Salon created");

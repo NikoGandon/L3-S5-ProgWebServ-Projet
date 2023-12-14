@@ -10,6 +10,7 @@ const {GetServeur} = require("../../logic/Serveur/GetServeur");
 const {DeleteServeur} = require("../../logic/Serveur/DeleteServeur");
 const { BanMembre } = require("../../logic/Serveur/BanMembre");
 const { UnbanMembre } = require("../../logic/Serveur/UnbanMembre");
+const { CreateSalon } = require("../../logic/Serveur/CreateSalon");
 
 /**
  * @swagger
@@ -90,8 +91,24 @@ routerServeur.delete("/", (req, res) => {
  *
  *
  */
+routerServeur.delete("/salon", (req, res) => {
+  if (!req.body.id) {
+    res.status(400).json({
+    message: "Veuillez remplir tous les champs",
+  });
+  }
+  SupprimerSalon(req, res);
+});
 
-// Utilisation des routes externes
+routerServeur.post("/salon", (req, res) => {
+  if (!req.body.nom || !req.body.description || !req.body.idServeur) {
+    res.status(400).json({
+    message: "Veuillez remplir tous les champs",
+  });
+  }
+  CreateSalon(req, res);
+});
+
 routerServeur.post("/ban", (req, res) => {
   if (!req.body.idUser || !req.body.idServeur || !req.body.date) {
     res.status(400).json({
