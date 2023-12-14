@@ -37,6 +37,10 @@ const Groupe = sequelize.define(
       type: DataTypes.INTEGER,
       allowNull: false,
     },
+    idCreateur: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    }
   },
   {
     freezeTableName: true,
