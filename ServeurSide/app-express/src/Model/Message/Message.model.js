@@ -1,7 +1,7 @@
-const sequelize = require("../Config/db");
+const sequelize = require("../../Config/db");
 const { DataTypes } = require("sequelize");
 
-const UserModel = require("./User.model");
+const UserModel = require("../User.model");
 
 /**
  * @desc Modele des messages
@@ -33,7 +33,7 @@ const Message = sequelize.define(
 );
 
 Message.belongsTo(UserModel, { through: Message });
-UserModel.hasMany(Message, { through: Message });
+UserModel.belongsToMany(Message, { through: Message });
 
 Message.sync({alter: true});
 

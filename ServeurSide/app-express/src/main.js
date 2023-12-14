@@ -43,7 +43,7 @@ const homeRoute = require("./Route/home");
 const AuthRoute = require("./Route/Auth/Auth");
 const UserRoute = require("./Route/User/User");
 const ServeurRoute = require("./Route/Serveur/serveur");
-const GroupeRoute = require("./Route/Groupe/Groupe");
+const GroupeRoute = require("./Route/Groupe/groupe");
 
 app.use("/", homeRoute);
 app.use("/Auth", AuthRoute)
