@@ -37,7 +37,7 @@ passport.use(
       }
 
       const estAdmin = await AdminModel.findOne({
-        where: { idUser: existsUser.id },
+        where: { userId: existsUser.id },
       });
 
       existsUser.estAdmin = estAdmin ? true : false;
