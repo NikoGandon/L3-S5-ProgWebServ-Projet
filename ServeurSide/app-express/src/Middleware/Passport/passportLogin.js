@@ -40,7 +40,10 @@ passport.use(
         where: { userId: existsUser.id },
       });
 
-      existsUser.estAdmin = estAdmin ? true : false;
+      existsUser.admin = false;
+      if (estAdmin) {
+        existsUser.admin = true;
+      }
 
       return done(null, existsUser, { message: "Connexion réussi" });
     } catch (error) {
