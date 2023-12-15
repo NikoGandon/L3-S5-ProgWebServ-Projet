@@ -21,10 +21,8 @@ routerHome.get("/", (req, res) => {
   res.status(200).json({ message: "Accès autorisé." });
 });
 
-// Utilisez `routerHome` au lieu de `routerUser` pour éviter la confusion
 routerHome.use("/AccueilUser", verifyToken, routerUser);
 routerHome.use("/AccueilAdmin", verifyAdminToken, routerSupAdmin);
 routerHome.use("/Auth", routerAuth);
-// Utilisez `routerHome
 
 module.exports = routerHome;
