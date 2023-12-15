@@ -1,6 +1,6 @@
 const express = require("express");
 const { modes } = require("tar");
-const banRoute = express;
+const banRoute = express.Router();
 
 /**
  * @swagger
