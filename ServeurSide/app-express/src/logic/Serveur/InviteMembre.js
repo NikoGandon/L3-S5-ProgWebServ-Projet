@@ -1,5 +1,12 @@
 const MembreServeur = require("../../Model/MembreServeur.model");
 
+/**
+ * @description Invite un membre dans un serveur
+ * @param {*} req
+ * @param {*} res
+ * @returns
+ */
+
 async function InviteMembre(req, res) {
   try {
     const idUser = req.body.idUser;
@@ -11,11 +18,9 @@ async function InviteMembre(req, res) {
     });
 
     return res.status(201).json(invMembre);
-
   } catch (error) {
-    return res.status(500).json({ error: "Ca marche pas." + error});
+    return res.status(500).json({ error: "Ca marche pas." + error });
   }
-    
 }
 
-module.exports = {InviteMembre};
+module.exports = { InviteMembre };

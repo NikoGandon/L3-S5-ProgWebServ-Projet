@@ -1,5 +1,12 @@
 const Salon = require("../../Model/Salon.model");
 
+/**
+ * @description Modifie un salon
+ * @param {*} req
+ * @param {*} res
+ * @returns
+ */
+
 async function ModifySalon(req, res) {
   try {
     const idSalonn = req.body.idSalon;

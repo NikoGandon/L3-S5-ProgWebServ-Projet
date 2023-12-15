@@ -2,6 +2,12 @@ const UserModel = require("../../Model/User.model");
 
 const { infoToken } = require("../../Middleware/AuthToken");
 
+/**
+ * @description Récupère les informations de l'utilisateur
+ * @param {*} req
+ * @param {*} res
+ * @returns
+ */
 async function getInformation(req, res) {
   const token = infoToken(req);
   const id = token.id;
@@ -13,17 +19,22 @@ async function getInformation(req, res) {
       return res.status(401).json({ message: "Utilisateur non trouvé." });
     }
   });
-  return res
-    .status(200)
-    .json({
-      infoUser: {
-        email: info.email,
-        bio: info.bio,
-        lienPP: info.lienPP,
-        lienParam: info.lienParametre,
-      },
-    });
+  return res.status(200).json({
+    infoUser: {
+      email: info.email,
+      bio: info.bio,
+      lienPP: info.lienPP,
+      lienParam: info.lienParametre,
+    },
+  });
 }
+
+/**
+ * @description Modifie les informations de l'utilisateur
+ * @param {*} req
+ * @param {*} res
+ * @returns
+ */
 
 async function updateInformation(req, res) {
   const { username, email, password, bio } = req.body;
@@ -43,8 +54,8 @@ async function updateInformation(req, res) {
     if (password) {
       user.password = password;
     }
-    if (bio){
-        user.bio = bio;
+    if (bio) {
+      user.bio = bio;
     }
     await user.save();
     return res.status(200).json({ message: "Utilisateur modifié." });
@@ -52,6 +63,13 @@ async function updateInformation(req, res) {
     return res.status(500).json({ message: "Erreur interne." });
   }
 }
+
+/**
+ * @description Supprime l'utilisateur
+ * @param {*} req
+ * @param {*} res
+ * @returns
+ */
 
 async function deleteUser(req, res) {
   const token = infoToken(req);

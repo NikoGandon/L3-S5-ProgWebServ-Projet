@@ -1,5 +1,11 @@
 const FriendModels = require("../../Model/Lien/FriendUser.model");
 
+/**
+ * @description Récupère les amis de l'utilisateur
+ * @param {*} req
+ * @param {*} res
+ * @returns
+ */
 const getFriend = async (req, res) => {
   try {
     const user = await UserModels.findById(req.body.id);
@@ -12,6 +18,13 @@ const getFriend = async (req, res) => {
     return null;
   }
 };
+
+/**
+ * @description Ajoute un ami à l'utilisateur
+ * @param {*} req
+ * @param {*} res
+ * @returns
+ */
 
 const addFriend = async (req, res) => {
   try {
@@ -26,6 +39,13 @@ const addFriend = async (req, res) => {
     return false;
   }
 };
+
+/**
+ * @description Supprime un ami de l'utilisateur
+ * @param {*} req
+ * @param {*} res
+ * @returns
+ */
 
 const removeFriend = async (req, res) => {
   try {

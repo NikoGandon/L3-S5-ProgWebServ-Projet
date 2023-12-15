@@ -1,5 +1,12 @@
 const BanniServeur = require("../../Model/BanniServeur.model");
 
+/**
+ * @description Deban un membre du serveur
+ * @param {*} req
+ * @param {*} res
+ * @returns
+ */
+
 async function UnbanMembre(req, res) {
   try {
     const idUser = req.body.idUser;
