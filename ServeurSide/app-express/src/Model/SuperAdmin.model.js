@@ -24,6 +24,6 @@ const Admin = sequelize.define(
 
 Admin.belongsTo(UserModel, { foreignKey: "userId" });
 
-Admin.sync({ alter: true });
+Admin.sync();
 
 module.exports = Admin;
