@@ -3,8 +3,8 @@ const routerHome = express.Router();
 
 const { checkToken } = require("../Middleware/AuthToken");
 
-routerHome.get("/", (req, res, next) => {
-  const token = checkToken(req, res);
+routerHome.get("/", (req, res) => {
+  const token = checkToken(req);
   if (token === -1) {
     return res.status(200).json({ message: "Accès aux non connecté." });
   }
