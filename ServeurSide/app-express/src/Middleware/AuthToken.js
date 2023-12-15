@@ -59,7 +59,7 @@ function verifyToken(req, res, next) {
 }
 
 function verifyAdminToken(req, res, next) {
-  const token = checkToken(req, res);
+  const token = checkToken(req);
   if (token === -1 || token === 0) {
     return res
       .status(401)

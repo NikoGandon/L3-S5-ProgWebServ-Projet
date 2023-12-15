@@ -30,11 +30,7 @@ const addFriend = async (req, res) => {
   try {
     const user = await UserModels.findById(id);
 
-    if (!user) {
-      return false;
-    }
-
-    return true;
+    return !!user;
   } catch (error) {
     return false;
   }
