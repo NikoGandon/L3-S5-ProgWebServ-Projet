@@ -6,6 +6,22 @@ const statsRoute = require("./stats");
 
 /**
  * @swagger
+ * /administrateur/AccueilAdmin:
+ * get:
+ * description: Utilisé pour récupérer l'accueil de l'administrateur
+ * responses:
+ *
+ *
+ */
+
+AdministrateurRoute.get("/AccueilAdmin", (req, res) => {
+  return res.status(200).json({
+    message: "Route non terminée.",
+  });
+});
+
+/**
+ * @swagger
  * /administrateur:
  * get:
  * description: Utilisé pour récupérer l'accueil de l'utilisateur
@@ -15,7 +31,9 @@ const statsRoute = require("./stats");
  */
 
 AdministrateurRoute.get("/", (req, res) => {
-  res.send("Accueil de l'administrateur");
+  return res.status(200).json({
+    message: "Route non terminée.",
+  });
 });
 
 AdministrateurRoute.use("/ban", BanRoute);
