@@ -3,25 +3,26 @@ const UserModel = require('../../Model/User.model');
 const { infoToken } = require("../../Middleware/AuthToken");
 
 async function getInformation(req, res) {
-    const token = infoToken(req);
-    const id = token.id;
-
-    const infos = UserModel.findOne({ id: id }, (err, user) => {
-        if (err) {
-            return res.status(500).json({ message: "Erreur interne." });
-        }
-        if (!user) {
-            return res.status(401).json({ message: "Utilisateur non trouvé." });
-        }
-        return res.status(200).json({ 
-            id: user.id,
-            username: user.username,
-            email: user.email,
-            lienImage: user.lienImage,
-         });
+  const token = infoToken(req);
+  const id = token.id;
+  const info = await UserModel.findOne({ id: id }, (err, user) => {
+    if (err) {
+      return res.status(500).json({ message: "Erreur interne." });
+    }
+    if (!user) {
+      return res.status(401).json({ message: "Utilisateur non trouvé." });
+    }
+  });
+  return res
+    .status(200)
+    .json({
+      infoUser: {
+        email: info.email,
+        bio: info.bio,
+        lienPP: info.lienPP,
+        lienParam: info.lienParametre,
+      },
     });
-
-    return res.status(200).json({ infos });
 }
 
 async function updateInformation(req, res) {
