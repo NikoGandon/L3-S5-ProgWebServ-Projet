@@ -35,6 +35,6 @@ const Message = sequelize.define(
 Message.belongsTo(UserModel, { through: Message });
 UserModel.belongsToMany(Message, { through: Message });
 
-Message.sync({alter: true});
+Message.sync();
 
 module.exports = Message;

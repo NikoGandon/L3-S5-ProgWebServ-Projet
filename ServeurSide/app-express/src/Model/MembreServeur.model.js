@@ -15,22 +15,22 @@ const MembreServeur = sequelize.define(
   "membreServeur",
   {
     idUser: {
-      type: DataTypes.STRING,
+      type: DataTypes.INTEGER,
       allowNull: false,
       primaryKey: true,
     },
     idServeur: {
-      type: DataTypes.STRING,
+      type: DataTypes.INTEGER,
       allowNull: false,
-      primaryKey: true
+      primaryKey: true,
     },
-    },
+  },
   {
     freezeTableName: true,
     timestamps: false,
   }
 );
 
-  MembreServeur.sync();
+MembreServeur.sync();
 
 module.exports = MembreServeur;

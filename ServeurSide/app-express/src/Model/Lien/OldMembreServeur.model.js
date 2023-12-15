@@ -29,6 +29,6 @@ const MembreServeur = sequelize.define(
 UserModel.belongsToMany(ServeurModel, { through: MembreServeur });
 ServeurModel.hasMany(UserModel, { through: MembreServeur });
 
-MembreServeur.sync({alter: true});
+MembreServeur.sync();
 
 module.exports = MembreServeur;

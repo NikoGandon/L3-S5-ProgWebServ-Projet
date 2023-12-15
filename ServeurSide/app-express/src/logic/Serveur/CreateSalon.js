@@ -1,5 +1,12 @@
 const SalonModel = require("../../Model/Salon.model");
 
+/**
+ * @description Crée un salon
+ * @param {*} req
+ * @param {*} res
+ * @returns
+ */
+
 async function CreateSalon(req, res) {
   try {
     const id = req.body.id;
@@ -15,11 +22,9 @@ async function CreateSalon(req, res) {
     });
 
     return res.status(201).json(NewSalon);
-
   } catch (error) {
-    return res.status(500).json({ error: "Ca marche pas." + error});
+    return res.status(500).json({ error: "Ca marche pas." + error });
   }
-    
 }
 
-module.exports = {CreateSalon};
+module.exports = { CreateSalon };

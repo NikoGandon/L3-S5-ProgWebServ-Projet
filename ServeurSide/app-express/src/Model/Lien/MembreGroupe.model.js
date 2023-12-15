@@ -23,6 +23,6 @@ const MembreGroupe = sequelize.define(
 UserModel.belongsToMany(GroupeModel, { through: MembreGroupe });
 GroupeModel.belongsToMany(UserModel, { through: MembreGroupe });
 
-MembreGroupe.sync({alter: true});
+MembreGroupe.sync();
 
 module.exports = MembreGroupe;

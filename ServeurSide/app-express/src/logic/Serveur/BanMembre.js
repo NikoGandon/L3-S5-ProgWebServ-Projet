@@ -1,5 +1,12 @@
 const BanniServeur = require("../../Model/BanniServeur.model");
 
+/**
+ * @description Ban un membre du serveur
+ * @param {*} req
+ * @param {*} res
+ * @returns
+ */
+
 async function BanMembre(req, res) {
   try {
     const idUser = req.body.idUser;
@@ -11,15 +18,13 @@ async function BanMembre(req, res) {
       idUser: idUser,
       idServeur: idServeur,
       date: date,
-      raison: raison
+      raison: raison,
     });
 
     return res.status(201).json(NewBanniServeur);
-
   } catch (error) {
-    return res.status(500).json({ error: "Ca marche pas." + error});
+    return res.status(500).json({ error: "Ca marche pas." + error });
   }
-    
 }
 
-module.exports = {BanMembre};
+module.exports = { BanMembre };

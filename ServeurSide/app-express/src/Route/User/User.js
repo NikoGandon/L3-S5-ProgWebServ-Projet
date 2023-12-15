@@ -7,6 +7,18 @@ const { verifyToken } = require("../../Middleware/AuthToken");
 
 const userLogic = require("../../logic/Utilisateur/user");
 
+/**
+ * @swagger
+ * /User/AccueilUser:
+ * get:
+ * description: Envoie les données pour la page d'accueil de l'utilisateur
+ * responses:
+ *
+ *
+ */
+routeurUser.get("/AccueilUser", verifyToken, (req, res) => {
+  return res.status(200).json({ message: "Route non terminée." });
+});
 
 /**
  * @swagger
@@ -66,6 +78,5 @@ routeurUser.use("/blocklist", BlocklistRoute);
 routeurUser.get("/search", () => {
   return res.status(200).json({ message: "Route non terminée." });
 });
-
 
 module.exports = routeurUser;
