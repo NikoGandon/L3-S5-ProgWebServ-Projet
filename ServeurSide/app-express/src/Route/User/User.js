@@ -17,7 +17,7 @@ const userLogic = require("../../logic/Utilisateur/user");
  *
  */
 routeurUser.get("/", (req, res) => {
-  userLogic.getInformation(req, res);
+  return userLogic.getInformation(req, res);
 });
 
 /**
@@ -30,7 +30,7 @@ routeurUser.get("/", (req, res) => {
  */
 
 routeurUser.put("/", (req, res) => {
-  userLogic.updateInformation(req, res);
+  return userLogic.updateInformation(req, res);
 });
 
 /**
