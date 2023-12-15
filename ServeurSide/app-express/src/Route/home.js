@@ -1,12 +1,11 @@
 const express = require("express");
-const routerHome = express.Router();  // Utilisez express.Router() au lieu de express()
+const routerHome = express.Router();
 
 const { verifyToken, verifyAdminToken } = require("../Middleware/AuthToken");
 const routerUser = require("./User/User");
 const routerSupAdmin = require("./Administrateur/administrateur");
 const routerAuth = require("./Auth/Auth");
 
-// Utilisez `routerHome` au lieu de `routeurHome` pour rester cohérent
 routerHome.get("/", (req, res) => {
   const token = checkToken(req);
 
