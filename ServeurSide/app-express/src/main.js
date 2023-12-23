@@ -6,6 +6,7 @@ const fs = require("fs");
 const session = require("express-session");
 const passport = require("passport");
 const bodyParser = require("body-parser");
+const cors = require("cors");
 
 const { verifyToken, verifyAdminToken } = require("./Middleware/AuthToken");
 
@@ -31,6 +32,12 @@ app.use(
     saveUninitialized: false,
   })
 );
+
+app.use(cors({
+  origin: "*",
+  methods: ["GET", "POST", "PUT", "DELETE"],
+  allowedHeaders: ["Content-Type", "Authorization"]
+}));
 
 app.use(passport.initialize());
 app.use(passport.session());
