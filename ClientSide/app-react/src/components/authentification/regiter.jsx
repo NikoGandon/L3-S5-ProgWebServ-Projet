@@ -6,9 +6,13 @@ import { React, useState } from "react";
  */
 
 const Regiter = () => {
-  const [email, setEmail] = useState("");
+  const [username, setusername] = useState("");
   const [password, setPassword] = useState("");
-  const [confirmation, setConfirmation] = useState("");
+  const [email, setEmail] = useState("");
+
+  const handleUsernameChange = (event) => {
+    setusername(event.target.value);
+  };
 
   const handleEmailChange = (event) => {
     setEmail(event.target.value);
@@ -18,25 +22,54 @@ const Regiter = () => {
     setPassword(event.target.value);
   };
 
-  const handleConfirmationChange = (event) => {
-    setConfirmation(event.target.value);
-  };
-
   const handleSubmit = (event) => {
-    event.preventDefault();
-    console.log(email, password, confirmation);
+    fetch("http://localhost:3000/auth/local/register", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        username: identifier,
+        email: identifier,
+        password: password,
+      }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
+        localStorage.setItem("token", data.jwt);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
   };
 
   return (
     <>
       <h1>Inscription</h1>
-      <form class="formsAuth" onSubmit={handleSubmit}>
-        <label htmlFor="email">Email</label>
-        <input type="email" id="email" name="email" value={email} onChange={handleEmailChange}/>
+      <form className="formsAuth" onSubmit={handleSubmit}>
+        <label htmlFor="username">username</label>
+        <input
+          type="text"
+          id="username"
+          name="username"
+          value={username}
+          onChange={handleUsernameChange}
+        />
+        <label htmlFor="email">email</label>
+        <input
+          type="email"
+          id="email"
+          name="email"
+          value={email}
+          onChange={handleEmailChange}
+        />
         <label htmlFor="password">Mot de passe</label>
-        <input type="password" id="password" name="password" value={password} onChange={handlePasswordChange}/>
-        <label htmlFor="confirmation">Confirmation</label>
-        <input type="password" id="confirmation" name="confirmation" value={confirmation} onChange={handleConfirmationChange}/>
+        <input
+          type="password"
+          id="password"
+          name="password"
+          value={password}
+          onChange={handlePasswordChange}
+        />
         <button type="submit">S'inscrire</button>
       </form>
     </>

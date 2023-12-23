@@ -6,11 +6,11 @@ import { React, useState } from "react";
  */
 
 const Login = () => {
-  const [email, setEmail] = useState("");
+  const [identifier, setidentifier] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleEmailChange = (event) => {
-    setEmail(event.target.value);
+  const handleidentifierChange = (event) => {
+    setidentifier(event.target.value);
   };
 
   const handlePasswordChange = (event) => {
@@ -18,21 +18,32 @@ const Login = () => {
   };
 
   const handleSubmit = (event) => {
-    event.preventDefault();
-    console.log(email, password);
+    fetch("http://localhost:3000/auth/login", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ identifier: identifier, password: password }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
+        localStorage.setItem("token", data.jwt);
+      })
+      .catch((error) => {
+        console.error(error);
+    });
   };
 
   return (
     <>
       <h1>Connexion</h1>
-      <form class="formsAuth" onSubmit={handleSubmit}>
-        <label htmlFor="email">Email</label>
+      <form className="formsAuth" onSubmit={handleSubmit}>
+        <label htmlFor="identifier">identifiant</label>
         <input
-          type="email"
-          id="email"
-          name="email"
-          value={email}
-          onChange={handleEmailChange}
+          type="identifier"
+          id="identifier"
+          name="identifier"
+          value={identifier}
+          onChange={handleidentifierChange}
         />
         <label htmlFor="password">Mot de passe</label>
         <input
