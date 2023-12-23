@@ -22,9 +22,9 @@ export default function Authentication() {
   return (
     <div>
       {isLogin ? (
-        <Login onSwitch={handleSwitch} onLogin={handleLogin} />
+        <Login onSwitch={handleSwitch} />
       ) : (
-        <Regiter onSwitch={handleSwitch} onRegister={handleRegister} />
+        <Regiter onSwitch={handleSwitch} />
       )}
       <button type="button" onClick={handleSwitch}>
         {isLogin ? "Je n'ai pas de compte" : "J'ai un compte"}
