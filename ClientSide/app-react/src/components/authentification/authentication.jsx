@@ -19,19 +19,17 @@ export default function Authentication() {
     // TODO
   };
 
-  const handleRegister = (event) => {
-    // TODO
-  };
-
-  const handleLogin = (event) => {
-    // TODO
-  };
-
   return (
     <div>
-      <Login />
-      <Regiter />
-      <OAuth2 />
+      {isLogin ? (
+        <Login onSwitch={handleSwitch} onLogin={handleLogin} />
+      ) : (
+        <Regiter onSwitch={handleSwitch} onRegister={handleRegister} />
+      )}
+      <button type="button" onClick={handleSwitch}>
+        {isLogin ? "Je n'ai pas de compte" : "J'ai un compte"}
+      </button>
     </div>
   );
+
 }
