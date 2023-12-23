@@ -8,6 +8,8 @@ build-node:
   script:
     - npm install ServeurSide/app-express/
     - node --check ServeurSide/app-express/*/*.js
+    - npm install ClientSide/app-react/
+    - node --check ClientSide/app-react/*/*.jsx
 
 
 sonarqube-check:
