@@ -1,24 +1,34 @@
 import { React, useState } from "react";
 import Authentication from "../authentification/authentication";
 
-const NavBar = () => {
+const NavBar = ({ onAuth, value }) => {
   return (
     <div id="navBar">
-      <button type="button">Se connecter</button>
+      <button type="button" onClick={onAuth}>
+        {value}
+      </button>
     </div>
   );
 };
 
 const HomeUnconnected = () => {
-  let [showAuth, setShowAuth] = useState(false);
+  const [isAuth, setIsAuth] = useState(false);
 
-  function handleButton() {
-    setShowAuth(!showAuth);
-  }
+  const handleAuth = () => {
+    setIsAuth(!isAuth);
+  };
 
   return (
     <>
-      <Authentication />
+      {isAuth ? (
+        <>
+          {" "}
+          <NavBar onAuth={handleAuth} value={"Accueil"}/>
+           <Authentication />
+        </>
+      ) : (
+        <NavBar onAuth={handleAuth} value={"Se connecter"} />
+      )}
     </>
   );
 };
