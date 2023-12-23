@@ -7,7 +7,7 @@ build-node:
   stage: build
   script:
     - npm install ClientSide/app-react/
-    - node --check ClientSide/app-express/*/*.jsx
+    - node --check ClientSide/app-react/*/*.jsx
 
 
 sonarqube-check:
