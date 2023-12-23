@@ -1,9 +1,11 @@
 import { useState } from "react";
 import { jwtDecode } from "jwt-decode";
+
 import "./App.css";
 
-import Authentication from "./components/authentification/authentication";
+import HomeUnconnected from "./components/home/homeUnconnected";
 import Home from "./components/Home/home";
+import Authentication from "./components/authentification/authentication";
 
 const elem = <h1>Bienvenue sur le site XXXX</h1>;
 
@@ -18,7 +20,6 @@ function App() {
     }
   }
 
-  return <>{estConnecte ? <Home /> : <Authentication />}</>;
+  return <>{estConnecte ? <Home /> : <HomeUnconnected />}</>;
 }
-
 export default App;
