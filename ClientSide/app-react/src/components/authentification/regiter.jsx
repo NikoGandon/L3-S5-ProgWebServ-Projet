@@ -1,4 +1,5 @@
 import { React, useState } from "react";
+import axios from "axios";
 
 /**
  * @desc Formulaire d'inscription
@@ -23,22 +24,29 @@ const Regiter = () => {
   };
 
   const handleSubmit = (event) => {
-    fetch("http://localhost:3000/auth/local/register", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        username: identifier,
-        email: identifier,
-        password: password,
-      }),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        console.log(data);
-        localStorage.setItem("token", data.jwt);
+    event.preventDefault();
+    axios
+      .post(
+        "https://127.0.0.1:3000/auth/register",
+        {
+          username: username,
+          email: email,
+          password: password,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      )
+      .then((response) => {
+        console.log("Données reçues avec succès:", response.data);
       })
       .catch((error) => {
-        console.error(error);
+        console.error("Erreur lors de la requête:", error);
+        if (error.response) {
+          console.error("Réponse du serveur:", error.response.data);
+        }
       });
   };
 
