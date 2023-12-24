@@ -19,7 +19,9 @@ routerLogin.post("/", (req, res, next) => {
       },
       (err, user, info) => {
         if (err) {
-          return next(err);
+          return res.status(400).json({
+            message: err,
+          });
         }
 
         if (!user) {
@@ -29,8 +31,8 @@ routerLogin.post("/", (req, res, next) => {
         }
 
         const token = createToken(user);
-
-        return res.status(200).json({token});
+        
+        return res.status(200).json({ token });
       }
     )(req, res, next);
   } catch (error) {

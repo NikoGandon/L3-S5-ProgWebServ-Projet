@@ -47,7 +47,7 @@ passport.use(
 
       return done(null, existsUser, { message: "Connexion réussi" });
     } catch (error) {
-      return done(error);
+      return done(null, null, {error: "Erreur lors de la connexion : " + error});
     }
   })
 );
