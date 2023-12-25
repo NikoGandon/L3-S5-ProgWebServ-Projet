@@ -1,4 +1,6 @@
-import { React, useState } from "react";
+import React, { useState } from "react";
+import { Navigate } from 'react-router-dom';
+
 import axios from "axios";
 
 /**
@@ -9,6 +11,8 @@ import axios from "axios";
 const Login = () => {
   const [identifier, setidentifier] = useState("");
   const [password, setPassword] = useState("");
+  const [isLogged, setIsLogged] = useState(false);
+  const [register, setRegister] = useState(false);
 
   const handleidentifierChange = (event) => {
     setidentifier(event.target.value);
@@ -17,6 +21,11 @@ const Login = () => {
   const handlePasswordChange = (event) => {
     setPassword(event.target.value);
   };
+
+  const registerHandler = () => {
+    setRegister(true);
+  }
+
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -35,6 +44,8 @@ const Login = () => {
       )
       .then((response) => {
         console.log("Données reçues avec succès:", response.data);
+        localStorage.setItem("token", response.data.token);
+        setIsLogged(true); 
       })
       .catch((error) => {
         console.error("Erreur lors de la requête:", error);
@@ -44,8 +55,14 @@ const Login = () => {
       });
   };
 
+
   return (
     <>
+      {
+        isLogged ? (
+          <Navigate to="/accueil" />
+        ) : null
+      }
       <h1>Connexion</h1>
       <form className="formsAuth" onSubmit={handleSubmit}>
         <label htmlFor="identifier">identifiant</label>
@@ -64,6 +81,10 @@ const Login = () => {
         />
         <button type="submit">Se connecter</button>
       </form>
+      <button onClick={registerHandler}>
+        Je n'ai pas de compte
+      </button>
+      {register ? <Navigate to="/auth/register" /> : null}
     </>
   );
 };
