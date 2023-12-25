@@ -2,7 +2,7 @@ import React, { useState } from "react";
 
 import Login from "./login";
 import Regiter from "./regiter";
-
+import OAuth2 from "./OAuth2";
 
 
 /**
@@ -28,8 +28,8 @@ export default function Authentication() {
         <Regiter onSwitch={handleSwitch} />
       )}
 
-      <button id="connectGoogle" onClick={handleGoogle}>Se connecter avec google  </button>
-        
+      <OAuth2 />
+
     </div>
   );
 }
