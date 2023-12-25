@@ -1,3 +1,4 @@
+import React from "react";
 import { useState } from "react";
 import { jwtDecode } from "jwt-decode";
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
@@ -10,7 +11,6 @@ import Authentication from "./components/authentification/authentication";
 import Login from "./components/authentification/login";
 import Register from "./components/authentification/regiter";
 
-const elem = <h1>Bienvenue sur le site XXXX</h1>;
 
 function App() {
   const [token, setToken] = useState(localStorage.getItem("token"));

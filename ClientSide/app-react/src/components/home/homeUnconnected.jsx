@@ -1,4 +1,4 @@
-import { React, useState } from "react";
+import React, { useState } from "react";
 import Authentication from "../authentification/authentication";
 
 const NavBar = ({ onAuth, value }) => {
