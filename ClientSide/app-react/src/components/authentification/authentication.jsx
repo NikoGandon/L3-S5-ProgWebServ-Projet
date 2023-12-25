@@ -16,10 +16,6 @@ export default function Authentication() {
     setIsLogin(!isLogin);
   };
 
-  const handleGoogle = () => { 
-    const newWindow = window.open('https://localhost:3000/auth/OAuth/', '_blank');
-  };
-
   return (
     <div>
       {isLogin ? (

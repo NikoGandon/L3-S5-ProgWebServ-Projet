@@ -4,7 +4,7 @@ import axios from "axios";
 const OAuth2 = () => {
   const handleGoogle = () => {
     const newWindow = window.open(
-      "https://localhost:3000/auth/google",
+      "https://localhost:3000/auth/oauth",
       "_blank",
       "width=600,height=400,toolbar=no,location=no,menubar=no"
     );
