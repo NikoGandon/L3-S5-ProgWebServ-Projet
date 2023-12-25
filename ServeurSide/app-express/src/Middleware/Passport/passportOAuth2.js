@@ -14,37 +14,49 @@ passport.use(
       callbackURL: process.env.GOOGLE_CALLBACK_URL,
       passReqToCallback: true,
     },
-    (request, accessToken, refreshToken, profile, done) => {
-      const user = {
-        username: profile.displayName,
-        email: profile.emails[0].value,
-      };
+    async (request, accessToken, refreshToken, profile, done) => {
+      try {
+        const userOAUTH = {
+          id: profile.id,
+          username: profile.displayName,
+          email: profile.emails[0].value,
+        };
 
-      OAuth2Model.findOne({ userOAuthID: profile.id }, (err, user) => {
-        if (err) {
-          return done(err);
+        const existUser = await UserModel.findOne({
+          where: { email: userOAUTH.email },
+        });
+
+        const existUserOAUTH = await OAuth2Model.findOne({ where: { userOAuthId: userOAUTH.id } });
+
+        if (existUser && existUserOAUTH) {
+          return done(null, existUser, { message: "Connexion en cours" });
         }
 
-        if (!user) {
-          UserModel.create(user, (err, user) => {
-            if (err) {
-              return done(err);
-            }
-            return done(null, user);
-          }).then((user) => {
-            OAuth2Model.create({
-              userId: user.id,
-              userOAuthId: profile.id,
-            });
-          }).catch((err) => {
-            console.log(err);
+        if (existUser && !existUserOAUTH) {
+          await OAuth2Model.create({
+            userId: existUser.id,
+            userOAuthId: userOAUTH.id,
           });
+
+          return done(null, existUser, { message: "Connexion en cours" });
         }
 
-        return done(null, user);
-      });
+        const userCreated = await UserModel.create({
+          username: user.username,
+          email: user.email,
+        });
 
-      return done(null, profile);
+        await OAuth2Model.create({
+          userId: userCreated.id,
+          userOAuthId: userOAUTH.id,
+        });
+
+        if (userCreated) {
+          return done(null, userCreated, { message: "Inscription réussi" });
+        }
+      } catch (error) {
+        return done(error, false, { message: "Erreur lors de l'inscription" });
+      }
     }
   )
 );
