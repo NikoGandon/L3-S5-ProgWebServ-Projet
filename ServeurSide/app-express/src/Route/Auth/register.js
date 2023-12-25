@@ -19,7 +19,7 @@ routerRegister.post("/", (req, res, next) => {
         }
 
         if (!user) {
-          return res.status(200).json({
+          return res.status(202).json({
             error: info.message,
           });
         }
