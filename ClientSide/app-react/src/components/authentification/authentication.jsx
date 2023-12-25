@@ -26,9 +26,6 @@ export default function Authentication() {
       ) : (
         <Regiter onSwitch={handleSwitch} />
       )}
-      <button type="button" onClick={handleSwitch}>
-        {isLogin ? "Je n'ai pas de compte" : "J'ai un compte"}
-      </button>
     </div>
   );
 

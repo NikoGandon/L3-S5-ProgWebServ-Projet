@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { jwtDecode } from "jwt-decode";
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 
 import "./App.css";
 
@@ -23,6 +24,16 @@ function App() {
     }
   }
 
-  return <>{estConnecte ? <Home /> : <HomeUnconnected />}</>;
+  return (
+    <Router>
+      <Routes>
+        <Route path="/" exact element={estConnecte ? <Home /> : <HomeUnconnected connectionState='false' />} />
+        <Route path="/accueil" element={estConnecte ? <Home /> : <HomeUnconnected connectionState='false' />} />
+        <Route path="/auth" element={<Authentication />} />
+        <Route path="/auth/login" element={<Login />} />
+        <Route path="/auth/register" element={<Register />} />
+      </Routes>
+    </Router>
+  )
 }
 export default App;

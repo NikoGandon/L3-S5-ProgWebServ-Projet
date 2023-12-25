@@ -22,12 +22,13 @@ const HomeUnconnected = () => {
     <>
       {isAuth ? (
         <>
-          {" "}
-          <NavBar onAuth={handleAuth} value={"Accueil"}/>
-           <Authentication />
+          <Authentication />
         </>
       ) : (
-        <NavBar onAuth={handleAuth} value={"Se connecter"} />
+        <>
+          {}
+          <NavBar onAuth={handleAuth} value={"Se connecter"} />
+        </>
       )}
     </>
   );
