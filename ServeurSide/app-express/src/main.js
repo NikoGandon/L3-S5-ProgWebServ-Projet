@@ -33,11 +33,13 @@ app.use(
   })
 );
 
-app.use(cors({
-  origin: "*",
-  methods: ["GET", "POST", "PUT", "DELETE"],
-  allowedHeaders: ["Content-Type", "Authorization"]
-}));
+app.use(
+  cors({
+    origin: "*",
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+  })
+);
 
 app.use(passport.initialize());
 app.use(passport.session());
@@ -53,7 +55,7 @@ const ServeurRoute = require("./Route/Serveur/serveur");
 const GroupeRoute = require("./Route/Groupe/groupe");
 
 app.use("/", homeRoute);
-app.use("/Auth", AuthRoute)
+app.use("/Auth", AuthRoute);
 app.use("/User", verifyToken, UserRoute);
 app.use("/Serveur", verifyToken, ServeurRoute);
 app.use("/Groupe", verifyToken, GroupeRoute);
