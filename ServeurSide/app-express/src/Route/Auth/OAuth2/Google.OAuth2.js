@@ -10,10 +10,16 @@ routerGoogleAuth.get(
   })
 );
 
-routerGoogleAuth.get("/callback", (req, res, next) => {
+routerGoogleAuth.get(
+  "/callback",
+  (req, res, next) => {
+    res.setHeader("Cross-Origin-Opener-Policy", "*");
+    res.setHeader("Cross-Origin-Embedder-Policy", "require-corp");
+    next();
+  },
   passportGoogleAuth.authenticate("googleOAuth", (err, user, info) => {
     if (err) {
-      return next(err);
+      return err;
     }
 
     if (!user) {
@@ -21,12 +27,17 @@ routerGoogleAuth.get("/callback", (req, res, next) => {
     }
 
     const token = createToken(user);
-
-    req.session.oauthToken = token;
-
-    return res.status(200).json({ token });
-  })(req, res, next);
-});
+    console.log("token : " + token);
+    return res
+      .status(200)
+      .cookie(
+        "authToken",
+        token,
+        { httpOnly: true, secure: true, sameSite: "none" }
+      )
+      .json({ message: "Connexion réussi" });
+  })
+);
 
 routerGoogleAuth.get("/failed", (req, res) => {
   return res.status(401).json({

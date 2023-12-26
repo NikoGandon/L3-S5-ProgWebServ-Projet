@@ -25,6 +25,7 @@
     "passport-google-oauth2": "^0.2.0",
     "passport-local": "^1.0.0",
     "sequelize": "^6.35.1",
-    "socket.io": "^4.7.2"
+    "socket.io": "^4.7.2",
+    "universal-cookie": "^6.1.1"
   }
 }
