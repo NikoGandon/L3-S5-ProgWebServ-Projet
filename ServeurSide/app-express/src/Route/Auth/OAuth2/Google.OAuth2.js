@@ -21,12 +21,17 @@ routerGoogleAuth.get("/callback", (req, res, next) => {
     }
 
     const token = createToken(user);
-
-    req.session.oauthToken = token;
-
-    return res.status(200).json({ token });
-  })(req, res, next);
-});
+    console.log("token : " + token);
+    return res
+      .status(200)
+      .cookie(
+        "authToken",
+        token,
+        { httpOnly: true, secure: true, sameSite: "none" }
+      )
+      .json({ message: "Connexion réussi" });
+  })
+);
 
 routerGoogleAuth.get("/failed", (req, res) => {
   return res.status(401).json({
