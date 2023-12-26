@@ -10,10 +10,16 @@ routerGoogleAuth.get(
   })
 );
 
-routerGoogleAuth.get("/callback", (req, res, next) => {
+routerGoogleAuth.get(
+  "/callback",
+  (req, res, next) => {
+    res.setHeader("Cross-Origin-Opener-Policy", "*");
+    res.setHeader("Cross-Origin-Embedder-Policy", "require-corp");
+    next();
+  },
   passportGoogleAuth.authenticate("googleOAuth", (err, user, info) => {
     if (err) {
-      return next(err);
+      return err;
     }
 
     if (!user) {
