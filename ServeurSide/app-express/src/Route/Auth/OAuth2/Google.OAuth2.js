@@ -27,12 +27,14 @@ routerGoogleAuth.get("/callback", (req, res, next) => {
     },
     (err, user, info) => {
       if (err) {
+        console.log(err);
         return res.status(400).json({
           message: err,
         });
       }
 
       if (!user) {
+        console.log(info.message);
         return res.status(400).json({
           message: info.message,
         });
@@ -40,10 +42,14 @@ routerGoogleAuth.get("/callback", (req, res, next) => {
 
       const token = createToken(user);
 
+      let dateExpiration = new Date();
+      dateExpiration = dateExpiration.setDate(expiresIn.getMonth() + 6);
+
       res.cookie("authToken", token, {
         httpOnly: true,
         secure: true,
         sameSite: "none",
+        maxAge: dateExpiration,
       });
 
       return res.redirect("http://localhost:5173/auth/login/success");

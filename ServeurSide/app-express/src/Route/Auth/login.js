@@ -20,7 +20,7 @@ routerLogin.post("/", (req, res, next) => {
       (err, user, info) => {
         if (err) {
           return res.status(400).json({
-            message: err,
+            error: err,
           });
         }
 
@@ -31,8 +31,16 @@ routerLogin.post("/", (req, res, next) => {
         }
 
         const token = createToken(user);
-        
-        return res.status(200).json({ token });
+
+        let dateExpiration = new Date();
+        dateExpiration = dateExpiration.setDate(expiresIn.getMonth() + 6);
+
+        return res.status(200).cookie("authToken", token, {
+          httpOnly: true,
+          secure: true,
+          sameSite: "none",
+          maxAge: new Date(Date.now().getMonth() + 6),
+        });
       }
     )(req, res, next);
   } catch (error) {
