@@ -62,12 +62,12 @@ passport.use(
 );
 
 passport.serializeUser((user, done) => {
-  done(null, user);
+  done(null, user, {message : "serialize done"});
 });
 
 passport.deserializeUser((user, done) => {
   UserModel.findById(user.id, (err, user) => {
-    done(err, user);
+    done(err, user, {message : "deserialize done"});
   });
 });
 
