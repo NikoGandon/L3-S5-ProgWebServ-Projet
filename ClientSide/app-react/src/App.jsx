@@ -9,7 +9,6 @@ import HomeUnconnected from "./components/home/homeUnconnected";
 import Home from "./components/Home/home";
 import Authentication from "./components/authentification/authentication";
 import Parametre from "./components/parametre/parametre";
-import LoginSuccess from "./components/authentification/loginSuccess";
 
 
 function App() {
@@ -24,6 +23,8 @@ function App() {
     }
   }
 
+ //  estConnecte = true;
+
   return (
     <Router>
       <Routes>
@@ -31,7 +32,7 @@ function App() {
         <Route path="/accueil" element={<Navigate to="/" />} />
         <Route path="/auth" element={<Authentication />} />
         <Route path="/parametre" element={<Parametre />} />
-        <Route path="/auth/login/success" element={<LoginSuccess />} />
+        
       </Routes>
     </Router>
   )
