@@ -4,7 +4,6 @@ import Login from "./login";
 import Regiter from "./regiter";
 import OAuth2 from "./OAuth2";
 
-
 /**
  * @desc Formulaire de connexion ou d'inscription avec un bouton pour switcher entre les deux et un bouton pour se connecter avec Google
  * @returns Bouton OAuth2 avec le formulaire de connexion ou le formulaire d'inscription
@@ -25,7 +24,6 @@ export default function Authentication() {
       )}
 
       <OAuth2 />
-
     </div>
   );
 }
