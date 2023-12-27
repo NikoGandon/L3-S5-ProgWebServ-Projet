@@ -7,7 +7,7 @@ import {
 } from "react-router-dom";
 
 import Login from "./login";
-import Regiter from "./regiter";
+import Register from "./regiter";
 import OAuth2 from "./OAuth2";
 
 /**
@@ -27,7 +27,6 @@ export default function Authentication() {
         <Route path="/auth" exact element={<Outlet />} />
         <Route path="/auth/login" element={<Login />} />
         <Route path="/auth/register" element={<Register />} />
-        <Route exact path="/auth/login/success" element={<LoginSuccess />} />
         <Route path="/auth/login/failed">
           Error loging in. Please try again later!
         </Route>
