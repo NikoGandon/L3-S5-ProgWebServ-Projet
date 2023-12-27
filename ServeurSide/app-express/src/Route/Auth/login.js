@@ -20,7 +20,7 @@ routerLogin.post("/", (req, res, next) => {
       (err, user, info) => {
         if (err) {
           return res.status(400).json({
-            message: err,
+            error: err,
           });
         }
 

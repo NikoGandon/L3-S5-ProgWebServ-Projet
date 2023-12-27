@@ -12,11 +12,11 @@ routerRegister.post("/", (req, res, next) => {
 
   try {
     passportRegister.authenticate(
-      "passportRegister",
-      (err, user, info) => {
-        if (err) {
-          return next(err);
-        }
+      if (err) {
+        return res.status(400).json({
+          error: err,
+        });
+      }
 
         if (!user) {
           return res.status(202).json({
