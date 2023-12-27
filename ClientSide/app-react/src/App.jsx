@@ -1,7 +1,7 @@
 import React from "react";
 import { useState } from "react";
 import { jwtDecode } from "jwt-decode";
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 
 import "./App.css";
 
@@ -11,12 +11,13 @@ import Authentication from "./components/authentification/authentication";
 import Login from "./components/authentification/login";
 import Register from "./components/authentification/regiter";
 import LoginSuccess from "./components/authentification/loginSuccess";
+import Parametre from "./components/parametre/parametre";
 
 
 function App() {
   const [token, setToken] = useState(localStorage.getItem("token"));
   console.log("token stocké  : " + token);
-  const estConnecte = token !== null;
+  let estConnecte = token !== null;
   if (token) {
     const { exp } = jwtDecode(token);
     if (exp * 1000 < new Date().getTime()) {
@@ -25,18 +26,15 @@ function App() {
     }
   }
 
+  estConnecte = true;
+
   return (
     <Router>
       <Routes>
         <Route path="/" exact element={estConnecte ? <Home /> : <HomeUnconnected connectionState='false' />} />
-        <Route path="/accueil" element={estConnecte ? <Home /> : <HomeUnconnected connectionState='false' />} />
+        <Route path="/accueil" element={<Navigate to="/" />} />
         <Route path="/auth" element={<Authentication />} />
-        <Route path="/auth/login" element={<Login />} />
-        <Route path="/auth/register" element={<Register />} />
-        <Route exact path="/auth/login/success" Component={LoginSuccess} />
-        <Route path="/auth/login/failed">
-          Error loging in. Please try again later!
-        </Route>
+        <Route path="/parametre" element={<Parametre />} />
       </Routes>
     </Router>
   )

@@ -1,4 +1,10 @@
 import React, { useState } from "react";
+import {
+  BrowserRouter as Router,
+  Route,
+  Routes,
+  Outlet,
+} from "react-router-dom";
 
 import Login from "./login";
 import Regiter from "./regiter";
@@ -16,14 +22,25 @@ export default function Authentication() {
   };
 
   return (
-    <div>
-      {isLogin ? (
-        <Login onSwitch={handleSwitch} />
-      ) : (
-        <Regiter onSwitch={handleSwitch} />
-      )}
+    <>
+      <Routes>
+        <Route path="/auth" exact element={<Outlet />} />
+        <Route path="/auth/login" element={<Login />} />
+        <Route path="/auth/register" element={<Register />} />
+        <Route exact path="/auth/login/success" element={<LoginSuccess />} />
+        <Route path="/auth/login/failed">
+          Error loging in. Please try again later!
+        </Route>
+      </Routes>
+      <div>
+        {isLogin ? (
+          <Login onSwitch={handleSwitch} />
+        ) : (
+          <Regiter onSwitch={handleSwitch} />
+        )}
 
-      <OAuth2 />
-    </div>
+        <OAuth2 />
+      </div>
+    </>
   );
 }
