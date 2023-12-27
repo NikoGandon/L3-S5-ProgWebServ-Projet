@@ -32,6 +32,7 @@ routerGoogleAuth.get("/callback", (req, res, next) => {
           message: err,
         });
       }
+      console.log("User connected")
 
       if (!user) {
         console.log(info.message);
@@ -43,7 +44,7 @@ routerGoogleAuth.get("/callback", (req, res, next) => {
       const token = createToken(user);
 
       let dateExpiration = new Date();
-      dateExpiration = dateExpiration.setDate(expiresIn.getMonth() + 6);
+      dateExpiration = dateExpiration.setDate(dateExpiration.getMonth() + 6);
 
       res.cookie("authToken", token, {
         httpOnly: true,
@@ -51,6 +52,7 @@ routerGoogleAuth.get("/callback", (req, res, next) => {
         sameSite: "none",
         maxAge: dateExpiration,
       });
+
 
       return res.redirect("http://localhost:5173/auth/login/success");
     }
