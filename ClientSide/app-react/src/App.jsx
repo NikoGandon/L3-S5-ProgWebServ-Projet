@@ -8,9 +8,6 @@ import "./App.css";
 import HomeUnconnected from "./components/home/homeUnconnected";
 import Home from "./components/Home/home";
 import Authentication from "./components/authentification/authentication";
-import Login from "./components/authentification/login";
-import Register from "./components/authentification/regiter";
-import LoginSuccess from "./components/authentification/loginSuccess";
 import Parametre from "./components/parametre/parametre";
 
 
@@ -26,7 +23,7 @@ function App() {
     }
   }
 
-  estConnecte = true;
+ //  estConnecte = true;
 
   return (
     <Router>
@@ -35,6 +32,7 @@ function App() {
         <Route path="/accueil" element={<Navigate to="/" />} />
         <Route path="/auth" element={<Authentication />} />
         <Route path="/parametre" element={<Parametre />} />
+        
       </Routes>
     </Router>
   )
