@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Navigate } from 'react-router-dom';
 
 import axios from "../../utils/axiosConf";
+import Cookies from "universal-cookie";
 
 /**
  * @desc Formulaire de connexion
@@ -9,10 +10,13 @@ import axios from "../../utils/axiosConf";
  */
 
 const Login = () => {
+  const cookies = new Cookies();
   const [identifier, setidentifier] = useState("");
   const [password, setPassword] = useState("");
   const [isLogged, setIsLogged] = useState(false);
   const [register, setRegister] = useState(false);
+  const [message, setMessage] = useState("");
+  const [error, setError] = useState("");
 
   const handleidentifierChange = (event) => {
     setidentifier(event.target.value);
@@ -44,11 +48,14 @@ const Login = () => {
       )
       .then((response) => {
         console.log("Données reçues avec succès:", response.data);
-        localStorage.setItem("token", response.data.token);
+        cookies.set("authToken", response.data.token);
+        setMessage(response.data.message);
+        setError(response.data.error);
         setIsLogged(true); 
       })
       .catch((error) => {
         console.error("Erreur lors de la requête:", error);
+        setError(error.response.data.error);
         if (error.response) {
           console.error("Réponse du serveur:", error.response.data);
         }
@@ -60,7 +67,7 @@ const Login = () => {
     <>
       {
         isLogged ? (
-          <Navigate to="/accueil" />
+          <Navigate to="/" />
         ) : null
       }
       <h1>Connexion</h1>
