@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import axios from "axios";
+import axios from "../../utils/axiosConf";
 import { Navigate } from 'react-router-dom';
 
 /**
@@ -51,7 +51,6 @@ const Regiter = () => {
         console.log("Données reçues avec succès:", response.data);
         setMessage(response.data.message);
         setError(response.data.error);
-
       })
       .catch((error) => {
         console.error("Erreur lors de la requête:", error);
