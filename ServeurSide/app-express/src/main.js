@@ -10,6 +10,13 @@ const cors = require("cors");
 
 const { verifyToken, verifyAdminToken } = require("./Middleware/AuthToken");
 
+app.use(
+  cors({
+    origin: "http://localhost:5173",
+    credentials: true,
+  })
+);
+
 const optionsSSL = {
   key: fs.readFileSync("./ServeurFolder/SSL_Certificat/private-key.pem"),
   cert: fs.readFileSync("./ServeurFolder/SSL_Certificat/certificate.pem"),
@@ -33,19 +40,12 @@ app.use(
   })
 );
 
-app.use(
-  cors({
-    origin: "*",
-    methods: ["GET", "POST", "PUT", "DELETE"],
-    allowedHeaders: ["Content-Type", "Authorization"],
-  })
-);
-
 app.use(passport.initialize());
 app.use(passport.session());
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+
 
 // routes
 const homeRoute = require("./Route/home");

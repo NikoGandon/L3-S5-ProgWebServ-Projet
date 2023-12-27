@@ -2,6 +2,15 @@ const routerGoogleAuth = require("express").Router();
 
 const { createToken } = require("../../../Middleware/AuthToken");
 const passportGoogleAuth = require("../../../Middleware/Passport/passportOAuth2");
+const session = require("express-session");
+
+routerGoogleAuth.use(
+  session({
+    secret: "coucou",
+    resave: false,
+    saveUninitialized: false,
+  })
+);
 
 routerGoogleAuth.get(
   "/",
@@ -10,45 +19,36 @@ routerGoogleAuth.get(
   })
 );
 
-routerGoogleAuth.get(
-  "/callback",
-  (req, res, next) => {
-    res.setHeader("Cross-Origin-Opener-Policy", "*");
-    res.setHeader("Cross-Origin-Embedder-Policy", "require-corp");
-    next();
-  },
-  passportGoogleAuth.authenticate("googleOAuth", (err, user, info) => {
-    if (err) {
-      return err;
+routerGoogleAuth.get("/callback", (req, res, next) => {
+  passportGoogleAuth.authenticate(
+    "googleOAuth",
+    {
+      failureRedirect: "http://localhost:5173/auth/login/failed",
+    },
+    (err, user, info) => {
+      if (err) {
+        return res.status(400).json({
+          message: err,
+        });
+      }
+
+      if (!user) {
+        return res.status(400).json({
+          message: info.message,
+        });
+      }
+
+      const token = createToken(user);
+
+      res.cookie("authToken", token, {
+        httpOnly: true,
+        secure: true,
+        sameSite: "none",
+      });
+
+      return res.redirect("http://localhost:5173/auth/login/success");
     }
-
-    if (!user) {
-      return res.status(401).json({ error: info.message });
-    }
-
-    const token = createToken(user);
-    console.log("token : " + token);
-    return res
-      .status(200)
-      .cookie(
-        "authToken",
-        token,
-        { httpOnly: true, secure: true, sameSite: "none" }
-      )
-      .json({ message: "Connexion réussi" });
-  })
-);
-
-routerGoogleAuth.get("/failed", (req, res) => {
-  return res.status(401).json({
-    error: "Echec de l'authentification",
-  });
-});
-
-routerGoogleAuth.get("/connected", (req, res) => {
-  return res.status(200).json({
-    message: "Connexion réussi",
-  });
+  )(req, res, next);
 });
 
 module.exports = routerGoogleAuth;
