@@ -10,6 +10,7 @@ import Home from "./components/Home/home";
 import Authentication from "./components/authentification/authentication";
 import Login from "./components/authentification/login";
 import Register from "./components/authentification/regiter";
+import LoginSuccess from "./components/authentification/loginSuccess";
 
 
 function App() {
@@ -32,6 +33,10 @@ function App() {
         <Route path="/auth" element={<Authentication />} />
         <Route path="/auth/login" element={<Login />} />
         <Route path="/auth/register" element={<Register />} />
+        <Route exact path="/auth/login/success" Component={LoginSuccess} />
+        <Route path="/auth/login/failed">
+          Error loging in. Please try again later!
+        </Route>
       </Routes>
     </Router>
   )
