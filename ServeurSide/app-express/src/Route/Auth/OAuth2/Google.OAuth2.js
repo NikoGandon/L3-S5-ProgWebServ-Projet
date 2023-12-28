@@ -29,7 +29,8 @@ routerGoogleAuth.get("/callback", (req, res, next) => {
       if (err) {
         console.log(err);
         return res.status(400).json({
-          message: err,
+          authStatus: false,
+          error: err,
         });
       }
       console.log("User connected");
@@ -37,6 +38,7 @@ routerGoogleAuth.get("/callback", (req, res, next) => {
       if (!user) {
         console.log(info.message);
         return res.status(400).json({
+          authStatus: false,
           message: info.message,
         });
       }
