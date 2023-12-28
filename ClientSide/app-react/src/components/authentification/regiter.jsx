@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import axios from "../../utils/axiosConf";
-import { Navigate } from 'react-router-dom';
 
 /**
  * @desc Formulaire d'inscription
@@ -29,13 +28,13 @@ const Regiter = () => {
 
   const loginHandler = () => {
     setLogin(true);
-  }
+  };
 
   const handleSubmit = (event) => {
     event.preventDefault();
     axios
       .post(
-        "https://127.0.0.1:3000/auth/register",
+        "https://localhost:3000/auth/register",
         {
           username: username,
           email: email,
@@ -95,10 +94,6 @@ const Regiter = () => {
         />
         <button type="submit">S'inscrire</button>
       </form>
-      <button onClick={loginHandler}>
-        J'ai déjà un compte
-      </button>
-      {login ? <Navigate to="/auth/login" /> : null}
     </>
   );
 };
