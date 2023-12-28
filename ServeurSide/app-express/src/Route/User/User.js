@@ -5,7 +5,9 @@ const AmiRoute = require("./Ami/friendUser");
 const BlocklistRoute = require("./Blocklist/blockListUser");
 const { verifyToken } = require("../../Middleware/AuthToken");
 
-const userLogic = require("../../logic/Utilisateur/user");
+const userLogic = require("../../Logic/Utilisateur/user");
+const getGroupes = require("../../Logic/Utilisateur/get-groupes");
+const getServeurs = require("../../Logic/Utilisateur/get-serveurs");
 
 /**
  * @swagger
@@ -77,6 +79,14 @@ routeurUser.use("/blocklist", BlocklistRoute);
 
 routeurUser.get("/search", () => {
   return res.status(200).json({ message: "Route non terminée." });
+});
+
+routeurUser.get("/get-serveurs", (req, res) => {
+  getServeurs(req, res);
+});
+
+routeurUser.get("/get-groupes", (req, res) => {
+  getGroupes(req, res);  
 });
 
 module.exports = routeurUser;
