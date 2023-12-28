@@ -23,7 +23,7 @@ routerGoogleAuth.get("/callback", (req, res, next) => {
   passportGoogleAuth.authenticate(
     "googleOAuth",
     {
-      failureRedirect: "http://localhost:5173/auth/login/failed",
+      failureRedirect: "http://localhost:5173/auth/failed",
     },
     (err, user, info) => {
       if (err) {
@@ -32,7 +32,7 @@ routerGoogleAuth.get("/callback", (req, res, next) => {
           message: err,
         });
       }
-      console.log("User connected")
+      console.log("User connected");
 
       if (!user) {
         console.log(info.message);
@@ -46,15 +46,18 @@ routerGoogleAuth.get("/callback", (req, res, next) => {
       let dateExpiration = new Date();
       dateExpiration = dateExpiration.setDate(dateExpiration.getMonth() + 6);
 
+      console.log("token:", token);
+
       res.cookie("authToken", token, {
+        domain: "localhost",
+        path: "/",
         httpOnly: true,
         secure: true,
-        sameSite: "none",
+        sameSite: "None",
         maxAge: dateExpiration,
       });
 
-
-      return res.redirect("http://localhost:5173/auth/login/success");
+      return res.redirect("https://localhost:5173/auth/success");
     }
   )(req, res, next);
 });
