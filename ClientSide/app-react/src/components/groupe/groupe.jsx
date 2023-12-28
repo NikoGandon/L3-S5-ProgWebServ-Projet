@@ -1,15 +1,17 @@
-import React, { useState } from "react";
+
+import React, { useEffect, useState } from "react";
 import "./groupe.css";
 
-import axios from "axios";
+import axios from "../../utils/axiosConf";
 
 const Groupe = () => {
 
-  const [groupe, setGroupe] = React.useState([]);
+  const [groupe, setGroupe] = useState();
 
   useEffect(() => {
-    axios.get("https://localhost:3000/groupe").then((res) => {
-      setGroupe(res.data);
+    axios.get("https://localhost:3000/user/get-groupes").then((res) => {
+      console.log(res);
+      setGroupe(res.data.groupes);
     });
   }, []);
 
@@ -22,11 +24,6 @@ const Groupe = () => {
           <button className="btn_base"><img className="icon_base" src="../../../images/mp.png" /></button>
           <div className="barre"></div>
           <div className="box_serveur">
-          <button className="btn_base"><img className="icon_base" src="../../../images/mp.png" /></button>
-          <button className="btn_base"><img className="icon_base" src="../../../images/mp.png" /></button>
-          <button className="btn_base"><img className="icon_base" src="../../../images/mp.png" /></button>
-          <button className="btn_base"><img className="icon_base" src="../../../images/mp.png" /></button>
-          <button className="btn_base"><img className="icon_base" src="../../../images/mp.png" /></button>
           </div>
         </div>
         <div className="mp-groupe">

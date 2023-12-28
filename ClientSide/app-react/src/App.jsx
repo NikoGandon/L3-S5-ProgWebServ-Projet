@@ -1,7 +1,13 @@
 import React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { jwtDecode } from "jwt-decode";
-import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
+import {
+  BrowserRouter as Router,
+  Route,
+  Routes,
+  Navigate,
+} from "react-router-dom";
+import axios from "./utils/axiosConf";
 
 import "./App.css";
 
@@ -13,28 +19,50 @@ import LoginSuccess from "./components/authentification/loginSuccess";
 import Groupe from "./components/groupe/groupe";
 
 function App() {
-  const [token, setToken] = useState(localStorage.getItem("token"));
-  console.log("token stocké  : " + token);
-  let estConnecte = token !== null;
-  if (token) {
-    const { exp } = jwtDecode(token);
-    if (exp * 1000 < new Date().getTime()) {
-      localStorage.removeItem("token");
-      setToken(null);
-    }
-  }
+  const [estConnecte, setEstConnecte] = useState(false);
+
+  useEffect(() => {
+    const checkAuthentication = async () => {
+      try {
+        console.log("Vérification de l'authentification...");
+        const response = await axios.get(
+          "https://localhost:3000/auth/check-auth"
+          );
+          
+        console.log("fin du fetch...");
+
+        if (response.data.authenticated) {
+          setEstConnecte(true);
+        }
+      } catch (error) {
+        console.error(
+          "Erreur lors de la vérification de l'authentification :",
+          error
+        );
+      }
+    };
+
+    checkAuthentication();
+  }, []);
 
   return (
     <Router>
       <Routes>
-        <Route path="/" exact element={estConnecte ? <Home /> : <HomeUnconnected connectionState='false' />} />
+        <Route
+          path="*"
+          exact
+          element={
+            estConnecte ? <Home /> : <HomeUnconnected connectionState="false" />
+          }
+        />
         <Route path="/accueil" element={<Navigate to="/" />} />
         <Route path="/auth" element={<Authentication />} />
+        <Route path="/auth/success" element={<LoginSuccess />} />
         <Route path="/parametre" element={<Parametre />} />
         <Route path="/auth/login/success" element={<LoginSuccess />} />
         <Route path="/groupe" element={<Groupe />} />
       </Routes>
     </Router>
-  )
+  );
 }
 export default App;
