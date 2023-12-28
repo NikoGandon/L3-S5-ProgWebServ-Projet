@@ -1,5 +1,7 @@
 const BanniServeur = require("../../Model/BanniServeur.model");
 
+const { infoToken } = require("../../Middleware/AuthToken");
+
 /**
  * @description Ban un membre du serveur
  * @param {*} req
@@ -9,7 +11,7 @@ const BanniServeur = require("../../Model/BanniServeur.model");
 
 async function BanMembre(req, res) {
   try {
-    const idUser = req.body.idUser;
+    const idUser = infoToken(req).id;
     const idServeur = req.body.idServeur;
     const date = req.body.date;
     const raison = req.body.raison;
@@ -21,9 +23,9 @@ async function BanMembre(req, res) {
       raison: raison,
     });
 
-    return res.status(201).json(NewBanniServeur);
+    return res.status(201).json({message: "Membre banni."});
   } catch (error) {
-    return res.status(500).json({ error: "Ca marche pas." + error });
+    return res.status(500).json({ error: "Erreur lors du bannissement du membre." });
   }
 }
 

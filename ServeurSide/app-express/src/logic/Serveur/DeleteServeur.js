@@ -1,4 +1,5 @@
 const Serveur = require("../../Model/Serveur.model");
+const { infoToken } = require("../../Middleware/AuthToken");
 
 /**
  * @description Supprime un serveur
@@ -9,6 +10,7 @@ const Serveur = require("../../Model/Serveur.model");
 
 async function DeleteServeur(req, res) {
   try {
+    const id = infoToken(req).id;
     const idServeur = req.body.idServeur;
     const serveur = await Serveur.findOne({
       where: { id: idServeur },
