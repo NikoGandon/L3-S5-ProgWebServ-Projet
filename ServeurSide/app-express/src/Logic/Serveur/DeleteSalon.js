@@ -9,9 +9,9 @@ const Salon = require("../../Model/Salon.model");
 
 async function DeleteSalon(req, res) {
   try {
-    const idSalonn = req.body.idSalon;
+    const idSalon = req.body.idSalon;
     const salon = await Salon.findOne({
-      where: { id: idSalonn },
+      where: { id: idSalon },
     });
 
     if (!salon) {
@@ -23,7 +23,7 @@ async function DeleteSalon(req, res) {
       message: "Serveur supprimé.",
     });
   } catch (error) {
-    return res.status(500).json({ error: "Ca marche pas." });
+    return res.status(500).json({ error: "Erreur lors de la suppression du salon." });
   }
 }
 

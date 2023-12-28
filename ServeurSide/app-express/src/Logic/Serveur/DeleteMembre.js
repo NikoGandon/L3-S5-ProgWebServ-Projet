@@ -1,4 +1,6 @@
 const MembreServeur = require("../../Model/MembreServeur.model");
+const { infoToken } = require("../../Middleware/AuthToken");
+
 
 /**
  * @description Supprime un membre du serveur
@@ -9,7 +11,7 @@ const MembreServeur = require("../../Model/MembreServeur.model");
 
 async function DeleteMembre(req, res) {
   try {
-    const idUser = req.body.idUser;
+    const idUser = infoToken(req).id;
     const idServeur = req.body.idServeur;
 
     const delMembre = await MembreServeur.findOne({
@@ -21,9 +23,9 @@ async function DeleteMembre(req, res) {
     }
 
     delMembre.destroy();
-    return res.status(201).json({ message: "Membre supprimé." });
+    return res.status(201).json({ message: "Divorce du membre et du serveur :(" });
   } catch (error) {
-    return res.status(500).json({ error: "Ca marche pas." + error });
+    return res.status(500).json({ error: "Erreur lors de la fin de l'inscription du membre : " + error });
   }
 }
 

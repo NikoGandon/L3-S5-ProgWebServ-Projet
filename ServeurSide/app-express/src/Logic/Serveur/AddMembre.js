@@ -1,4 +1,5 @@
 const MembreServeur = require("../../Model/MembreServeur.model");
+const { infoToken } = require("../../Middleware/AuthToken");
 
 /**
  * @description Invite un membre dans un serveur
@@ -9,7 +10,7 @@ const MembreServeur = require("../../Model/MembreServeur.model");
 
 async function InviteMembre(req, res) {
   try {
-    const idUser = req.body.idUser;
+    const idUser = infoToken(req).id;
     const idServeur = req.body.idServeur;
 
     const invMembre = await MembreServeur.create({

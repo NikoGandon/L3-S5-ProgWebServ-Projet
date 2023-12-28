@@ -38,8 +38,7 @@ async function getInformation(req, res) {
 
 async function updateInformation(req, res) {
   const { username, email, password, bio } = req.body;
-  const token = infoToken(req);
-  const id = token.id;
+  const id = infoToken(req).id;
   const user = await UserModel.findOne({ id: id });
   if (!user) {
     return res.status(202).json({ message: "Utilisateur non trouvé." });
