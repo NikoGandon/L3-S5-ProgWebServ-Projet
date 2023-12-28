@@ -20,7 +20,7 @@ const ServeurBar = () => {
 
   return (
     <>
-      {serveurs
+      {serveurs.length > 0
         ? serveurs.map((serveur) => (
             <div key={serveur.id} onClick={() => { navigateToServeur(serveur.id) }}>
               <img src={serveur.image} alt="serveur" />
