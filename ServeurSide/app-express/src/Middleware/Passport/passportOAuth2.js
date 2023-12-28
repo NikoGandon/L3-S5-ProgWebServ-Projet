@@ -42,8 +42,8 @@ passport.use(
         }
 
         const userCreated = await UserModel.create({
-          username: user.username,
-          email: user.email,
+          username: userOAUTH.username,
+          email: userOAUTH.email,
         });
 
         await OAuth2Model.create({
