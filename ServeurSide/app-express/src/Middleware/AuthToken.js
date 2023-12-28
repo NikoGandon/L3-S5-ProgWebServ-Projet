@@ -38,15 +38,18 @@ function checkToken(req) {
 }
 
 function infoToken(req) {
-  const token = checkToken(req);
-  if (token == 0) {
+  const tokenExists = checkToken(req);
+  if (tokenExists == 0) {
     return { message: "Accès non autorisé aux non-connectés." };
   }
-  if (token == -1) {
+  if (tokenExists == -1) {
     return { message: "Token invalide." };
   }
+
   try {
+    const token = req.cookies.authToken;
     const decoded = JWT.verify(token, secretKey);
+    console.log(decoded);
     return decoded;
   } catch (err) {
     return { message: "Token invalide : " + err };
