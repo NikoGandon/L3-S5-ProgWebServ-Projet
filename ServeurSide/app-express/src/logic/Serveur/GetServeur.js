@@ -1,4 +1,8 @@
 const Serveur = require("../../Model/Serveur.model");
+const UserModel = require("../../Model/User.model");
+const MembreServeur = require("../../Model/MembreServeur.model");
+const SalonModel = require("../../Model/Salon.model");
+const { infoToken } = require("../../Middleware/AuthToken");
 
 /**
  * @description Récupère un serveur
@@ -9,22 +13,57 @@ const Serveur = require("../../Model/Serveur.model");
 
 async function GetServeur(req, res) {
   try {
+    const id = infoToken(req).id;
     const idServeur = req.body.idServeur;
     const serveur = await Serveur.findOne({
       where: { id: idServeur },
     });
+    
+    const membre = await MembreServeur.findOne({
+      where: { idServeur: idServeur, idUser: id },
+    });
 
-    if (!serveur) {
-      return res.status(404).json({ error: "Serveur non trouvé." });
+    let Salons = [];
+    let Membres = [];
+
+    const salons = await SalonModel.findAll({
+      where: { idServeur: idServeur },
+    });
+
+    const membres = await MembreServeur.findAll({
+      where: { idServeur: idServeur },
+    });
+
+    for (let i = 0; i < salons.length; i++) {
+      Salons.push({
+        id: salons[i].id,
+        nom: salons[i].nom,
+        description: salons[i].description,
+      });
+    }
+
+    for (let i = 0; i < membres.length; i++) {
+      const user = await UserModel.findOne({
+        where: { id: membres[i].idUser },
+      });
+      Membres.push({
+        id: user.id,
+        username: user.username,
+        lienPP: user.lienPP,
+      });
     }
 
     return res.status(200).json({
-      id: serveur.id,
-      nom: serveur.nom,
-      description: serveur.description,
-      lienParametre: serveur.lienParametre,
-      lienLog: serveur.lienLog,
+      serveur: {
+        id: serveur.id,
+        nom: serveur.nom,
+        description: serveur.description,
+        lienImage: serveur.lienImage,
+        salons: Salons,
+        membres: Membres,
+      },
     });
+
   } catch (error) {
     return res
       .status(500)
