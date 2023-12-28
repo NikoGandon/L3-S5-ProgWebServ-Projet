@@ -22,24 +22,29 @@ export default function Authentication() {
     setIsLogin(!isLogin);
   };
 
+  const setLogin = (val) => {
+    setIsLogin(val);
+  };
+
   return (
     <>
       <Routes>
-        <Route path="/" exact element={<Outlet />} />
-        <Route path="/success" element={<LoginSuccess/>} />
-        <Route path="/failed">
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
-          Error loging in. Please try again later!
-        </Route>
+        <Route path="/success" element={<LoginSuccess />} />
+        <Route path="*" element={
+          <Outlet>
+            <Route path="login" element={<Login onSwitch={() => setLogin(true)} />} />
+            <Route path="register" element={<Register onSwitch={() => setLogin(false)} />} />
+            <Route path="*" element={<Login onSwitch={() => setLogin(true)} />} />
+          </Outlet>
+        }/>
       </Routes>
       <div>
         {isLogin ? (
           <Login onSwitch={handleSwitch} />
         ) : (
-          <Regiter onSwitch={handleSwitch} />
+          <Register onSwitch={handleSwitch} />
         )}
-
+        <button onClick={handleSwitch}> {isLogin ? ("Je n'ai pas de compte") : ("J'ai un compte")} </button>
         <OAuth2 />
       </div>
     </>

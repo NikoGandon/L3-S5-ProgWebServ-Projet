@@ -1,11 +1,10 @@
 import React, { useEffect } from "react";
-import Cookie from "universal-cookie";
+import Cookies from "universal-cookie";
 
 export default function LoginSuccess() {
   useEffect(() => {
-    const cookies = new Cookie();
-    const authToken = cookies.get("authToken");
-    cookies.set("authToken", authToken);
+    const cookie = new Cookies();
+    cookie.get("authToken");
 
     setTimeout(() => {
       window.close();

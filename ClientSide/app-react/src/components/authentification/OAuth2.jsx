@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 
 const OAuth2 = () => {
 
   const handleGoogle = async () => {
     let timer = null;
-    const googleLoginURL = "https://127.0.0.1:3000/Auth/OAuth/";
+    const googleLoginURL = "https://localhost:3000/Auth/OAuth/";
     const newWindow = window.open(
       googleLoginURL,
       "_blank",
@@ -15,6 +15,7 @@ const OAuth2 = () => {
       timer = setInterval(() => {
         if (newWindow.closed) {
           if (timer) clearInterval(timer);
+          window.location.reload(true);
         }
       }, 500);
     }
