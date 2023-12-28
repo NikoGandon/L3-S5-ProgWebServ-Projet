@@ -7,15 +7,23 @@ const session = require("express-session");
 const passport = require("passport");
 const bodyParser = require("body-parser");
 const cors = require("cors");
+const cookieParser = require("cookie-parser");
 
 const { verifyToken, verifyAdminToken } = require("./Middleware/AuthToken");
 
+app.enable("trust proxy");
+
 app.use(
   cors({
-    origin: "http://localhost:5173",
+    origin: "https://localhost:5173",
     credentials: true,
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+    optionsSuccessStatus: 204,
   })
 );
+
+app.use(cookieParser());
 
 const optionsSSL = {
   key: fs.readFileSync("./ServeurFolder/SSL_Certificat/private-key.pem"),
@@ -23,7 +31,6 @@ const optionsSSL = {
   ca: fs.readFileSync("./ServeurFolder/SSL_Certificat/csr.pem"),
 };
 
-app.enable("trust proxy");
 
 app.use(function (req, res, next) {
   if (!req.secure) {
@@ -45,7 +52,6 @@ app.use(passport.session());
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-
 
 // routes
 const homeRoute = require("./Route/home");
