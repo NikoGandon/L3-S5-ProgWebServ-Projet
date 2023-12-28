@@ -16,10 +16,13 @@ function createToken(user) {
   );
 }
 
+/**
+ * @desc Vérifie si l'utilisateur est connecté, si son token est valide et s'il est admin
+ * @param {*} req
+ * @returns 0 s'il n'est pas connecté, -1 si le token est invalide, 1 s'il est valide, 2 si l'utilisateur est admin
+ */
 function checkToken(req) {
-  const token = req.headers.authorization
-    ? req.headers.authorization.split(" ")[1]
-    : null;
+  const token = req.cookies.authToken;
   if (!token) {
     return 0;
   }
@@ -53,7 +56,9 @@ function infoToken(req) {
 function verifyToken(req, res, next) {
   const token = checkToken(req);
   if (token === -1 || token === 0) {
-    return res.status(401).json({ message: "Accès non autorisé aux non-connectés." });
+    return res
+      .status(401)
+      .json({ message: "Accès non autorisé aux non-connectés." });
   }
   next();
 }
@@ -73,4 +78,10 @@ function verifyAdminToken(req, res, next) {
   next();
 }
 
-module.exports = { createToken, checkToken, infoToken, verifyToken, verifyAdminToken };
+module.exports = {
+  createToken,
+  checkToken,
+  infoToken,
+  verifyToken,
+  verifyAdminToken,
+};
