@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { Navigate } from 'react-router-dom';
+import React, { useEffect, useState } from "react";
+import { Navigate } from "react-router-dom";
 
 import axios from "../../utils/axiosConf";
 import Cookies from "universal-cookie";
@@ -10,7 +10,6 @@ import Cookies from "universal-cookie";
  */
 
 const Login = () => {
-  const cookies = new Cookies();
   const [identifier, setidentifier] = useState("");
   const [password, setPassword] = useState("");
   const [isLogged, setIsLogged] = useState(false);
@@ -28,30 +27,23 @@ const Login = () => {
 
   const registerHandler = () => {
     setRegister(true);
-  }
+  };
 
-
+  /**
+   * @desc Envoie du formulaire de connexion et récupération du token dans un cookie
+   * @param {*} event 
+   */
   const handleSubmit = (event) => {
     event.preventDefault();
     axios
-      .post(
-        "https://127.0.0.1:3000/auth/login",
-        {
-          username: identifier,
-          password: password,
-        },
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      )
+      .post("https://localhost:3000/auth/login", {
+        username: identifier,
+        password: password,
+      })
       .then((response) => {
-        console.log("Données reçues avec succès:", response.data);
-        cookies.set("authToken", response.data.token);
-        setMessage(response.data.message);
-        setError(response.data.error);
-        setIsLogged(true); 
+        if (response.data.authStatus) {
+          window.location.reload(true);
+        }
       })
       .catch((error) => {
         console.error("Erreur lors de la requête:", error);
@@ -62,14 +54,9 @@ const Login = () => {
       });
   };
 
-
   return (
     <>
-      {
-        isLogged ? (
-          <Navigate to="/" />
-        ) : null
-      }
+      {isLogged ? <Navigate to="/" /> : null}
       <h1>Connexion</h1>
       <form className="formsAuth" onSubmit={handleSubmit}>
         <label htmlFor="identifier">identifiant</label>
@@ -88,10 +75,6 @@ const Login = () => {
         />
         <button type="submit">Se connecter</button>
       </form>
-      <button onClick={registerHandler}>
-        Je n'ai pas de compte
-      </button>
-      {register ? <Navigate to="/auth/register" /> : null}
     </>
   );
 };
