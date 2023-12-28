@@ -14,7 +14,63 @@ const { CreateSalon } = require("../../logic/Serveur/CreateSalon");
 const { DeleteSalon } = require("../../logic/Serveur/DeleteSalon");
 const { InviteMembre } = require("../../logic/Serveur/InviteMembre");
 const { DeleteMembre } = require("../../logic/Serveur/DeleteMembre");
-const { ModifySalon } = require("../../logic/Serveur/ModifySalon");
+const UserModel = require("../../Model/User.model");
+const ServeurModel = require("../../Model/Serveur.model");
+const MembreServeur = require("../../Model/MembreServeur.model");
+
+const { infoToken } = require("../../Middleware/AuthToken");
+
+/**
+ * @desc Vérifie si l'utilisateur a les droits d'administrateur
+ * @param {*} req
+ * @param {*} res
+ * @param {*} next
+ * @returns
+ */
+
+const checkAdminServ = async (req, res, next) => {
+  const id = infoToken(req).id;
+
+  const user = await UserModel.findOne({ id: id });
+  if (!user) {
+    return res.status(202).json({ message: "Utilisateur non trouvé." });
+  }
+
+  const serveur = await ServeurModel.findOne({ id: req.body.idServeur });
+  if (!serveur) {
+    return res.status(202).json({ message: "Serveur non trouvé." });
+  }
+  // TODO: a terminer
+  next();
+};
+
+const checkMembreServ = async (req, res, next) => {
+  const id = infoToken(req).id;
+
+  const user = await UserModel.findOne({ id: id });
+
+  if (!user) {
+    return res.status(202).json({ message: "Utilisateur non trouvé." });
+  }
+
+  const serveur = await ServeurModel.findOne({ id: req.body.idServeur });
+  if (!serveur) {
+    return res.status(202).json({ message: "Serveur non trouvé." });
+  }
+
+  const membre = await MembreServeur.findOne({
+    idUser: id,
+    idServeur: req.body.idServeur,
+  });
+
+  if (!membre) {
+    return res
+      .status(202)
+      .json({ message: "Vous n'êtes pas membre du serveur." });
+  }
+
+  next();
+};
 
 /**
  * @swagger
