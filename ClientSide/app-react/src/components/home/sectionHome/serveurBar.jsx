@@ -1,14 +1,33 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+
+import axios from "../../../utils/axiosConf";
 
 /**
- * @desc Renvoie la liste de tous les serveurs dont l'utilisateur est membre
- * 
+ * @desc Affiche tous les serveurs dont l'utilisateur est membre
+ *
  */
 
 const ServeurBar = () => {
+  const [serveurs, setServeurs] = useState([]);
+
+  useEffect(() => {
+    axios.get("https://localhost:3000/user/get-serveurs").then((res) => {
+      setServeurs(res.data);
+    });
+  }, []);
+
+  function navigateToServeur(idServeur) {}
+
   return (
     <>
-      <h1>Bar</h1>
+      {serveurs
+        ? serveurs.map((serveur) => (
+            <div key={serveur.id} onClick={() => { navigateToServeur(serveur.id) }}>
+              <img src={serveur.image} alt="serveur" />
+              <div className="NomServeur">{serveur.nom}</div>
+            </div>
+          ))
+        : null}
     </>
   );
 };
