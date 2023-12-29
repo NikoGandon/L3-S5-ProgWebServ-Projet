@@ -3,9 +3,9 @@ import "./groupe.css";
 
 import axios from "../../utils/axiosConf";
 
-const Groupe = () => {
+const Groupe = ({IDGroupe}) => {
 
-  const [groupe, setGroupe] = useState();
+  const [groupe, setGroupe] = useState(IDGroupe);
 
   useEffect(() => {
     axios.get("https://localhost:3000/user/get-groupes").then((res) => {
