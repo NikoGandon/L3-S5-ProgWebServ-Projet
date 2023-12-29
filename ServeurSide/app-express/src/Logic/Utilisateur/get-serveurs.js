@@ -11,8 +11,8 @@ const getServeurs = async (req, res) => {
 
     try {
         const User = await UserModel.findOne( {where :{ id: id }});
-        const MembreServeur = await MembreServeurModel.findOne( {where :{ userId: User.id }});
-        if (!MembreServeur) return res.status(200).json({ error: "Vous n'êtes pas membre d'un Serveur" });
+        const MembreServeur = await MembreServeurModel.findOne( {where :{ idUser: User.id }});
+        if (!MembreServeur) return res.status(200).json({ error: "Vous n'êtes pas membre d'un Serveur", Serveurs: [] });
         let Serveurs = [];
         for (let i = 0; i < MembreServeur.length; i++) {
             const Serveur = await ServeurModel.findOne( {where :{ id: MembreServeur[i].idUser }});

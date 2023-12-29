@@ -12,7 +12,7 @@ const getGroupes = async (req, res) => {
     try {
         const User = await UserModel.findOne( {where :{ id: id }});
         const MembreGroupe = await MembreGroupeModel.findOne( {where :{ userId: User.id }});
-        if (!MembreGroupe) return res.status(200).json({ error: "Vous n'êtes pas membre d'un groupe" });
+        if (!MembreGroupe) return res.status(200).json({ error: "Vous n'êtes pas membre d'un Groupe", Groupes: [] });
         let Groupes = [];
         for (let i = 0; i < MembreGroupe.length; i++) {
             const Groupe = await GroupeModel.findOne( {where :{ id: MembreGroupe[i].userId }});
