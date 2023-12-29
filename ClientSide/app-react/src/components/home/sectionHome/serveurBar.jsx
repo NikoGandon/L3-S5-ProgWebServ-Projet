@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 
 import axios from "../../../utils/axiosConf";
 
@@ -7,7 +8,7 @@ import axios from "../../../utils/axiosConf";
  *
  */
 
-const ServeurBar = () => {
+const ServeurBar = ({ onRevenirAccueil }) => {
   const [serveurs, setServeurs] = useState([]);
 
   useEffect(() => {
@@ -16,13 +17,19 @@ const ServeurBar = () => {
     });
   }, []);
 
-  function navigateToServeur(idServeur) {}
-
   return (
     <>
+      <div className="button_home" onClick={onRevenirAccueil}>
+          <img src="../../../images/plus.png" alt="Home" />
+      </div>
       {serveurs.length > 0
         ? serveurs.map((serveur) => (
-            <div key={serveur.id} onClick={() => { navigateToServeur(serveur.id) }}>
+            <div
+              key={serveur.id}
+              onClick={() => {
+                navigateToServeur(serveur.id);
+              }}
+            >
               <img src={serveur.image} alt="serveur" />
               <div className="NomServeur">{serveur.nom}</div>
             </div>
