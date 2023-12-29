@@ -3,8 +3,8 @@ import React, { useState, useEffect } from "react";
 /**
  * @desc Affiche l'interface d'un serveur (liste des salons, liste des membres, liste des messages)
  */
-const Serveur = () => {
-  const [idServeur, setIdServeur] = useState(0);
+const Serveur = ({IDServeur}) => {
+  const [idServeur, setIdServeur] = useState(IDServeur);
 
   useEffect(() => {
     axios
