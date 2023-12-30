@@ -6,18 +6,18 @@ import MessagePrv from "../../MP/mp";
 import Profil from "../../user/profil";
 import Param from "../../user/param.jsx";
 
-const Content = ({ typeContent, IDContent }) => {
+const Content = ({ contexte }) => {
   let content = null;
 
-  switch (typeContent) {
+  switch (contexte.contexteUser) {
     case "serveur":
-      content = <Serveur IDServeur={IDContent} />;
+      content = <Serveur IDServeur={contexte.contexteID} />;
       break;
     case "groupe":
-      content = <Groupe IDGroupe={IDContent} />;
+      content = <Groupe IDGroupe={contexte.contexteID} />;
       break;
     case "MP":
-      content = <MessagePrv IDMP={IDContent} />;
+      content = <MessagePrv IDMP={contexte.contexteID} />;
       break;
     case "profil":
       content = <Profil />;

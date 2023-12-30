@@ -13,23 +13,21 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
  *
  */
 const Home = () => {
-
-  const [context, setContext] = useState("accueil"); // ["accueil", "serveur", "groupe", "MP", "param"]
-  const [contextID, setContextID] = useState(null); // [idServeur, idGroupe, idMP]
+  const [contexte, setContexte] = useState({
+    contexteUser: "accueil", // accueil, serveur, groupe, MP, profil, param
+    contexteID: null,        // ID du serveur, groupe, MP
+  });
 
   function handleServeurSelec(id) {
-    setContext("serveur");
-    setServeurSelec(id);
+    setContexte(["serveur", id]);
   }
 
   function handleMPSelec(id) {
-    setContext("MP");
-    setMPSelec(id);
+    setContexte(["MP", id]);
   }
 
   function handleGroupeSelec(id) {
-    setContext("groupe");
-    setContextID(id);
+    setContexte(["groupe", id]);
   }
 
   /**
@@ -37,14 +35,12 @@ const Home = () => {
    *
    */
 
-  function handleParam(id) {
-    setContext("param");
-    setContextID(null);
+  function handleParam() {
+    setContexte(["param", null]);
   }
 
   const handleRevenirAccueil = () => {
-    setContext("accueil");
-    setContextID(null);
+    setContexte(["accueil", null]);
   };
 
   return (
@@ -59,18 +55,12 @@ const Home = () => {
       <div id="barreLaterale">
         <BarreLat
           {...{
-            context: context,
+            context: contexte.contexteUser,
           }}
         />
       </div>
       <div id="content">
-        <Content
-          {...{
-            typeContent: context,
-            IDContent: contextID,
-          }}
-          onChangeBarreLat={handleParam}
-        />
+        <Content {...{ contexte }} onChangeBarreLat={handleParam} />
       </div>
     </>
   );
