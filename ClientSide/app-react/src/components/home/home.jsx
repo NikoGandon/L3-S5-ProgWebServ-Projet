@@ -13,32 +13,23 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
  *
  */
 const Home = () => {
-  const [serveurSelec, setServeurSelec] = useState(null);
-  const [MPSelec, setMPSelec] = useState(null);
-  const [groupeSelec, setGroupeSelec] = useState(null);
-  const [param, setParam] = useState(false);
 
-  const [accueil, setAccueil] = useState(true);
+  const [context, setContext] = useState("accueil"); // ["accueil", "serveur", "groupe", "MP", "param"]
+  const [contextID, setContextID] = useState(null); // [idServeur, idGroupe, idMP]
 
   function handleServeurSelec(id) {
+    setContext("serveur");
     setServeurSelec(id);
-    setMPSelec(null);
-    setGroupeSelec(null);
-    setAccueil(false);
   }
 
   function handleMPSelec(id) {
+    setContext("MP");
     setMPSelec(id);
-    setServeurSelec(null);
-    setGroupeSelec(null);
-    setAccueil(false);
   }
 
   function handleGroupeSelec(id) {
-    setGroupeSelec(id);
-    setMPSelec(null);
-    setServeurSelec(null);
-    setAccueil(false);
+    setContext("groupe");
+    setContextID(id);
   }
 
   /**
@@ -47,15 +38,13 @@ const Home = () => {
    */
 
   function handleParam(id) {
-    setGroupeSelec(id);
-    setMPSelec(null);
-    setServeurSelec(null);
-    setAccueil(false);
+    setContext("param");
+    setContextID(null);
   }
 
   const handleRevenirAccueil = () => {
-    setServeurSelec(null);
-    setAccueil(true);
+    setContext("accueil");
+    setContextID(null);
   };
 
   return (
@@ -70,27 +59,15 @@ const Home = () => {
       <div id="barreLaterale">
         <BarreLat
           {...{
-            context: serveurSelec ? "serveur" : param ? "param" : "accueil",
+            context: context,
           }}
         />
       </div>
       <div id="content">
         <Content
           {...{
-            typeContent: serveurSelec
-              ? "serveur"
-              : MPSelec
-              ? "MP"
-              : groupeSelec
-              ? "groupe"
-              : "accueil",
-            IDContent: serveurSelec
-              ? serveurSelec
-              : MPSelec
-              ? MPSelec
-              : groupeSelec
-              ? groupeSelec
-              : null,
+            typeContent: context,
+            IDContent: contextID,
           }}
           onChangeBarreLat={handleParam}
         />
