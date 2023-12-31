@@ -12,11 +12,7 @@ import axios from "./utils/axiosConf";
 import "./App.css";
 
 import HomeUnconnected from "./components/home/homeUnconnected";
-import Home from "./components/Home/home";
-import Authentication from "./components/authentification/authentication";
-import Parametre from "./components/parametre/parametre";
-import LoginSuccess from "./components/authentification/loginSuccess";
-import Groupe from "./components/groupe/groupe";
+import Home from "./components/home/home";
 
 function App() {
   const [estConnecte, setEstConnecte] = useState(false);
