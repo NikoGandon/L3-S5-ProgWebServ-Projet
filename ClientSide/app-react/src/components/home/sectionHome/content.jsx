@@ -9,20 +9,19 @@ import Param from "../../user/param.jsx";
 import { UserContext } from "../../../contexts/user.context";
 
 const Content = () => {
-  const contexte = useContext(UserContext);
+  const { contexteUser } = useContext(UserContext);
 
   let content = null;
-  console.log(contexte);
 
-  switch (contexte.contexteUser) {
+  switch (contexteUser) {
     case "serveur":
-      content = <Serveur IDServeur={contexte.contexteID} />;
+      content = <Serveur />;
       break;
     case "groupe":
-      content = <Groupe IDGroupe={contexte.contexteID} />;
+      content = <Groupe />;
       break;
     case "MP":
-      content = <MessagePrv IDMP={contexte.contexteID} />;
+      content = <MessagePrv />;
       break;
     case "profil":
       content = <Profil />;

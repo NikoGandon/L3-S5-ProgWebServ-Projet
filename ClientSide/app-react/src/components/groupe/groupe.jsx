@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useContext, useState } from "react";
 import "./groupe.css";
 
 import axios from "../../utils/axiosConf";
+import { UserContext } from "../../contexts/user.context";
 
 /** 
  * @INFO Cette partie est dans src/components/home/sectionHome/BarreLatHome.jsx  
@@ -98,5 +99,28 @@ const Groupe = () => {
   );
 };
 */
+
+/**
+ * @desc Affiche l'interface d'un groupe (liste des membres, liste des messages)
+ */
+const Groupe = () => {
+  const { contexteID } = useContext(UserContext);
+  const [message, setMessage] = useState([]); //TODO : Récupérer les messages du groupe & les afficher
+
+  useEffect(() => {
+    axios
+      .get("https://localhost:3000/groupe/", {
+        params: {
+          id: contexteID,
+        },
+      })
+      .then((res) => {
+        console.log(res);
+        setMessage(res.data.message);
+      });
+  }, []);
+
+  return <></>;
+};
 
 export default Groupe;
