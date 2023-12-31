@@ -1,16 +1,20 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
+
+import axios from "../../utils/axiosConf";
+import { UserContext } from "../../contexts/user.context";
+
 
 /**
  * @desc Affiche l'interface d'un serveur (liste des salons, liste des membres, liste des messages)
  */
-const Serveur = ({IDServeur}) => {
-  const [idServeur, setIdServeur] = useState(IDServeur);
+const Serveur = () => {
+  const { contexteID } = useContext(UserContext);
 
   useEffect(() => {
     axios
       .get("https://localhost:3000/serveur/", {
         params: {
-          id: idServeur,
+          id: contexteID,
         },
       })
       .then((res) => {});

@@ -1,5 +1,5 @@
 import React from "react";
-import Content from "./sectionHome/content";
+import Content from "./sectionHome/Content";
 import ServeurBar from "./sectionHome/serveurBar";
 import BarreLat from "./sectionHome/barreLat";
 import { ContextUserProvider } from "../../contexts/user.context";
