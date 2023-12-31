@@ -383,7 +383,7 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "127.0.0.1:3000/Serveur/Salon/",
+									"raw": "https://127.0.0.1:3000/Serveur/Salon/",
 									"host": [
 										"127",
 										"0",
@@ -472,7 +472,7 @@
 								"method": "DELETE",
 								"header": [],
 								"url": {
-									"raw": "127.0.0.1:3000/Serveur/Salon",
+									"raw": "https://127.0.0.1:3000/Serveur/Salon",
 									"host": [
 										"127",
 										"0",
@@ -563,7 +563,7 @@
 						"method": "PUT",
 						"header": [],
 						"url": {
-							"raw": "127.0.0.1:3000/",
+							"raw": "https://127.0.0.1:3000/",
 							"host": [
 								"127",
 								"0",
