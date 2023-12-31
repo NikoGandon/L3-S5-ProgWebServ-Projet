@@ -12,6 +12,7 @@ const { BanMembre } = require("../../logic/Serveur/BanMembre");
 const { UnbanMembre } = require("../../logic/Serveur/UnbanMembre");
 const { InviteMembre } = require("../../Logic/Serveur/AddMembre");
 const { DeleteMembre } = require("../../logic/Serveur/DeleteMembre");
+const { GetSalon } = require("../../Logic/Serveur/GetSalon.js");
 
 const UserModel = require("../../Model/User.model");
 const ServeurModel = require("../../Model/Serveur.model");
@@ -187,5 +188,14 @@ routerServeur.delete("/ban", (req, res) => {
 });
 
 routerServeur.use("/invite", inviteRoute);
+
+routerServeur.get("/get-salons", (req, res) => {
+  if (!req.body.idServeur) {
+    res.status(400).json({
+      message: "Veuillez remplir tous les champs",
+    });
+  }
+  GetSalon(req, res);
+});
 
 module.exports = routerServeur;
