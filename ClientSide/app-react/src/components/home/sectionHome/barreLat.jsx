@@ -1,40 +1,38 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 
-import   BarreLatHome   from "./BarreLatContext/barreLatHome";
-//import { barreLatServeur } from "./BarreLatContext/barreLatServeur";
+import BarreLatHome from "./BarreLatContext/barreLatHome";
+import BarreLatServeur from "./BarreLatContext/barreLatServeur";
 //import { barreLatParam } from "./BarreLatContext/barreLatParam"
+
+import { UserContext } from "../../../contexts/user.context";
 
 /**
  * @desc Affiche la barre latérale - peut changer en fonction du contexte
- * @param {*} context Chaque composant parent peut envoyer un contexte différent
- *                    Par exemple, le composant Home envoie le contexte "home"
- *                    Le composant Serveur envoie le contexte "serveur"
- *                    Le composant Parametre envoie le contexte "Param"
  * @returns
  */
-const BarreLat = ({ context }) => {
-  const [contexte, setContexte] = useState(context);
-
+const BarreLat = () => {
+  const { contexteUser, contexteID, updateContexte } = useContext(UserContext);
+  
   let element = null;
 
-  switch (contexte) {
+  const handleClick = (nameContext, IDContext) => {
+    updateContexte({ contexteUser: nameContext, contexteID: IDContext });
+  };
+
+  switch (contexteUser) {
     case "accueil":
-      element = <BarreLatHome />;
+      element = <BarreLatHome handleClick={handleClick}/>;
       break;
     case "serveur":
-      element = <p>{context}</p>;
+      element = <BarreLatServeur handleClick={handleClick}/>;
       break;
     case "param":
-      element = <p>{context}</p>;
+      element = <p>{contexteUser}</p>;
       break;
     default:
   }
 
-  return (
-    <>
-      {element}
-    </>
-  );
+  return <>{element}</>;
 };
 
 export default BarreLat;

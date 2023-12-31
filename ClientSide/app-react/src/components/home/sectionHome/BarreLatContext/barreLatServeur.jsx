@@ -1,22 +1,49 @@
-const { useState, useEffect } = require("react");
+import React, { useEffect, useState, useContext } from "react";
+import axios from "../../../../utils/axiosConf";
+import { UserContext } from "../../../../contexts/user.context";
 
-const { axios } = require("../../../utils/axiosConf");
+/**
+ * @desc Récupère les salons d'un serveur
+ * @param
+ */
 
-const barreLatServeur = (serveurID) => {
+const barreLatServeur = ({ handleClick }) => {
+  const { contexteUser, contexteID, updateContexte } = useContext(UserContext);
+  const [salons, setSalons] = useState([]);
+
   useEffect(() => {
     axios
-      .get("https://localhost:3000/serveur", {
+      .get("https://localhost:3000/serveur/get-salons", {
         params: {
-          idServeur: serveurID,
+          idServeur: contexteID,
         },
       })
       .then((res) => {
-        setServeur(res.data);
+        setSalons(res.data);
       })
       .catch((err) => {
         console.log(err);
       });
   }, []);
+
+  return (
+    <>
+      {salons.length > 0
+        ? salons.map((salon) => {
+            return (
+              <p
+                key={salon.idSalon}
+                onClick={() => {
+                  handleClick("serveur", salon.idSalon);
+                }}
+              >
+                {salon.nomSalon}
+              </p>
+            );
+          })
+        : null}
+    </>
+  );
 };
 
 export default barreLatServeur;
