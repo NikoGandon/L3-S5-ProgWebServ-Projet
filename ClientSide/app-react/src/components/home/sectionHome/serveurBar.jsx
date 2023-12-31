@@ -1,14 +1,17 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
 
 import axios from "../../../utils/axiosConf";
+import { UserContext } from "../../../contexts/user.context";
+
 
 /**
  * @desc Affiche tous les serveurs dont l'utilisateur est membre
- *
- */
+*
+*/
 
 const ServeurBar = ({ onRevenirAccueil }) => {
+  const { contexteUser, contexteID, updateContexte } = useContext(UserContext);
   const [serveurs, setServeurs] = useState([]);
 
   useEffect(() => {
@@ -27,7 +30,7 @@ const ServeurBar = ({ onRevenirAccueil }) => {
             <div
               key={serveur.id}
               onClick={() => {
-                navigateToServeur(serveur.id);
+                updateContexte("serveur", serveur.id);
               }}
             >
               <img src={serveur.image} alt="serveur" />

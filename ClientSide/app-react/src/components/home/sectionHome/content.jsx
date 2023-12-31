@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 
 import Serveur from "../../serveur/serveur";
 import Groupe from "../../groupe/groupe";
@@ -6,18 +6,23 @@ import MessagePrv from "../../MP/mp";
 import Profil from "../../user/profil";
 import Param from "../../user/param.jsx";
 
-const Content = ({ typeContent, IDContent }) => {
-  let content = null;
+import { UserContext } from "../../../contexts/user.context";
 
-  switch (typeContent) {
+const Content = () => {
+  const contexte = useContext(UserContext);
+
+  let content = null;
+  console.log(contexte);
+
+  switch (contexte.contexteUser) {
     case "serveur":
-      content = <Serveur IDServeur={IDContent} />;
+      content = <Serveur IDServeur={contexte.contexteID} />;
       break;
     case "groupe":
-      content = <Groupe IDGroupe={IDContent} />;
+      content = <Groupe IDGroupe={contexte.contexteID} />;
       break;
     case "MP":
-      content = <MessagePrv IDMP={IDContent} />;
+      content = <MessagePrv IDMP={contexte.contexteID} />;
       break;
     case "profil":
       content = <Profil />;

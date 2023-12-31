@@ -27,8 +27,8 @@ function App() {
         console.log("Vérification de l'authentification...");
         const response = await axios.get(
           "https://localhost:3000/auth/check-auth"
-          );
-          
+        );
+
         console.log("fin du fetch...");
 
         if (response.data.authenticated) {
@@ -56,11 +56,11 @@ function App() {
           }
         />
         <Route path="/accueil" element={<Navigate to="/" />} />
-        <Route path="/auth" element={<Authentication />} />
+        {/*<Route path="/auth" element={<Authentication />} />
         <Route path="/auth/success" element={<LoginSuccess />} />
         <Route path="/parametre" element={<Parametre />} />
         <Route path="/auth/login/success" element={<LoginSuccess />} />
-        <Route path="/groupe" element={<Groupe />} />
+        <Route path="/groupe" element={<Groupe />} />*/}
       </Routes>
     </Router>
   );
