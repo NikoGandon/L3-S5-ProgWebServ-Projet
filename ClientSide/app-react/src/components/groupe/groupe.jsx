@@ -3,10 +3,13 @@ import "./groupe.css";
 
 import axios from "../../utils/axiosConf";
 
-const Groupe = ({IDGroupe}) => {
+/** 
+ * @INFO Cette partie est dans src/components/home/sectionHome/BarreLatHome.jsx  
+const Groupe = () => {
 
-  const [groupe, setGroupe] = useState(IDGroupe);
-
+  const { contexteID } = useContext(UserContext);
+  const [groupe, setGroupe] = useState([]);
+  
   useEffect(() => {
     axios.get("https://localhost:3000/user/get-groupes").then((res) => {
       console.log(res);
@@ -94,5 +97,6 @@ const Groupe = ({IDGroupe}) => {
     </>
   );
 };
+*/
 
 export default Groupe;
