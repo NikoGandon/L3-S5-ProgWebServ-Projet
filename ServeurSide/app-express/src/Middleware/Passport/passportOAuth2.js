@@ -26,7 +26,16 @@ passport.use(
           where: { email: userOAUTH.email },
         });
 
-        const existUserOAUTH = await OAuth2Model.findOne({ where: { userOAuthId: userOAUTH.id } });
+        const isBanned = await BanModel.findOne({
+          where: { idUser: existUser.id },
+        });
+        if (isBanned) {
+          return done(null, false, { message: "Vous êtes banni" });
+        }
+
+        const existUserOAUTH = await OAuth2Model.findOne({
+          where: { userOAuthId: userOAUTH.id },
+        });
 
         if (existUser && existUserOAUTH) {
           return done(null, existUser, { message: "Connexion en cours" });
@@ -62,12 +71,12 @@ passport.use(
 );
 
 passport.serializeUser((user, done) => {
-  done(null, user, {message : "serialize done"});
+  done(null, user, { message: "serialize done" });
 });
 
 passport.deserializeUser((user, done) => {
   UserModel.findById(user.id, (err, user) => {
-    done(err, user, {message : "deserialize done"});
+    done(err, user, { message: "deserialize done" });
   });
 });
 
