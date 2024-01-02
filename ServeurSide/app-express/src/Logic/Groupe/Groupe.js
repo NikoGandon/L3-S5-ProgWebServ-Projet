@@ -1,9 +1,7 @@
-const express = require("express");
-const router = express.Router();
 const Groupe = require("../../Model/Groupe.model");
 const Membre = require("../../Model/Lien/MembreGroupe.model");
 const Message = require("../../Model/Message/Message.model");
-const MessageGroupe = require("../../Model/Lien/MessageGroupe.model");
+const MessageGroupe = require("../../Model/Message/MessageGroupe.model");
 
 /**
  * @description Page du groupe
