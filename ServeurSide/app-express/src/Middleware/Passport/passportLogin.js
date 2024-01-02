@@ -34,6 +34,7 @@ passport.use(
       const isBanned = await BanModel.findOne({
         where: { idUser: existsUser.id },
       });
+      
       if (isBanned) {
         return done(null, false, { message: "Vous êtes banni" });
       }
