@@ -31,7 +31,6 @@ const optionsSSL = {
   ca: fs.readFileSync("./ServeurFolder/SSL_Certificat/csr.pem"),
 };
 
-
 app.use(function (req, res, next) {
   if (!req.secure) {
     return res.redirect("https://" + req.headers.host + req.url);
@@ -59,12 +58,14 @@ const AuthRoute = require("./Route/Auth/Auth");
 const UserRoute = require("./Route/User/User");
 const ServeurRoute = require("./Route/Serveur/serveur");
 const GroupeRoute = require("./Route/Groupe/groupe");
+const MPRoute = require("./Route/MessagePrive/messageprive");
 
 app.use("/", homeRoute);
 app.use("/Auth", AuthRoute);
 app.use("/User", verifyToken, UserRoute);
 app.use("/Serveur", verifyToken, ServeurRoute);
 app.use("/Groupe", verifyToken, GroupeRoute);
+app.use("/MP", verifyToken, MPRoute);
 
 const httpsServer = https.createServer(optionsSSL, app);
 const HTTPS_PORT = process.env.PORT;
