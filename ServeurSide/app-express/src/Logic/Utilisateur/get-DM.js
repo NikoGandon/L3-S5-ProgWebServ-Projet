@@ -12,7 +12,7 @@ const getGroupes = async (req, res) => {
   console.log("id user : " + id);
 
   try {
-    const utilisateur = await UserModel.findByPk(id, {
+    /*const utilisateur = await UserModel.findByPk(id, {
       include: [
         {
           model: GroupeModel,
@@ -68,6 +68,73 @@ const getGroupes = async (req, res) => {
             },
           ],
           order: [[MessageModel, "date", "DESC"]],
+          limit: 1,
+        },
+      ],
+    });*/
+
+    const utilisateur = await UserModel.findByPk(id, {
+      include: [
+        {
+          model: GroupeModel,
+          as: "groupes",
+          through: {
+            attributes: [],
+          },
+          include: [
+            {
+              model: MembreGroupeModel,
+              as: "membres",
+              through: {
+                attributes: [],
+              },
+              include: [
+                {
+                  model: UserModel,
+                  as: "utilisateur",
+                  attributes: ["id", "username", "email", "lienPP"],
+                },
+              ],
+            },
+            {
+              model: MessageGroupeModel,
+              as: "messages",
+              through: {
+                attributes: [],
+              },
+              include: [
+                {
+                  model: MessageModel,
+                  as: "message",
+                  attributes: ["id", "contenu", "createdAt"],
+                },
+              ],
+              order: [["message", "createdAt", "DESC"]],
+              limit: 1,
+            },
+          ],
+          order: [
+            [
+              { model: MessageGroupeModel, as: "messages" },
+              "createdAt",
+              "DESC",
+            ],
+          ],
+        },
+        {
+          model: MessagePriveModel,
+          as: "messagesPrives",
+          through: {
+            attributes: [],
+          },
+          include: [
+            {
+              model: MessageModel,
+              as: "message",
+              attributes: ["id", "contenu", "createdAt"],
+            },
+          ],
+          order: [["message", "date", "DESC"]],
           limit: 1,
         },
       ],
