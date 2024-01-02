@@ -13,15 +13,27 @@ const UserModel = require("../User.model");
 
 const MembreGroupe = sequelize.define(
   "MembreGroupe",
-  {},
+  {
+    userId: {
+      type: DataTypes.INTEGER,
+      primaryKey: true,
+    },
+    groupeId: {
+      type: DataTypes.INTEGER,
+      primaryKey: true,
+    },
+  },
   {
     freezeTableName: true,
     timestamps: false,
   }
 );
 
-UserModel.belongsToMany(GroupeModel, { through: MembreGroupe });
-GroupeModel.belongsToMany(UserModel, { through: MembreGroupe });
+UserModel.hasMany(MembreGroupe, { foreignKey: "userId" });
+GroupeModel.hasMany(MembreGroupe, { foreignKey: "groupeId" });
+
+MembreGroupe.belongsTo(UserModel, { foreignKey: "userId", as: "utilisateur" });
+MembreGroupe.belongsTo(GroupeModel, { foreignKey: "groupeId", as: "groupe" });
 
 MembreGroupe.sync();
 
