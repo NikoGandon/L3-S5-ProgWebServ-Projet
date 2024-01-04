@@ -16,9 +16,12 @@ const ServeurBar = ({ onRevenirAccueil }) => {
 
   useEffect(() => {
     axios.get("https://localhost:3000/user/get-serveurs").then((res) => {
-      setServeurs(res.data);
+      console.log(res.data.Serveurs);
+      setServeurs(res.data.Serveurs);
     });
   }, []);
+
+  console.log(serveurs);
 
   return (
     <>
@@ -33,11 +36,11 @@ const ServeurBar = ({ onRevenirAccueil }) => {
                 updateContexte("serveur", serveur.id);
               }}
             >
-              <img src={serveur.image} alt="serveur" />
-              <div className="NomServeur">{serveur.nom}</div>
+              <img src={serveur.image} alt={serveur.nom} />
+              <div className="NomServeur">Coucou, {serveur.nomServeur}</div>
             </div>
           ))
-        : null}
+        : "pas de serveur ?"}
     </>
   );
 };
