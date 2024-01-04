@@ -1,4 +1,4 @@
-async function getConversationMessages(idCouple) {
+/*async function getConversationMessages(idCouple) {
   try {
     const messages = await Message.findAll({
       where: {
@@ -201,4 +201,166 @@ socket.on("voirmessage", ({ idMessage, idServeur }) => {
     idUser: idUser[socket.id],
     idMessage,
   });
-});
+});*/
+
+/////////////////////// Reset ///////////////////////////
+
+const MessageModele = require("../Model/Message/Message.model");
+const MessageGroupeModele = require("../Model/Message/MessageGroupe.model");
+const MembreGroupeModele = require("../Model/Lien/MembreGroupe.model");
+
+const { socketConfig } = require("../Config/ioSocket");
+const { Server } = require("socket.io");
+
+
+function handleGroupeMessage(socket) {
+  const io = new Server(socket.Server, socketConfig);
+  socket.on("envoiemessagegr", async ({ idGroup, contenu }) => {
+    try {
+      const userestGroup = await MembreGroupeModele.findOne({
+        where: {
+          userId: socket.user.id,
+          groupeId: idGroup,
+        },
+      });
+
+      if (!userestGroup) {
+        throw new Error("L'utilisateur ne fait pas partie de ce groupe.");
+      }
+      const newMessage = await MessageModele.create({
+        userId: socket.user.id,
+        contenu: contenu,
+      });
+
+      const newMessageGroupe = await MessageGroupeModele.create({
+        messageId: newMessage.id,
+        groupeId: idGroup,
+      });
+
+      io.to(idGroup).emit("groupMessage", newMessage);
+    } catch (error) {
+      console.error(
+        "Erreur lors de l'envoi du message dans le groupe :",
+        error
+      );
+      socket.emit("envoiemessagegr", { message: error.message });
+    }
+  });
+
+  socket.on("deleteGroupMessage", async ({ idMessage, idGroup }) => {
+    try {
+      const isMessageAuteur = await MessageModele.findOne({
+        where: {
+          id: idMessage,
+          userId: socket.user.id,
+        },
+      });
+
+      if (!isMessageAuteur) {
+        throw new Error(
+          "L'utilisateur n'est pas autorisé à supprimer ce message."
+        );
+      }
+
+      await Message.destroy({
+        where: {
+          id: idMessage,
+        },
+      });
+
+      await MessageGroupeModele.destroy({
+        where: {
+          messageId: idMessage,
+          groupeId: idGroup,
+        },
+      });
+
+      io.to(idGroup).emit("groupMessageDeleted", idMessage);
+    } catch (error) {
+      console.error(
+        "Erreur lors de la suppression du message dans le groupe :",
+        error
+      );
+      socket.emit("deleteGroupMessageError", { message: error.message });
+    }
+  });
+}
+
+const MembreServeurModele = require("../Model/MembreServeur.model");
+const MessageSalonModele = require("../Model/Message/MessageSalon.model");
+
+function handleSalonMessage(socket) {
+  const io = new Server(socket.Server, socketConfig);
+  io.on("envoieMessageSrv", async ({ idSalon, contenu }) => {
+    try {
+      const userestSrv = await MembreServeurModele.findOne({
+        where: {
+          idUser: socket.user.id,
+          idSalon: idSalon,
+        },
+      });
+
+      if (!userestSrv) {
+        throw new Error("L'utilisateur ne fait pas partie de ce serveur.");
+      }
+
+      const newMessage = await MessageModele.create({
+        idUser: socket.user.id,
+        contenu: contenu,
+      });
+
+      await MessageSalonModele.create({
+        idMessage: newMessage.id,
+        idSalon: idSalon,
+      });
+
+      io.to(idSalon).emit("serveurMessage", newMessage);
+    } catch (error) {
+      console.error(
+        "Erreur lors de l'envoi du message dans le serveur :",
+        error
+      );
+      socket.emit("envoieMessageSrv", { message: error.message });
+    }
+  });
+
+  socket.on("deleteServeurMessage", async ({ idMessage, idSalon }) => {
+    try {
+      const isMessageAuteur = await MessageModele.findOne({
+        where: {
+          id: idMessage,
+          userId: socket.user.id,
+        },
+      });
+
+      if (!isMessageAuteur) {
+        throw new Error(
+          "L'utilisateur n'est pas autorisé à supprimer ce message."
+        );
+      }
+
+      await Message.destroy({
+        where: {
+          id: idMessage,
+        },
+      });
+
+      await MessageSalonModele.destroy({
+        where: {
+          idMessage: idMessage,
+          idSalon: idSalon,
+        },
+      });
+
+      io.to(idSalon).emit("serveurMessageDeleted", idMessage);
+    } catch (error) {
+      console.error(
+        "Erreur lors de la suppression du message dans le serveur :",
+        error
+      );
+      socket.emit("deleteServeurMessageError", { message: error.message });
+    }
+  });
+}
+
+module.exports = { handleGroupeMessage, handleSalonMessage };
