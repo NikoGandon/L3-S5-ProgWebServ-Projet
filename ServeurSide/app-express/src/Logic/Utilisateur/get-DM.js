@@ -15,48 +15,30 @@ const getGroupes = async (req, res) => {
 
   try {
     let utilisateur = await UserModel.findOne({ where: { id: id } });
-    if (!utilisateur)
-      return res.status(200).json({ error: "Utilisateur non trouvé" });
-    let groupes = await MembreGroupeModel.findAll({
+    let groupesMembre = await MembreGroupeModel.findAll({
       where: { userId: utilisateur.id },
     });
-    if (groupes.length > 0) {
-      var messagesGroupe = await MessageGroupeModel.findAll(
-        {
-          where: { idGroupe: groupes.id },
-        },
-        { order: [["updatedAt", "DESC"]], limit: 1 }
-      );
+
+    console.log("groupesMembre : " + groupesMembre.length);
+
+    let Groupes = [];
+
+    if (groupesMembre.length == 0) return res.status(200).json({ message: "Aucun groupe..." });
+
+    for (let i = 0; i < groupesMembre.length; i++) {
+
+      const groupe = await GroupeModel.findOne({
+        where: { id: groupesMembre[i].groupeId },
+      });
+
+      Groupes.push({
+        id: groupe.id,
+        nomGroupe: groupe.nom,
+        imgLink: groupe.lienImage,
+      });
     }
-    let messagesPrives = await MessagePriveModel.findAll(
-      {
-        where: {
-          [Op.or]: [
-            { idAuteur: utilisateur.id },
-            { idDestinataire: utilisateur.id },
-          ],
-        },
-      },
-      { order: [["updatedAt", "DESC"]] }
-    );
 
-    utilisateur.groupes = {
-      groupes: groupes,
-      messagesGroupe: messagesGroupe,
-    };
-
-    utilisateur.messagesPrives = messagesPrives;
-
-    return res.status(200).json({
-      groupes:
-        utilisateur.groupes.length > 0
-          ? utilisateur.groupes.groupes
-          : "Vous n'êtes membre d'aucun groupe",
-      messagesPrives:
-        utilisateur.messagesPrives.length > 0
-          ? utilisateur.messagesPrives
-          : "Vous n'avez aucun message privé",
-    });
+    return res.status(200).json({ Groupes: Groupes });
     
   } catch (err) {
     console.log(err);
