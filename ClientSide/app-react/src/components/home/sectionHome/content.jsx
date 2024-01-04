@@ -20,9 +20,6 @@ const Content = () => {
     case "groupe":
       content = <Groupe />;
       break;
-    case "MP":
-      content = <MessagePrv />;
-      break;
     case "profil":
       content = <Profil />;
       break;
