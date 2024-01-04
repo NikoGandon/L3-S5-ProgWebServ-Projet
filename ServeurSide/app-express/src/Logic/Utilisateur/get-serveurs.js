@@ -11,12 +11,12 @@ const getServeurs = async (req, res) => {
 
     try {
         const User = await UserModel.findOne( {where :{ id: id }});
-        const MembreServeur = await MembreServeurModel.findOne( {where :{ idUser: User.id }});
-        if (!MembreServeur) return res.status(200).json({ error: "Vous n'êtes pas membre d'un Serveur", Serveurs: [] });
+        const MembreServeur = await MembreServeurModel.findAll( {where :{ idUser: User.id }});
+        if (MembreServeur.length == 0) return res.status(200).json({ error: "Vous n'êtes pas membre d'un Serveur", Serveurs: [] });
         let Serveurs = [];
         for (let i = 0; i < MembreServeur.length; i++) {
-            const Serveur = await ServeurModel.findOne( {where :{ id: MembreServeur[i].idUser }});
-            const NombreMembre = await MembreServeurModel.count({ where: { ServeurId: Serveur.id } });
+            const Serveur = await ServeurModel.findOne( {where :{ id: MembreServeur[i].idServeur }});
+            const NombreMembre = await MembreServeurModel.count({ where: { idServeur: Serveur.id } });
             Serveurs.push({
                 id: Serveur.id,
                 nomServeur: Serveur.nom,
