@@ -26,98 +26,40 @@ const GroupeBox = ({ nomGroupe, nbMembres, handleClick }) => {
 };
 
 /**
- * @desc Section d'un message privé
- * @returns
- */
-const MessagePriveBox = ({ nomUtilisateur, handleClick }) => {
-  return (
-    <button
-      className="btn_find_groupe"
-      onClick={() => {
-        handleClick("mp", id);
-      }}
-    >
-      <div className="div_find_groupe">
-        <img className="icon_mp" src="../../../images/singe.jpg" />
-        <div className="name_mp_box">
-          <p className="name_mp">{nomUtilisateur}</p>
-        </div>
-      </div>
-    </button>
-  );
-};
-
-/**
  * @desc Affiche tous les Groupes et MP dont l'utilisateur est membre
  *       trié par ordre chronologique
  */
 const BarreLatHome = ({ handleClick }) => {
   const [groupesMembre, setGroupesMembre] = useState([]);
-  const [messagesPrives, setMessagesPrives] = useState([]);
   const [mergedList, setMergedList] = useState([]);
 
   useEffect(() => {
     axios
       .get("https://localhost:3000/user/get-DM")
       .then((res) => {
-        console.log(res.data);
-
-        if (res.data.groupes) {
-          var groupesTriés = res.data.groupes.sort((a, b) => {
-            const dateA = new Date(a.messages[0]?.message.createdAt || 0);
-            const dateB = new Date(b.messages[0]?.message.createdAt || 0);
-            return dateB - dateA;
-          });
-        }
-
-        if (res.data.messagesPrives) {
-          var messagesTriés = res.data.messagesPrives.sort((a, b) => {
-            const dateA = new Date(a.message.createdAt);
-            const dateB = new Date(b.message.createdAt);
-            return dateB - dateA;
-          });
-        }
-
-        setGroupesMembre(groupesTriés);
-        setMessagesPrives(messagesTriés);
+        console.log(res.data.Groupes);
+        setGroupesMembre(res.data.Groupes);
       })
       .catch((err) => {
         console.log(err);
       });
   }, []);
 
-  useEffect(() => {
-    const mergedList = [...groupesMembre, ...messagesPrives];
+  console.log(groupesMembre);
 
-    mergedList.sort((a, b) => {
-      const dateA = new Date(a.message.createdAt || 0);
-      const dateB = new Date(b.message.createdAt || 0);
-      return dateB - dateA;
-    });
-
-    setMergedList(mergedList);
-  }, [groupesMembre, messagesPrives]);
 
   return (
     <>
       <div className="barreLatHome">
         <div className="box_mp">
-          {mergedList.length > 0 ? (
-            mergedList.map((item) =>
-              item.nom ? (
-                <GroupeBox
-                  key={item.id}
-                  nomGroupe={item.nom}
-                  nbMembres={item.nbMembres}
-                  handleClick={handleClick}
-                />
-              ) : (
-                <MessagePriveBox
-                  key={item.id}
-                  nomUtilisateur={item.nomUtilisateur}
-                  handleClick={handleClick}
-                />
-              )
+          {groupesMembre.length > 0 ? (
+            groupesMembre.map((item) =>
+              <GroupeBox
+                key={item.id}
+                nomGroupe={item.nom}
+                nbMembres={item.nbMembres}
+                handleClick={handleClick}
+              />
             )
           ) : (
             <p>Commencez à discuter !</p>
