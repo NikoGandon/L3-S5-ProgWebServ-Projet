@@ -8,6 +8,7 @@ const passport = require("passport");
 const bodyParser = require("body-parser");
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
+const { Server } = require("socket.io");
 
 const { verifyToken, verifyAdminToken } = require("./Middleware/AuthToken");
 
@@ -69,6 +70,26 @@ app.use("/MP", verifyToken, MPRoute);
 
 const httpsServer = https.createServer(optionsSSL, app);
 const HTTPS_PORT = process.env.PORT;
+
+const { socketConfig } = require("./Config/ioSocket");
+
+const io = new Server(httpsServer, socketConfig);
+
+const {
+  handleGroupeMessage,
+  handleSalonMessage,
+} = require("./Socket/message.socket");
+
+io.on("connection", (socket) => {
+  console.log("A user connected");
+
+  socket.on("clientConnection", () => {
+    console.log("Client has connected");
+  });
+
+  handleGroupeMessage(socket);
+  handleSalonMessage(socket);
+});
 
 httpsServer.listen(HTTPS_PORT, () => {
   console.log("HTTPS Server running on port " + HTTPS_PORT);
