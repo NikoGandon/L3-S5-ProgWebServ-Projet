@@ -62,17 +62,21 @@ const BarreLatHome = ({ handleClick }) => {
       .then((res) => {
         console.log(res.data);
 
-        const groupesTriés = res.data.groupes.sort((a, b) => {
-          const dateA = new Date(a.messages[0]?.message.createdAt || 0);
-          const dateB = new Date(b.messages[0]?.message.createdAt || 0);
-          return dateB - dateA;
-        });
+        if (res.data.groupes) {
+          var groupesTriés = res.data.groupes.sort((a, b) => {
+            const dateA = new Date(a.messages[0]?.message.createdAt || 0);
+            const dateB = new Date(b.messages[0]?.message.createdAt || 0);
+            return dateB - dateA;
+          });
+        }
 
-        const messagesTriés = res.data.messagesPrives.sort((a, b) => {
-          const dateA = new Date(a.message.createdAt);
-          const dateB = new Date(b.message.createdAt);
-          return dateB - dateA;
-        });
+        if (res.data.messagesPrives) {
+          var messagesTriés = res.data.messagesPrives.sort((a, b) => {
+            const dateA = new Date(a.message.createdAt);
+            const dateB = new Date(b.message.createdAt);
+            return dateB - dateA;
+          });
+        }
 
         setGroupesMembre(groupesTriés);
         setMessagesPrives(messagesTriés);

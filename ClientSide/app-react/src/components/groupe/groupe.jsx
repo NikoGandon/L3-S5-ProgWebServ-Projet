@@ -100,27 +100,19 @@ const Groupe = () => {
 };
 */
 
+import BarreChat from "../chat/BarreChat";
+import Conversation from "../chat/ConversationChat";
+
 /**
  * @desc Affiche l'interface d'un groupe (liste des membres, liste des messages)
  */
 const Groupe = () => {
-  const { contexteID } = useContext(UserContext);
-  const [message, setMessage] = useState([]); //TODO : Récupérer les messages du groupe & les afficher
-
-  useEffect(() => {
-    axios
-      .get("https://localhost:3000/groupe/", {
-        params: {
-          id: contexteID,
-        },
-      })
-      .then((res) => {
-        console.log(res);
-        setMessage(res.data.message);
-      });
-  }, []);
-
-  return <></>;
+  return (
+    <>
+      <Conversation />
+      <BarreChat />
+    </>
+  );
 };
 
 export default Groupe;

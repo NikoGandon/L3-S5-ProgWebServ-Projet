@@ -1,6 +1,5 @@
 import React from "react";
 import { useState, useEffect } from "react";
-import { jwtDecode } from "jwt-decode";
 import {
   BrowserRouter as Router,
   Route,
@@ -8,6 +7,18 @@ import {
   Navigate,
 } from "react-router-dom";
 import axios from "./utils/axiosConf";
+import { io } from "socket.io-client";
+
+const socket = io("https://localhost:3000", {
+  transports: ["websocket"],
+  rejectUnauthorized: false,
+});
+
+socket.on("connect", () => {
+  console.log("Connected to server");
+});
+
+socket.emit("connection");
 
 import "./App.css";
 
