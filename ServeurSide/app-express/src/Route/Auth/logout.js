@@ -11,12 +11,21 @@ const logoutRouteur = express.Router();
  */
 
 logoutRouteur.get("/", (req, res, next) => {
-    req.logout((err) => {
-        if (err) {
-            return next(err);
-        }
-        res.redirect("/");
+    try {
+        res.clearCookie('authToken', {
+          domain: 'localhost',
+          path: '/',
+          httpOnly: true,
+          secure: true,
+          sameSite: 'None',
         });
+      
+        // Répondez avec un statut 200 pour indiquer que la déconnexion s'est bien passée
+        res.status(200).send('Déconnexion réussie');
+      } catch (error) {
+        console.error('Erreur lors de la déconnexion :', error);
+        res.status(500).send('Erreur lors de la déconnexion');
+      }
 });
 
 module.exports = logoutRouteur;
