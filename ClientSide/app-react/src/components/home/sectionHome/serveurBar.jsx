@@ -33,7 +33,7 @@ const ServeurBar = ({ onRevenirAccueil }) => {
             <div
               key={serveur.id}
               onClick={() => {
-                updateContexte("serveur", serveur.id);
+                handleServeurSelect(serveur.id);
               }}
             >
               <img src={serveur.image} alt={serveur.nom} />
