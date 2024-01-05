@@ -54,6 +54,10 @@ const Serveur = sequelize.define(
         return "ressources/serveur/" + this.id + "_LOG.json";
       },
     },
+    idCreateur: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    },
   },
   {
     freezeTableName: true,
@@ -68,6 +72,6 @@ Serveur.afterCreate(async (serveur) => {
   });
 });
 
-Serveur.sync();
+Serveur.sync({alter: true});
 
 module.exports = Serveur;
