@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import axios from "../../utils/axiosConf";
 import PopUp from "../pop-up/pop-up.model";
 
+import "../../../src/cssGeneral.css";
+
 const Form = ({ onSubmit }) => {
   const [nom, setNom] = useState("");
   const [description, setDescription] = useState("");
@@ -61,6 +63,7 @@ const CreateServeur = () => {
       )
       .then((res) => {
         console.log("Serveur créé avec succès", res.data);
+        window.location.reload();
       })
       .catch((error) => {
         console.error("Erreur lors de la création du serveur", error);
@@ -69,12 +72,12 @@ const CreateServeur = () => {
 
   return (
     <>
+    <div className="div_create_serveur" onClick={handleBoutonCreate}>
       <button>
-        <div className="div_create_serveur" onClick={handleBoutonCreate}>
-          <img className="icon_create_serveur" src="../../../images/plus.png" />
-          <p className="name_create_serveur">Créer un serveur</p>
-        </div>
+          {/* <img className="icon_create_serveur" src="../../../images/plus.png" /> */}
+          <p className="name_create_serveur">✚</p>
       </button>
+      </div>
       {isFormVisible && <Form onSubmit={handleSubmit} />}
     </>
   );

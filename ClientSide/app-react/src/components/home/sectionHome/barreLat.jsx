@@ -22,6 +22,7 @@ const BarreLat = () => {
   const handleClickGroupe = (idGroupe) => {
     handleGroupeSelect(idGroupe);
   };
+  
 
   switch (contexteUser) {
     case "accueil":
