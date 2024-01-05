@@ -34,8 +34,17 @@ const Chat = () => {
 
   useEffect(() => {
     const socket = io("https://localhost:3000");
-    socket.emit("join" + contexteUser, { id: contexteID });
-  }, [contexteUser, contexteID]);
+    socket.emit("join" + contexteUser, { id: contexteSalon || contexteID });
+    return () => {
+      socket.off("sendMessage");
+      socket.disconnect();
+    };
+  }, [contexteUser, contexteID, contexteSalon]);
+
+  const sendMessage = (message) => {
+    const socket = io("https://localhost:3000");
+    socket.emit("sendMessage", message);
+  };
 
   return (
     <>
