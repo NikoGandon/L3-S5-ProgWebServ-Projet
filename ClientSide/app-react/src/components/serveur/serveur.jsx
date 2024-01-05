@@ -8,17 +8,17 @@ import { UserContext } from "../../contexts/user.context";
  * @desc Affiche l'interface d'un serveur (liste des salons, liste des membres, liste des messages)
  */
 const Serveur = () => {
-  const { contexteID } = useContext(UserContext);
+  const { contexteID, contexteSalon } = useContext(UserContext);
 
   useEffect(() => {
     axios
       .get("https://localhost:3000/serveur/", {
         params: {
-          id: contexteID,
+          idSeveur: contexteID,
+          idSalon: contexteSalon,
         },
       })
-      .then((res) => {});
-  }, []);
+  }, [contexteID, contexteSalon]);
 
   return (
     <>

@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
 import { UserContext } from "../../contexts/user.context";
 import { io } from "socket.io-client";
-import axios from "axios";
+import axios from "../../utils/axiosConf";
 
 const FormatMessage = (message) => {
   return {
@@ -11,37 +11,41 @@ const FormatMessage = (message) => {
 };
 
 const ConversationChat = () => {
-  const { contexteUser, contexteID } = useContext(UserContext); // contexteUser = Serveur, Groupe, Accueil, Param
+  const { contexteUser, contexteID, contexteSalon } = useContext(UserContext); // contexteUser = Serveur, Groupe || contexteSalon = ID du salon (serveur)
   const [messages, setMessages] = useState([]);
 
-  useEffect(() => {
-    axios
-      .get("https://localhost:3000/groupe/", {
-        params: {
-          id: contexteID,
-        },
-      })
-      .then((res) => {
-        console.log(res);
-        setMessages(res.data.message);
+  if (contexteUser === "serveur" || contexteUser === "groupe") {
+    useEffect(() => {
+      axios
+        .get("https://localhost:3000/" + contexteUser, {
+          params: {
+            idServeur: contexteUser === "serveur" ? contexteID : null,
+            idGroupe: contexteUser === "groupe" ? contexteID : null,
+            idSalon: contexteSalon,
+          },
+        })
+        .then((res) => {
+          console.log(res);
+          setMessages(res.data.messages || "pas de message");
+        });
+
+      const socket = io("https://localhost:3000");
+
+      socket.emit("join" + contexteUser, { id: contexteSalon | contexteID });
+
+      socket.on("newMessage", (newMessage) => {
+        setMessages((prevMessages) => [
+          ...prevMessages,
+          FormatMessage(newMessage),
+        ]);
       });
 
-    const socket = io("https://localhost:3000");
-
-    socket.emit("join" + contexteUser, { id: contexteID });
-
-    socket.on("newMessage", (newMessage) => {
-      setMessages((prevMessages) => [
-        ...prevMessages,
-        FormatMessage(newMessage),
-      ]);
-    });
-
-    return () => {
-      socket.off("newMessage");
-      socket.disconnect();
-    };
-  }, []);
+      return () => {
+        socket.off("newMessage");
+        socket.disconnect();
+      };
+    }, []);
+  }
 
   return (
     <>
