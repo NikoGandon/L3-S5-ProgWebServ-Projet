@@ -22,8 +22,9 @@ async function CreateServeur(req, res) {
       idCreateur: idUser,
     });
 
-    return res.status(201).json({ message: "Serveur créé." });
+    return res.status(200).json({ message: "Serveur créé." });
   } catch (error) {
+    console.log(error);
     return res.status(500).json({ error: "Erreur lors de la création du serveur." });
   }
 }
