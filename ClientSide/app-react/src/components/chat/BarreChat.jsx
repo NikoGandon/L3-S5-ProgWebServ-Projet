@@ -1,14 +1,18 @@
 import React, { useState, useEffect, useContext } from "react";
-import axios from "axios";
 import { UserContext } from "../../contexts/user.context";
 import { io } from "socket.io-client";
 
-const FormChat = () => {
-  const { contexteUser, contexteID } = useContext(UserContext);
+/**
+ * @desc Logique pour le formulaire de chat
+ * @param {*} sendMessage
+ * @returns
+ */
+const FormChat = ({ sendMessage }) => {
   const [message, setMessage] = useState("");
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    sendMessage(message);
     setMessage("");
   };
 
@@ -28,18 +32,30 @@ const FormChat = () => {
   );
 };
 
+/**
+ * @desc Affiche une barre de chat, utilise le contexte pour savoir si on est dans un groupe ou un serveur et pour rejoindre au bon socket
+ * @returns
+ */
 const Chat = () => {
-  const { contexteUser, contexteID } = useContext(UserContext);
-  const [message, setMessage] = useState("");
+  const { contexteUser, contexteID, contexteSalon } = useContext(UserContext);
 
   useEffect(() => {
     const socket = io("https://localhost:3000");
-    socket.emit("join" + contexteUser, { id: contexteID });
-  }, [contexteUser, contexteID]);
+    socket.emit("join" + contexteUser, { id: contexteSalon || contexteID });
+    return () => {
+      socket.off("sendMessage");
+      socket.disconnect();
+    };
+  }, [contexteUser, contexteID, contexteSalon]);
+
+  const sendMessage = (message) => {
+    const socket = io("https://localhost:3000");
+    socket.emit("sendMessage", message);
+  };
 
   return (
     <>
-      <FormChat />
+      <FormChat sendMessage={sendMessage} />
     </>
   );
 };

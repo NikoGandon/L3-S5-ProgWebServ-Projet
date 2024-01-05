@@ -1,46 +1,59 @@
 import React, { createContext, useState } from "react";
 
 const UserContext = createContext({
-  contexteUser: "accueil", // accueil, serveur, groupe, MP, param
-  contexteID: null,        // ID du serveur, groupe, MP
-  updateContexte: () => {}, // Fonction pour changer le contexte
+  contexteUser: "accueil",
+  contexteID: null,
+  contexteSalon: null,
+  handleServeurSelect: () => {},
+  handleMPSelect: () => {},
+  handleGroupeSelect: () => {},
+  handleParam: () => {},
+  handleRevenirAccueil: () => {},
+  updateContext: () => {},
 });
 
 const ContextUserProvider = (props) => {
   const [context, setContext] = useState({
     contexteUser: "accueil",
     contexteID: null,
+    contexteSalon: null,
   });
 
-  function handleServeurSelec(id) {
-    setContext({contexteUser: "serveur", contexteID: id});
+  function handleServeurSelect(idServeur, idSalon = null) {
+    setContext({
+      contexteUser: "serveur",
+      contexteID: idServeur,
+      contexteSalon: idSalon,
+    });
   }
 
-  function handleMPSelec(id) {
-    setContext({contexteUser: "MP", contexteID: id});
+  function handleMPSelect(id) {
+    setContext({ contexteUser: "MP", contexteID: id });
   }
 
-  function handleGroupeSelec(id) {
-    setContext({contexteUser: "groupe", contexteID: id});
+  function handleGroupeSelect(id) {
+    setContext({ contexteUser: "groupe", contexteID: id });
   }
-
-  /**
-   * @info Paramètre utilisateur ne peut s'atteindre que depuis l'accueil
-   *
-   */
 
   function handleParam() {
-    setContext({contexteUser: "param", contexteID: null});
+    setContext({ contexteUser: "param", contexteID: null });
   }
 
   const handleRevenirAccueil = () => {
-    setContext({contexteUser: "accueil", contexteID: null});
+    setContext({ contexteUser: "accueil", contexteID: null });
   };
 
   const updateContext = {
     contexteUser: context.contexteUser,
     contexteID: context.contexteID,
-    updateContext: setContext
+    contexteSalon: context.contexteSalon,
+    serveurs: context.serveurs,
+    handleServeurSelect,
+    handleMPSelect,
+    handleGroupeSelect,
+    handleParam,
+    handleRevenirAccueil,
+    updateContext: setContext,
   };
 
   return (

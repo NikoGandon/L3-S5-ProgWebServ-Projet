@@ -8,7 +8,8 @@ import { UserContext } from "../../../../contexts/user.context";
  */
 
 const barreLatServeur = ({ handleClick }) => {
-  const { contexteUser, contexteID, updateContexte } = useContext(UserContext);
+  const { contexteUser, contexteID, contexteSalon, handleServeurSelect } =
+    useContext(UserContext);
   const [salons, setSalons] = useState([]);
 
   useEffect(() => {
@@ -20,11 +21,16 @@ const barreLatServeur = ({ handleClick }) => {
       })
       .then((res) => {
         setSalons(res.data);
+        handleServeurSelect(contexteID, salons[0].idSalon);
       })
       .catch((err) => {
         console.log(err);
       });
-  }, []);
+  }, [contexteID]);
+
+  const handleSelectSalon = (idSalon) => {
+    handleServeurSelect(contexteID, idSalon);
+  };
 
   return (
     <>
@@ -34,7 +40,7 @@ const barreLatServeur = ({ handleClick }) => {
               <p
                 key={salon.idSalon}
                 onClick={() => {
-                  handleClick("serveur", salon.idSalon);
+                  handleSelectSalon(contexteID, salon.idSalon);
                 }}
               >
                 {salon.nomSalon}
