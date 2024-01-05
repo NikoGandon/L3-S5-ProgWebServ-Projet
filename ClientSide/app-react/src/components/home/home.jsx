@@ -2,6 +2,7 @@ import React from "react";
 import Content from "./sectionHome/Content";
 import ServeurBar from "./sectionHome/serveurBar";
 import BarreLat from "./sectionHome/barreLat";
+import Logout from "../authentification/logout"
 import { ContextUserProvider } from "../../contexts/user.context";
 
 
@@ -19,6 +20,9 @@ const Home = () => {
     <>
       <ContextUserProvider>
         <h1>Bienvenue à toi !</h1>
+        <div id="logout">
+          <Logout />
+        </div>
         <div id="barreServeur">
           <ServeurBar />
         </div>
