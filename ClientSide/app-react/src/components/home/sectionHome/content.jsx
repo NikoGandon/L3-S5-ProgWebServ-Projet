@@ -5,6 +5,7 @@ import Groupe from "../../groupe/groupe";
 import MessagePrv from "../../MP/mp";
 import Profil from "../../user/profil";
 import Param from "../../user/param.jsx";
+import Acceuil from "../../acceuil/acceuil.jsx";
 
 import { UserContext } from "../../../contexts/user.context";
 
@@ -26,8 +27,11 @@ const Content = () => {
     case "param":
       content = <Param />;
       break;
+    case "acceuil":
+      content = <Acceuil />;
+      break;
     default:
-      content = null;
+      content = <Acceuil />;
       break;
   }
 
