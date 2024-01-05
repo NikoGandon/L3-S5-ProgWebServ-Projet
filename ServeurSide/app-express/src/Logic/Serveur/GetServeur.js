@@ -3,6 +3,44 @@ const UserModel = require("../../Model/User.model");
 const MembreServeur = require("../../Model/MembreServeur.model");
 const SalonModel = require("../../Model/Salon.model");
 const { infoToken } = require("../../Middleware/AuthToken");
+const MessageSalonModel = require("../../Model/Message/MessageSalon.model");
+const MessageModel = require("../../Model/Message/Message.model");
+
+async function getInfoSalon(req, res, idSalon, idServeur) {
+  const serveur = await Serveur.findOne({ where: { id: idServeur } });
+
+  if (!serveur) {
+    return res.status(202).json({ message: "Serveur non trouvé." });
+  }
+
+  const salon = await SalonModel.findOne({
+    where: { id: idSalon, idServeur: idServeur },
+  });
+
+  if (!salon) {
+    return res.status(202).json({ message: "Salon non trouvé." });
+  }
+
+  const MessageSalon = await MessageSalonModel.findAll({
+    where: { idSalon: salon.id },
+  });
+
+  let Messages = [];
+
+  MessageSalon.forEach((message) => {
+    MessageModel.findOne({
+      where: { id: message.idMessage },
+    }).then((message) => {
+      Messages.push({
+        id: message.id,
+        contenu: message.contenu,
+        date: message.date,
+        username: message.idUser,
+      });
+    });
+  });
+  return res.status(200).json({ messages: Messages });
+}
 
 /**
  * @description Récupère un serveur
@@ -14,11 +52,21 @@ const { infoToken } = require("../../Middleware/AuthToken");
 async function GetServeur(req, res) {
   try {
     const id = infoToken(req).id;
-    const idServeur = req.body.idServeur;
+    const idServeur = req.query.idServeur;
+    const idSalon = req.query.idSalon;
+
+    console.log("id : " + id);
+    console.log("idServeur : " + idServeur);
+    console.log("idSalon : " + idSalon);
+
     const serveur = await Serveur.findOne({
       where: { id: idServeur },
     });
-    
+
+    if (idSalon != undefined || idSalon != null) {
+      return getInfoSalon(req, res, idServeur, idSalon);
+    }
+
     const membre = await MembreServeur.findOne({
       where: { idServeur: idServeur, idUser: id },
     });
@@ -63,7 +111,6 @@ async function GetServeur(req, res) {
         membres: Membres,
       },
     });
-
   } catch (error) {
     return res
       .status(500)

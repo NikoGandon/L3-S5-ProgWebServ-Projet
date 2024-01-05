@@ -9,7 +9,11 @@ const SalonModel = require("../../Model/Salon.model");
 
 async function GetSalon(req, res) {
   try {
-    const idServeur = req.body.idServeur;
+    const idServeur = req.query.idServeur;
+    if (!idServeur) {
+      console.log("idServeur non trouvé.");
+      return res.status(404).json({ message: "Serveur non trouvé." });
+    }
 
     let Salons = [];
 
@@ -29,6 +33,7 @@ async function GetSalon(req, res) {
       salons: Salons,
     });
   } catch (error) {
+    console.log(error);
     return res
       .status(500)
       .json({ error: "Erreur lors de la récupération du serveur." + error });
