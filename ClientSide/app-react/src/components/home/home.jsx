@@ -5,6 +5,8 @@ import BarreLat from "./sectionHome/barreLat";
 import Logout from "../authentification/logout"
 import { ContextUserProvider } from "../../contexts/user.context";
 
+import "../../../src/cssGeneral.css";
+
 
 /**
  * @desc Affiche l'interface de l'utilisateur
@@ -18,11 +20,8 @@ const Home = () => {
 
   return (
     <>
+    <div class="grid">
       <ContextUserProvider>
-        <h1>Bienvenue à toi !</h1>
-        <div id="logout">
-          <Logout />
-        </div>
         <div id="barreServeur">
           <ServeurBar />
         </div>
@@ -30,9 +29,12 @@ const Home = () => {
           <BarreLat />
         </div>
         <div id="content">
+          <h1>Content</h1>
           <Content />
+          <Logout />
         </div>
       </ContextUserProvider>
+      </div>
     </>
   );
 };
