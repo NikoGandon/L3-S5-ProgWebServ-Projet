@@ -11,20 +11,24 @@ import { UserContext } from "../../../contexts/user.context";
  * @returns
  */
 const BarreLat = () => {
-  const { contexteUser, contexteID, updateContexte } = useContext(UserContext);
+  const { contexteUser, handleGroupeSelect, handleServeurSelect } = useContext(UserContext);
   
   let element = null;
 
-  const handleClick = (nameContext, IDContext) => {
-    updateContexte({ contexteUser: nameContext, contexteID: IDContext });
+  const handleClickServeur = (idServeur, idSalon = null) => {
+    handleServeurSelect(idServeur, idSalon);
+  };
+
+  const handleClickGroupe = (idGroupe) => {
+    handleGroupeSelect(idGroupe);
   };
 
   switch (contexteUser) {
     case "accueil":
-      element = <BarreLatHome handleClick={handleClick}/>;
+      element = <BarreLatHome handleClick={handleClickGroupe}/>;
       break;
     case "serveur":
-      element = <BarreLatServeur handleClick={handleClick}/>;
+      element = <BarreLatServeur handleClick={handleClickServeur}/>;
       break;
     case "param":
       element = <p>{contexteUser}</p>;

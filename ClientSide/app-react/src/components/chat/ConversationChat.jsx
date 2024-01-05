@@ -10,6 +10,30 @@ const FormatMessage = (message) => {
   };
 };
 
+const OwnMessage = ({ message, username, lienPP }) => {
+  return (
+    <div className="own_message">
+      <p className="own_message_text">{message}</p>
+      <div className="userA">
+        <p className="username">{username}</p>
+        <img className="iconMessage" src={lienPP} />
+      </div>
+    </div>
+  );
+};
+
+const OtherMessage = ({ message, username, lienPP }) => {
+  return (
+    <div className="other_message">
+      <p className="other_message_text">{message}</p>
+      <div className="userB">
+        <img className="iconMessage" src={lienPP} />
+        <p className="username">{username}</p>
+      </div>
+    </div>
+  );
+};
+
 const ConversationChat = () => {
   const { contexteUser, contexteID, contexteSalon } = useContext(UserContext); // contexteUser = Serveur, Groupe || contexteSalon = ID du salon (serveur)
   const [messages, setMessages] = useState([]);
@@ -47,13 +71,44 @@ const ConversationChat = () => {
     }, []);
   }
 
-  return (
+  /*return (
     <>
       {messages.map((message) => (
         <FormatMessage key={message.id} message={message} />
       ))}{" "}
     </>
+  );*/
+
+  return (
+    <>
+      <div className="message_prv">
+        <div className="messages">
+          {messages.map((message) => {
+            if (message.isOwnMessage) {
+              return (
+                <OwnMessage
+                  key={message.idMessagePrv}
+                  message={message.message.contenu}
+                  username={message.message.Auteur.nom}
+                  lienPP={message.message.Auteur.lienPP}
+                />
+              );
+            } else {
+              return (
+                <OtherMessage
+                key={message.idMessagePrv}
+                message={message.message.contenu}
+                username={message.message.Receveur.nom}
+                lienPP={message.message.Receveur.lienPP}
+                />
+              );
+            }
+          })}
+        </div>
+      </div>
+    </>
   );
+
 };
 
 export default ConversationChat;
