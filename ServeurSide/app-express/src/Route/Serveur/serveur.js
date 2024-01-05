@@ -1,5 +1,5 @@
 const express = require("express");
-const routerServeur = express.Router(); // Créez un nouvel objet routeur
+const routerServeur = express.Router();
 
 const banRoute = require("./ban");
 const salonRoute = require("./salon");
@@ -81,8 +81,8 @@ const checkMembreServ = async (req, res, next) => {
  *
  */
 
-routerServeur.get("/", checkMembreServ, (req, res) => {
-  if (!req.body.idServeur) {
+routerServeur.get("/", (req, res) => {
+  if (req.query.idServeur == undefined || req.query.idServeur == null) {
     return res.status(400).json({
       message: "Erreur lors de la requête.",
     });
@@ -190,9 +190,9 @@ routerServeur.delete("/ban", (req, res) => {
 routerServeur.use("/invite", inviteRoute);
 
 routerServeur.get("/get-salons", (req, res) => {
-  if (!req.body.idServeur) {
-    res.status(400).json({
-      message: "Veuillez remplir tous les champs",
+  if (!req.query.idServeur) {
+    return res.status(400).json({
+      message: "Erreur lors de la requête.",
     });
   }
   GetSalon(req, res);

@@ -52,11 +52,21 @@ async function getInfoSalon(req, res, idSalon, idServeur) {
 async function GetServeur(req, res) {
   try {
     const id = infoToken(req).id;
-    const idServeur = req.body.idServeur;
+    const idServeur = req.query.idServeur;
+    const idSalon = req.query.idSalon;
+
+    console.log("id : " + id);
+    console.log("idServeur : " + idServeur);
+    console.log("idSalon : " + idSalon);
+
     const serveur = await Serveur.findOne({
       where: { id: idServeur },
     });
-    
+
+    if (idSalon != undefined || idSalon != null) {
+      return getInfoSalon(req, res, idServeur, idSalon);
+    }
+
     const membre = await MembreServeur.findOne({
       where: { idServeur: idServeur, idUser: id },
     });
@@ -101,7 +111,6 @@ async function GetServeur(req, res) {
         membres: Membres,
       },
     });
-
   } catch (error) {
     return res
       .status(500)
