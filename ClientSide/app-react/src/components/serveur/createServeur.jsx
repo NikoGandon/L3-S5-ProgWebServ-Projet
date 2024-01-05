@@ -1,60 +1,64 @@
 import React, { useState } from "react";
+import axios from "../../utils/axiosConf";
+import PopUp from "../pop-up/pop-up.model";
 
-import axios from "../../../utils/axiosConf";
-import PopUp from "../../pop-up/pop-up.model";
+const Form = ({ onSubmit }) => {
+  const [nom, setNom] = useState("");
+  const [description, setDescription] = useState("");
+  const [image, setImage] = useState("");
 
-/**
- * @desc Affiche le formulaire de création de serveur (nom, image, description, catégorie, type, lien, date)
- * @returns
- */
-const Form = () => {
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    onSubmit({ nom, description, image });
+  };
+
   return (
     <PopUp>
-      <form className="form_create_serveur">
+      <form className="form_create_serveur" onSubmit={handleSubmit}>
         <input
           className="input_create_serveur"
           type="text"
           placeholder="Nom du serveur"
+          value={nom}
+          onChange={(e) => setNom(e.target.value)}
         />
         <input
           className="input_create_serveur"
           type="text"
           placeholder="Description du serveur"
+          value={description}
+          onChange={(e) => setDescription(e.target.value)}
         />
-        {/*TODO: Ajouter une image*/}
+        {/* Ajouter une entrée pour l'image */}
+        <input
+          className="input_create_serveur"
+          type="text"
+          placeholder="Image du serveur"
+          value={image}
+          onChange={(e) => setImage(e.target.value)}
+        />
+        <button type="submit">Créer le serveur</button>
       </form>
     </PopUp>
   );
 };
 
-/**
- * @desc Permet de créer un serveur
- * @param {string} nom - Nom du serveur
- * @param {string} image - Image du serveur
- * @param {string} description - Description du serveur
- */
-//TODO: terminer la fonction
 const CreateServeur = () => {
-  const [nom, setNom] = useState("");
-  const [image, setImage] = useState("");
-  const [description, setDescription] = useState("");
-
-  const [serveur, setServeur] = useState([]);
-
-  const handleSubmit = () => {
-    axios
-      .post("https://localhost:3000/serveur/", {
-        nom: nom,
-        image: image,
-        description: description,
-      })
-      .then((res) => {
-        setServeur(res.data);
-      });
-  };
+  const [isFormVisible, setIsFormVisible] = useState(false);
 
   const handleBoutonCreate = () => {
-    //TODO : Afficher le formulaire de création de serveur
+    setIsFormVisible(!isFormVisible);
+  };
+
+  const handleSubmit = (data) => {
+    axios
+      .post("https://localhost:3000/serveur/", data)
+      .then((res) => {
+        console.log("Serveur créé avec succès", res.data);
+      })
+      .catch((error) => {
+        console.error("Erreur lors de la création du serveur", error);
+      });
   };
 
   return (
@@ -65,6 +69,9 @@ const CreateServeur = () => {
           <p className="name_create_serveur">Créer un serveur</p>
         </div>
       </button>
+      {isFormVisible && <Form onSubmit={handleSubmit} />}
     </>
   );
 };
+
+export default CreateServeur;

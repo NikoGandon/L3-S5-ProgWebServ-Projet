@@ -4,24 +4,28 @@ import { Link } from "react-router-dom";
 import axios from "../../../utils/axiosConf";
 import { UserContext } from "../../../contexts/user.context";
 
+import CreateServeur from "../../serveur/createServeur";
 
 /**
  * @desc Affiche tous les serveurs dont l'utilisateur est membre
-*
-*/
+ *
+ */
 
 const ServeurBar = ({ onRevenirAccueil }) => {
-  const { contexteUser, contexteID, updateContexte } = useContext(UserContext);
+  const { contexteUser, contexteID, updateContexte, handleServeurSelect } =
+    useContext(UserContext);
   const [serveurs, setServeurs] = useState([]);
 
   useEffect(() => {
-    axios.get("https://localhost:3000/user/get-serveurs").then((res) => {
-      console.log(res.data.Serveurs);
-      setServeurs(res.data.Serveurs);
-    });
+    axios
+      .get("https://localhost:3000/user/get-serveurs")
+      .then((res) => {
+        setServeurs(res.data.Serveurs);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }, []);
-
-  console.log(serveurs);
 
   return (
     <>
@@ -43,6 +47,8 @@ const ServeurBar = ({ onRevenirAccueil }) => {
           ))
         : "pas de serveur"}
       <div className="createServeur">
+        <CreateServeur />
+      </div>
     </>
   );
 };
