@@ -1,9 +1,9 @@
 import React from "react";
 
-const PopUp = ({ Children }) => {
+const PopUp = ({ children }) => {
   return (
     <div id="PopUp">
-      {Children}
+      {children}
     </div>
   );
 };
