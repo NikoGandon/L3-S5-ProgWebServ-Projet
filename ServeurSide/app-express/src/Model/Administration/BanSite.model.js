@@ -49,3 +49,5 @@ const BanniSite = sequelize.define(
 );
 
 BanniSite.sync();
+
+module.exports = BanniSite;
