@@ -6,12 +6,12 @@ import { UserContext } from "../../../../contexts/user.context";
  * @desc Section d'un groupe
  * @returns
  */
-const GroupeBox = ({ nomGroupe, nbMembres, handleClick }) => {
+const GroupeBox = ({ nomGroupe, nbMembres, idGroupe, handleClick }) => {
   return (
     <button
       className="btn_find_groupe"
       onClick={() => {
-        handleClick("groupe", id);
+        handleClick("groupe", idGroupe);
       }}
     >
       <div className="div_find_groupe">
@@ -31,7 +31,6 @@ const GroupeBox = ({ nomGroupe, nbMembres, handleClick }) => {
  */
 const BarreLatHome = ({ handleClick }) => {
   const [groupesMembre, setGroupesMembre] = useState([]);
-  const [mergedList, setMergedList] = useState([]);
 
   useEffect(() => {
     axios
@@ -47,20 +46,20 @@ const BarreLatHome = ({ handleClick }) => {
 
   console.log(groupesMembre);
 
-
   return (
     <>
       <div className="barreLatHome">
         <div className="box_mp">
-          {groupesMembre.length > 0 ? (
-            groupesMembre.map((item) =>
+          {groupesMembre && groupesMembre.length > 0 ? (
+            groupesMembre.map((item) => (
               <GroupeBox
                 key={item.id}
                 nomGroupe={item.nom}
                 nbMembres={item.nbMembres}
+                idGroupe={item.id}
                 handleClick={handleClick}
               />
-            )
+            ))
           ) : (
             <p>Commencez à discuter !</p>
           )}

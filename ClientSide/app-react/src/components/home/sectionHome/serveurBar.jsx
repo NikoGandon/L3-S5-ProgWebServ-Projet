@@ -26,7 +26,7 @@ const ServeurBar = ({ onRevenirAccueil }) => {
   return (
     <>
       <div className="button_home" onClick={onRevenirAccueil}>
-          <img src="../../../images/plus.png" alt="Home" />
+        <img src="../../../images/plus.png" alt="Home" />
       </div>
       {serveurs.length > 0
         ? serveurs.map((serveur) => (
@@ -36,11 +36,13 @@ const ServeurBar = ({ onRevenirAccueil }) => {
                 handleServeurSelect(serveur.id);
               }}
             >
-              <img src={serveur.image} alt={serveur.nom} />
+              <p>{serveur.id}</p>
+              <img src={serveur.imgLink} alt={serveur.nomServeur} />
               <div className="NomServeur">Coucou, {serveur.nomServeur}</div>
             </div>
           ))
-        : "pas de serveur ?"}
+        : "pas de serveur"}
+      <div className="createServeur">
     </>
   );
 };
