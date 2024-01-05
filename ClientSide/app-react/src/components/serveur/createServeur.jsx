@@ -52,7 +52,13 @@ const CreateServeur = () => {
 
   const handleSubmit = (data) => {
     axios
-      .post("https://localhost:3000/serveur/", data)
+      .post("https://localhost:3000/Serveur/", 
+        {
+          nom: data.nom,
+          description: data.description,
+          lienImage: data.image,
+        }
+      )
       .then((res) => {
         console.log("Serveur créé avec succès", res.data);
       })
