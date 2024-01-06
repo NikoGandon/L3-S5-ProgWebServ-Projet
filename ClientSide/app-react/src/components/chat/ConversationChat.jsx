@@ -35,11 +35,12 @@ const OtherMessage = ({ message, username, lienPP }) => {
 };
 
 const ConversationChat = () => {
-  const { contexteUser, contexteID, contexteSalon } = useContext(UserContext); // contexteUser = Serveur, Groupe || contexteSalon = ID du salon (serveur)
+  const { contexteUser, contexteID, contexteSalon } = useContext(UserContext);
   const [messages, setMessages] = useState([]);
+  const [infosConv, setInfosConv] = useState();
 
-  if (contexteUser === "serveur" || contexteUser === "groupe") {
-    useEffect(() => {
+  useEffect(() => {
+    if (contexteUser === "serveur" || contexteUser === "groupe") {
       axios
         .get("https://localhost:3000/" + contexteUser, {
           params: {
@@ -49,13 +50,20 @@ const ConversationChat = () => {
           },
         })
         .then((res) => {
-          console.log(res);
-          setMessages(res.data.messages || "pas de message");
+          setInfosConv(res.data.nomSalon);
+          // setInfosConv(res.data.groupe.nom); // A voir ce que renvoie le groupe
+
+          if (res.data.messages && Array.isArray(res.data.messages)) {
+            setMessages(res.data.messages);
+          }
+        })
+        .catch((error) => {
+          console.error("Erreur lors de la récupération des messages", error);
         });
 
       const socket = io("https://localhost:3000");
 
-      socket.emit("join" + contexteUser, { id: contexteSalon | contexteID });
+      socket.emit("join" + contexteUser, { id: contexteSalon || contexteID });
 
       socket.on("newMessage", (newMessage) => {
         setMessages((prevMessages) => [
@@ -68,47 +76,42 @@ const ConversationChat = () => {
         socket.off("newMessage");
         socket.disconnect();
       };
-    }, []);
-  }
+    }
+  }, [contexteUser, contexteID, contexteSalon]);
 
-  /*return (
-    <>
-      {messages.map((message) => (
-        <FormatMessage key={message.id} message={message} />
-      ))}{" "}
-    </>
-  );*/
+  console.log("infoConv", infosConv);
 
   return (
-    <>
-      <div className="message_prv">
-        <div className="messages">
-          {messages.map((message) => {
+    <div className="messageConv">
+      <div className="messages">
+        {messages.length > 1 ? (
+          messages.map((message) => {
             if (message.isOwnMessage) {
               return (
                 <OwnMessage
                   key={message.idMessagePrv}
                   message={message.message.contenu}
-                  username={message.message.Auteur.nom}
-                  lienPP={message.message.Auteur.lienPP}
+                  username={message.message.nom}
+                  lienPP={message.message.lienPP}
                 />
               );
             } else {
               return (
                 <OtherMessage
-                key={message.idMessagePrv}
-                message={message.message.contenu}
-                username={message.message.Receveur.nom}
-                lienPP={message.message.Receveur.lienPP}
+                  key={message.idMessagePrv}
+                  message={message.message.contenu}
+                  username={message.message.nom}
+                  lienPP={message.message.lienPP}
                 />
               );
             }
-          })}
-        </div>
+          })
+        ) : (
+          <p>Pas de message dans {infosConv}</p>
+        )}
       </div>
-    </>
+    </div>
   );
-
 };
 
 export default ConversationChat;
