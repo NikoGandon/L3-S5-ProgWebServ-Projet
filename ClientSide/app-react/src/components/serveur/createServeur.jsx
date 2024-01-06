@@ -62,16 +62,15 @@ const CreateServeur = ({ ajouterServeur }) => {
 
   const handleSubmit = (data) => {
     axios
-      .post("https://localhost:3000/Serveur/", 
-        {
-          nom: data.nom,
-          description: data.description,
-          lienImage: data.image,
-        }
-      )
+      .post("https://localhost:3000/Serveur/", {
+        nom: data.nom,
+        description: data.description,
+        lienImage: data.image,
+      })
       .then((res) => {
         console.log("Serveur créé avec succès", res.data);
-        window.location.reload();
+        ajouterServeur();
+        setIsFormVisible(false);
       })
       .catch((error) => {
         console.error("Erreur lors de la création du serveur", error);
@@ -80,11 +79,11 @@ const CreateServeur = ({ ajouterServeur }) => {
 
   return (
     <>
-    <div className="div_create_serveur" onClick={handleBoutonCreate}>
-      <button>
+      <div className="div_create_serveur" onClick={handleBoutonCreate}>
+        <button>
           {/* <img className="icon_create_serveur" src="../../../images/plus.png" /> */}
           <p className="name_create_serveur">✚</p>
-      </button>
+        </button>
       </div>
       {isFormVisible && <Form onSubmit={handleSubmit} />}
     </>
