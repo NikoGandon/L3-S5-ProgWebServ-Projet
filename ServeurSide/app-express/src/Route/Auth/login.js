@@ -41,8 +41,6 @@ routerLogin.post("/", async (req, res, next) => {
             dateExpiration.getMonth() + 6
           );
 
-          console.log("token : " + token);
-
           return res
             .cookie("authToken", token, {
               domain: "localhost",

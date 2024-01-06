@@ -10,7 +10,7 @@ const cors = require("cors");
 const cookieParser = require("cookie-parser");
 const { Server } = require("socket.io");
 
-const { verifyToken, verifyAdminToken } = require("./Middleware/AuthToken");
+const { infoToken, verifyToken, verifyAdminToken } = require("./Middleware/AuthToken");
 
 app.enable("trust proxy");
 
@@ -75,20 +75,34 @@ const { socketConfig } = require("./Config/ioSocket");
 
 const io = new Server(httpsServer, socketConfig);
 
-const {
-  handleGroupeMessage,
-  handleSalonMessage,
-} = require("./Socket/message.socket");
+const { handleSocketConnection } = require("./Socket/message.socket");
+
+io.use((socket, next) => {
+  cookieParser()(socket.request, socket.request.res, () => {
+    const authToken = socket.request.cookies.authToken;
+
+    socket.data.userId = authToken;
+
+    if (authToken) {
+      return next();
+    } else {
+      return next(new Error("Authentication failed."));
+    }
+  });
+});
 
 io.on("connection", (socket) => {
   console.log("A user connected");
+
+  const user = socket.request.cookies.authToken;
 
   socket.on("clientConnection", () => {
     console.log("Client has connected");
   });
 
-  handleGroupeMessage(socket);
-  handleSalonMessage(socket);
+  socket.data.userId = infoToken(null, user).id;
+
+  handleSocketConnection(socket, io);
 });
 
 httpsServer.listen(HTTPS_PORT, () => {
