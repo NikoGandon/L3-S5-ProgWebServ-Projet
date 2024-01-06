@@ -13,10 +13,6 @@ async function getInfoSalon(req, res, idServeur, idSalon) {
     return res.status(202).json({ message: "Serveur non trouvé." });
   }
 
-  // const salon = await SalonModel.findOne({
-  //   where: { id: idSalon, idServeur: idServeur },
-  // });
-
   const salon = await SalonModel.findOne({
     attributes: ["id", "nom", "description", "idServeur"],
     where: {
@@ -24,8 +20,6 @@ async function getInfoSalon(req, res, idServeur, idSalon) {
       idServeur: idServeur,
     },
   });
-
-  console.log("salon : ", salon);
 
   if (!salon) {
     return res.status(202).json({ message: "Salon non trouvé." });
@@ -37,18 +31,27 @@ async function getInfoSalon(req, res, idServeur, idSalon) {
 
   let Messages = [];
 
-  MessageSalon.forEach((message) => {
-    MessageModel.findOne({
-      where: { id: message.idMessage },
-    }).then((message) => {
-      Messages.push({
-        id: message.id,
-        contenu: message.contenu,
-        date: message.date,
-        username: message.idUser,
-      });
+  for (const messageSalon of MessageSalon) {
+    const messageMod = await MessageModel.findOne({
+      where: { id: messageSalon.idMessage },
     });
-  });
+
+    const user = await UserModel.findOne({
+      where: { id: messageMod.userId },
+    });
+
+    if (user) {
+      console.log(messageMod);
+      Messages.push({
+        id: messageMod.id,
+        contenu: messageMod.contenu,
+        date: messageMod.createdAt,
+        username: user.username,
+      });
+    } else console.log("User non trouvé.");
+    console.log(Messages);
+  }
+
   return res.status(200).json({ messages: Messages, nomSalon: salon.nom });
 }
 
@@ -88,8 +91,6 @@ async function GetServeur(req, res) {
 
     let Salons = [];
     let Membres = [];
-
-    console.log("serveur.id : " + serveur.id);
 
     /* Ne marche pas pour je ne sais quelle raison, vive sequelize......
     const salons = await SalonModel.findAll({
