@@ -51,9 +51,11 @@ const ConversationChat = () => {
         })
         .then((res) => {
           setInfosConv(res.data.nomSalon);
+          console.log(res.data);
           // setInfosConv(res.data.groupe.nom); // A voir ce que renvoie le groupe
 
           if (res.data.messages && Array.isArray(res.data.messages)) {
+            console.log("data", res.data);
             setMessages(res.data.messages);
           }
         })
@@ -61,10 +63,20 @@ const ConversationChat = () => {
           console.error("Erreur lors de la récupération des messages", error);
         });
 
-      const socket = io("https://localhost:3000");
+      const socket = io("https://localhost:3000", {
+        transports: ["websocket"],
+      });
 
-      socket.emit("join" + contexteUser, { id: contexteSalon || contexteID });
+      /*socket.emit("joinRoom", {
+        roomType: contexteUser,
+        roomId: contexteSalon || contexteID,
+      });*/
 
+      socket.on("incomingMessage", (newMessage) => {
+        if (newMessage.roomType === "groupe") {
+        } else if (newMessage.roomType === "salon") {
+        }
+      });
       socket.on("newMessage", (newMessage) => {
         setMessages((prevMessages) => [
           ...prevMessages,
@@ -72,36 +84,34 @@ const ConversationChat = () => {
         ]);
       });
 
-      return () => {
+      /*return () => {
         socket.off("newMessage");
         socket.disconnect();
-      };
+      };*/
     }
   }, [contexteUser, contexteID, contexteSalon]);
-
-  console.log("infoConv", infosConv);
 
   return (
     <div className="messageConv">
       <div className="messages">
-        {messages.length > 1 ? (
+        {messages.length ? (
           messages.map((message) => {
             if (message.isOwnMessage) {
               return (
                 <OwnMessage
-                  key={message.idMessagePrv}
-                  message={message.message.contenu}
-                  username={message.message.nom}
-                  lienPP={message.message.lienPP}
+                  key={message.id}
+                  message={message.contenu}
+                  username={message.nom}
+                  lienPP={message.lienPP}
                 />
               );
             } else {
               return (
                 <OtherMessage
-                  key={message.idMessagePrv}
-                  message={message.message.contenu}
-                  username={message.message.nom}
-                  lienPP={message.message.lienPP}
+                  key={message.id}
+                  message={message.contenu}
+                  username={message.nom}
+                  lienPP={message.lienPP}
                 />
               );
             }
