@@ -6,16 +6,26 @@ const { infoToken } = require("../../Middleware/AuthToken");
 const MessageSalonModel = require("../../Model/Message/MessageSalon.model");
 const MessageModel = require("../../Model/Message/Message.model");
 
-async function getInfoSalon(req, res, idSalon, idServeur) {
+async function getInfoSalon(req, res, idServeur, idSalon) {
   const serveur = await Serveur.findOne({ where: { id: idServeur } });
 
   if (!serveur) {
     return res.status(202).json({ message: "Serveur non trouvé." });
   }
 
+  // const salon = await SalonModel.findOne({
+  //   where: { id: idSalon, idServeur: idServeur },
+  // });
+
   const salon = await SalonModel.findOne({
-    where: { id: idSalon, idServeur: idServeur },
+    attributes: ["id", "nom", "description", "idServeur"],
+    where: {
+      id: idSalon,
+      idServeur: idServeur,
+    },
   });
+
+  console.log("salon : ", salon);
 
   if (!salon) {
     return res.status(202).json({ message: "Salon non trouvé." });
@@ -39,7 +49,7 @@ async function getInfoSalon(req, res, idSalon, idServeur) {
       });
     });
   });
-  return res.status(200).json({ messages: Messages });
+  return res.status(200).json({ messages: Messages, nomSalon: salon.nom });
 }
 
 /**
@@ -63,23 +73,38 @@ async function GetServeur(req, res) {
       where: { id: idServeur },
     });
 
+    if (!serveur) {
+      console.log("Serveur non trouvé.");
+      return res.status(404).json({ message: "Serveur non trouvé." });
+    }
+
     if (idSalon != undefined || idSalon != null) {
-      return getInfoSalon(req, res, idServeur, idSalon);
+      return getInfoSalon(req, res, serveur.id, idSalon);
     }
 
     const membre = await MembreServeur.findOne({
-      where: { idServeur: idServeur, idUser: id },
+      where: { idServeur: serveur.id, idUser: id },
     });
 
     let Salons = [];
     let Membres = [];
 
+    console.log("serveur.id : " + serveur.id);
+
+    /* Ne marche pas pour je ne sais quelle raison, vive sequelize......
     const salons = await SalonModel.findAll({
-      where: { idServeur: idServeur },
+      where: { idServeur: 10 },
+    });*/
+
+    const salons = await SalonModel.findAll({
+      attributes: ["id", "nom", "description", "idServeur"],
+      where: {
+        idServeur: serveur.id,
+      },
     });
 
     const membres = await MembreServeur.findAll({
-      where: { idServeur: idServeur },
+      where: { idServeur: serveur.id },
     });
 
     for (let i = 0; i < salons.length; i++) {
@@ -112,9 +137,10 @@ async function GetServeur(req, res) {
       },
     });
   } catch (error) {
-    return res
-      .status(500)
-      .json({ error: "Erreur lors de la récupération du serveur." + error });
+    return res.status(500).json({
+      error:
+        "Erreur lors de la récupération du serveur from GetServeur." + error,
+    });
   }
 }
 

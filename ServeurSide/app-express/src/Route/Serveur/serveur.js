@@ -82,7 +82,9 @@ const checkMembreServ = async (req, res, next) => {
  */
 
 routerServeur.get("/", (req, res) => {
-  if (req.query.idServeur == undefined || req.query.idServeur == null) {
+  const idServeur = req.query.idServeur;
+
+  if (idServeur == undefined || idServeur == null) {
     return res.status(400).json({
       message: "Erreur lors de la requête.",
     });
@@ -102,7 +104,7 @@ routerServeur.get("/", (req, res) => {
 
 routerServeur.post("/", (req, res) => {
   if (!req.body.nom || !req.body.description || !req.body.lienImage) {
-    res.status(400).json({
+    return res.status(400).json({
       message: "Veuillez remplir tous les champs",
     });
   }
@@ -120,7 +122,7 @@ routerServeur.post("/", (req, res) => {
  */
 
 routerServeur.put("/", checkAdminServ, (req, res) => {
-  res.send("Modification du serveur");
+  return res.send("Modification du serveur");
 });
 
 /**
@@ -135,7 +137,7 @@ routerServeur.put("/", checkAdminServ, (req, res) => {
 
 routerServeur.delete("/", (req, res) => {
   if (!req.body.idServeur) {
-    res.status(400).json({
+    return res.status(400).json({
       message: "Veuillez remplir tous les champs",
     });
   }
@@ -153,7 +155,7 @@ routerServeur.delete("/", (req, res) => {
  */
 routerServeur.post("/membre", (req, res) => {
   if (!req.body.idUser || !req.body.idServeur) {
-    res.status(400).json({
+    return res.status(400).json({
       message: "Veuillez remplir tous les champs",
     });
   }
@@ -162,7 +164,7 @@ routerServeur.post("/membre", (req, res) => {
 
 routerServeur.delete("/membre", (req, res) => {
   if (!req.body.idUser || !req.body.idServeur) {
-    res.status(400).json({
+    return res.status(400).json({
       message: "Veuillez remplir tous les champs",
     });
   }
@@ -171,7 +173,7 @@ routerServeur.delete("/membre", (req, res) => {
 
 routerServeur.post("/ban", (req, res) => {
   if (!req.body.idUser || !req.body.idServeur || !req.body.date) {
-    res.status(400).json({
+    return res.status(400).json({
       message: "Veuillez remplir tous les champs",
     });
   }
@@ -180,7 +182,7 @@ routerServeur.post("/ban", (req, res) => {
 
 routerServeur.delete("/ban", (req, res) => {
   if (!req.body.idUser) {
-    res.status(400).json({
+    return res.status(400).json({
       message: "Veuillez remplir tous les champs",
     });
   }

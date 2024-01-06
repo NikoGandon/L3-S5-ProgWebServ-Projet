@@ -1,5 +1,7 @@
 const Serveur = require("../../Model/Serveur.model");
 const { infoToken } = require("../../Middleware/AuthToken");
+const Salon = require("../../Model/Salon.model");
+const SalonServeur = require("../../Model/Lien/SalonServeur.model");
 
 /**
  * @description Crée un serveur
@@ -15,17 +17,29 @@ async function CreateServeur(req, res) {
     const description = req.body.description;
     const lienImage = req.body.lienImage;
 
-    await Serveur.create({
+    const serveur = await Serveur.create({
       nom: nom,
       description: description,
       lienImage: lienImage,
       idCreateur: idUser,
     });
 
+    const salon = await Salon.create({
+      nom: "Général",
+      idServeur: serveur.id,
+    });
+
+    await SalonServeur.create({
+      salonId: salon.id,
+      serveurId: serveur.id,
+    });
+
     return res.status(200).json({ message: "Serveur créé." });
   } catch (error) {
     console.log(error);
-    return res.status(500).json({ error: "Erreur lors de la création du serveur." });
+    return res
+      .status(500)
+      .json({ error: "Erreur lors de la création du serveur." });
   }
 }
 
