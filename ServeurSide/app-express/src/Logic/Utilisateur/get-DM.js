@@ -11,15 +11,12 @@ const { infoToken } = require("../../Middleware/AuthToken");
 
 const getGroupes = async (req, res) => {
   const id = infoToken(req).id;
-  console.log("id user : " + id);
 
   try {
     let utilisateur = await UserModel.findOne({ where: { id: id } });
     let groupesMembre = await MembreGroupeModel.findAll({
       where: { userId: utilisateur.id },
     });
-
-    console.log("groupesMembre : " + groupesMembre.length);
 
     let Groupes = [];
 

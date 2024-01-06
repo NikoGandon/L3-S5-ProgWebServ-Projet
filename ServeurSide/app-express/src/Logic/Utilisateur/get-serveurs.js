@@ -7,7 +7,6 @@ const { infoToken } = require("../../Middleware/AuthToken");
 const getServeurs = async (req, res) => {
 
     const id = infoToken(req).id;
-    console.log("id user : " + id);
 
     try {
         const User = await UserModel.findOne( {where :{ id: id }});
