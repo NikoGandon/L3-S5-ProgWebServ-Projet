@@ -1,6 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import axios from "../../utils/axiosConf";
 import PopUp from "../pop-up/pop-up.model";
+
+import { PopupContext } from "../../contexts/popup.context";
 
 import "../../../src/cssGeneral.css";
 
@@ -9,9 +11,12 @@ const Form = ({ onSubmit }) => {
   const [description, setDescription] = useState("");
   const [image, setImage] = useState("");
 
+  const { closePopUp } = useContext(PopupContext);
+
   const handleSubmit = (e) => {
     e.preventDefault();
     onSubmit({ nom, description, image });
+    closePopUp();
   };
 
   return (
@@ -45,11 +50,14 @@ const Form = ({ onSubmit }) => {
   );
 };
 
-const CreateServeur = () => {
+const CreateServeur = ({ ajouterServeur }) => {
   const [isFormVisible, setIsFormVisible] = useState(false);
+
+  const { openPopup } = useContext(PopupContext);
 
   const handleBoutonCreate = () => {
     setIsFormVisible(!isFormVisible);
+    openPopup();
   };
 
   const handleSubmit = (data) => {
