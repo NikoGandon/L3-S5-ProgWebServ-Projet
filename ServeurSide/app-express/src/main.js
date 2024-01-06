@@ -75,10 +75,19 @@ const { socketConfig } = require("./Config/ioSocket");
 
 const io = new Server(httpsServer, socketConfig);
 
-const {
-  handleGroupeMessage,
-  handleSalonMessage,
-} = require("./Socket/message.socket");
+io.use((socket, next) => {
+  cookieParser()(socket.request, socket.request.res, () => {
+    const authToken = socket.request.cookies.authToken;
+
+    socket.data.userId = authToken;
+
+    if (authToken) {
+      return next();
+    } else {
+      return next(new Error("Authentication failed."));
+    }
+  });
+});
 
 io.on("connection", (socket) => {
   console.log("A user connected");
