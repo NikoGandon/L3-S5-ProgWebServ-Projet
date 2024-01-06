@@ -39,18 +39,28 @@ const FormChat = ({ sendMessage }) => {
 const Chat = () => {
   const { contexteUser, contexteID, contexteSalon } = useContext(UserContext);
 
+  const socket = io("https://localhost:3000", {
+    transports: ["websocket"],
+  });
+
   useEffect(() => {
-    const socket = io("https://localhost:3000");
-    socket.emit("join" + contexteUser, { id: contexteSalon || contexteID });
+    socket.emit("joinRoom", {
+      roomType: contexteUser,
+      roomId: contexteSalon || contexteID,
+    });
+    /*
     return () => {
-      socket.off("sendMessage");
       socket.disconnect();
-    };
-  }, [contexteUser, contexteID, contexteSalon]);
+    };*/
+  }, [contexteUser, contexteID, contexteSalon, socket]);
 
   const sendMessage = (message) => {
-    const socket = io("https://localhost:3000");
-    socket.emit("sendMessage", message);
+    socket.emit("sendMessage", {
+      roomType: contexteUser,
+      roomId: contexteSalon || contexteID,
+      contenu: message,
+      serveurId: contexteUser === "serveur" ? contexteID : null,
+    });
   };
 
   return (
