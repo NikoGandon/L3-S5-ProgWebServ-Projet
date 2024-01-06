@@ -1,6 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import axios from "../../utils/axiosConf";
 import PopUp from "../pop-up/pop-up.model";
+
+import { PopupContext } from "../../contexts/popup.context";
 
 import "../../../src/cssGeneral.css";
 
@@ -9,9 +11,12 @@ const Form = ({ onSubmit }) => {
   const [description, setDescription] = useState("");
   const [image, setImage] = useState("");
 
+  const { closePopUp } = useContext(PopupContext);
+
   const handleSubmit = (e) => {
     e.preventDefault();
     onSubmit({ nom, description, image });
+    closePopUp();
   };
 
   return (
@@ -45,25 +50,27 @@ const Form = ({ onSubmit }) => {
   );
 };
 
-const CreateServeur = () => {
+const CreateServeur = ({ ajouterServeur }) => {
   const [isFormVisible, setIsFormVisible] = useState(false);
+
+  const { openPopup } = useContext(PopupContext);
 
   const handleBoutonCreate = () => {
     setIsFormVisible(!isFormVisible);
+    openPopup();
   };
 
   const handleSubmit = (data) => {
     axios
-      .post("https://localhost:3000/Serveur/", 
-        {
-          nom: data.nom,
-          description: data.description,
-          lienImage: data.image,
-        }
-      )
+      .post("https://localhost:3000/Serveur/", {
+        nom: data.nom,
+        description: data.description,
+        lienImage: data.image,
+      })
       .then((res) => {
         console.log("Serveur créé avec succès", res.data);
-        window.location.reload();
+        ajouterServeur();
+        setIsFormVisible(false);
       })
       .catch((error) => {
         console.error("Erreur lors de la création du serveur", error);
@@ -72,11 +79,11 @@ const CreateServeur = () => {
 
   return (
     <>
-    <div className="div_create_serveur" onClick={handleBoutonCreate}>
-      <button>
+      <div className="div_create_serveur" onClick={handleBoutonCreate}>
+        <button>
           {/* <img className="icon_create_serveur" src="../../../images/plus.png" /> */}
           <p className="name_create_serveur">✚</p>
-      </button>
+        </button>
       </div>
       {isFormVisible && <Form onSubmit={handleSubmit} />}
     </>

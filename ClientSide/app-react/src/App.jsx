@@ -25,6 +25,9 @@ import "./App.css";
 import HomeUnconnected from "./components/home/homeUnconnected";
 import Home from "./components/home/home";
 
+import  ContextPopUpProvider  from "./contexts/popup.context";
+import PopUpContainer from "./components/containers/popup.container";
+
 function App() {
   const [estConnecte, setEstConnecte] = useState(false);
 
@@ -59,7 +62,14 @@ function App() {
           path="*"
           exact
           element={
-            estConnecte ? <Home /> : <HomeUnconnected connectionState="false" />
+            estConnecte ? (
+              <ContextPopUpProvider>
+                <PopUpContainer />
+                <Home />
+              </ContextPopUpProvider>
+            ) : (
+              <HomeUnconnected connectionState="false" />
+            )
           }
         />
         <Route path="/accueil" element={<Navigate to="/" />} />
