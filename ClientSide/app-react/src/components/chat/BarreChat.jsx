@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
 import { UserContext } from "../../contexts/user.context";
 import { io } from "socket.io-client";
+import "../../cssGeneral.css";
 
 /**
  * @desc Logique pour le formulaire de chat
@@ -18,15 +19,18 @@ const FormChat = ({ sendMessage }) => {
 
   return (
     <>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} id="formChat">
+        <div id="zoneDeText">
         <input
           type="text"
           name="message"
           placeholder={`Envoyer un message`}
+          id="zoneEnvoieMessage"
           value={message}
           onChange={(e) => setMessage(e.target.value)}
         />
-        <input type="submit" value="Envoyer" />
+        <input type="submit" value="➤" id="envoyer"/>
+        </div>
       </form>
     </>
   );

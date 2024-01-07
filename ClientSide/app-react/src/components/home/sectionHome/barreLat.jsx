@@ -32,7 +32,7 @@ const BarreLat = () => {
       element = <BarreLatServeur handleClick={handleClickServeur}/>;
       break;
     case "param":
-      element = <p>{contexteUser}</p>;
+      element = <p>"{contexteUser}</p>;
       break;
     default:
   }
