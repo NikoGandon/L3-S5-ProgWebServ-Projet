@@ -1,7 +1,7 @@
 import React from "react";
-import {PopUp} from "../pop-up/pop-up.model"
+import PopUp from "../pop-up/pop-up.model"
 import axios from "../../utils/axiosConf"
-import MembreGroupe from "../../../../../ServeurSide/app-express/src/Model/Lien/MembreGroupe.model";
+
 const Profil = () => {
   const [users, setUser] = useState();
   const [profilSelectionne, setProfilSelectionne] = useState(null);
