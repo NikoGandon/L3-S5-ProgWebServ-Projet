@@ -1,11 +1,13 @@
 import React, { useEffect, useState, useContext } from "react";
 import axios from "../../../../utils/axiosConf";
 import { UserContext } from "../../../../contexts/user.context";
+import Serveur from "../../../serveur/serveur";
 
 /**
  * @desc Récupère les salons d'un serveur
  * @param
  */
+
 
 const barreLatServeur = ({ handleClick }) => {
   const { contexteUser, contexteID, contexteSalon, handleServeurSelect } =
@@ -39,9 +41,16 @@ const barreLatServeur = ({ handleClick }) => {
 
   return (
     <>
+    <div id="nomDuServeurDiv">
+      <h3 id="nomServeurTitle">Serveur</h3>
+      <div id="barre"></div>
+      </div>
+
       {salons.length > 0
         ? salons.map((salon) => {
             return (
+              <div id="salonDesign">
+              
               <p
                 key={salon.id}
                 onClick={() => {
@@ -50,9 +59,10 @@ const barreLatServeur = ({ handleClick }) => {
               >
                 {salon.nom}
               </p>
+              </div>
             );
           })
-        : "il n'y a pas de salon"}
+        : "Aucun salon"}
     </>
   );
 };

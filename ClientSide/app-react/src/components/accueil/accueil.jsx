@@ -7,7 +7,7 @@ const Accueil = () => {
     <>
       <h1>Accueil</h1>
       <div className="button_param" onClick={()=>{handleParam()}}>
-        <img src="../../../images/plus.png" alt="Param" />
+        <img src="../../public/image/serverLogfo.png" alt="Param" />
       </div>
     </>
   );
