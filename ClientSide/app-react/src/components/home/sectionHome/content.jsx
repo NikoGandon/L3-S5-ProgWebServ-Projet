@@ -2,9 +2,9 @@ import React, { useContext } from "react";
 
 import Serveur from "../../serveur/serveur";
 import Groupe from "../../groupe/groupe";
-import MessagePrv from "../../MP/mp";
 import Profil from "../../user/profil";
 import Param from "../../user/param.jsx";
+import Acceuil from "../../accueil/accueil.jsx";
 
 import { UserContext } from "../../../contexts/user.context";
 
@@ -26,8 +26,11 @@ const Content = () => {
     case "param":
       content = <Param />;
       break;
+    case "acceuil":
+      content = <Acceuil />;
+      break;
     default:
-      content = null;
+      content = <Acceuil />;
       break;
   }
 

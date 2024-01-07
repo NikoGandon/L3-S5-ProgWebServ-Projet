@@ -35,11 +35,12 @@ const OtherMessage = ({ message, username, lienPP }) => {
 };
 
 const ConversationChat = () => {
-  const { contexteUser, contexteID, contexteSalon } = useContext(UserContext); // contexteUser = Serveur, Groupe || contexteSalon = ID du salon (serveur)
+  const { contexteUser, contexteID, contexteSalon } = useContext(UserContext);
   const [messages, setMessages] = useState([]);
+  const [infosConv, setInfosConv] = useState();
 
-  if (contexteUser === "serveur" || contexteUser === "groupe") {
-    useEffect(() => {
+  useEffect(() => {
+    if (contexteUser === "serveur" || contexteUser === "groupe") {
       axios
         .get("https://localhost:3000/" + contexteUser, {
           params: {
@@ -49,14 +50,33 @@ const ConversationChat = () => {
           },
         })
         .then((res) => {
-          console.log(res);
-          setMessages(res.data.messages || "pas de message");
+          setInfosConv(res.data.nomSalon);
+          console.log(res.data);
+          // setInfosConv(res.data.groupe.nom); // A voir ce que renvoie le groupe
+
+          if (res.data.messages && Array.isArray(res.data.messages)) {
+            console.log("data", res.data);
+            setMessages(res.data.messages);
+          }
+        })
+        .catch((error) => {
+          console.error("Erreur lors de la récupération des messages", error);
         });
 
-      const socket = io("https://localhost:3000");
+      const socket = io("https://localhost:3000", {
+        transports: ["websocket"],
+      });
 
-      socket.emit("join" + contexteUser, { id: contexteSalon | contexteID });
+      /*socket.emit("joinRoom", {
+        roomType: contexteUser,
+        roomId: contexteSalon || contexteID,
+      });*/
 
+      socket.on("incomingMessage", (newMessage) => {
+        if (newMessage.roomType === "groupe") {
+        } else if (newMessage.roomType === "salon") {
+        }
+      });
       socket.on("newMessage", (newMessage) => {
         setMessages((prevMessages) => [
           ...prevMessages,
@@ -64,51 +84,44 @@ const ConversationChat = () => {
         ]);
       });
 
-      return () => {
+      /*return () => {
         socket.off("newMessage");
         socket.disconnect();
-      };
-    }, []);
-  }
-
-  /*return (
-    <>
-      {messages.map((message) => (
-        <FormatMessage key={message.id} message={message} />
-      ))}{" "}
-    </>
-  );*/
+      };*/
+    }
+  }, [contexteUser, contexteID, contexteSalon]);
 
   return (
-    <>
-      <div className="message_prv">
-        <div className="messages">
-          {messages.map((message) => {
+    <div className="messageConv">
+      <div className="messages">
+        {messages.length ? (
+          messages.map((message) => {
             if (message.isOwnMessage) {
               return (
                 <OwnMessage
-                  key={message.idMessagePrv}
-                  message={message.message.contenu}
-                  username={message.message.Auteur.nom}
-                  lienPP={message.message.Auteur.lienPP}
+                  key={message.id}
+                  message={message.contenu}
+                  username={message.nom}
+                  lienPP={message.lienPP}
                 />
               );
             } else {
               return (
                 <OtherMessage
-                key={message.idMessagePrv}
-                message={message.message.contenu}
-                username={message.message.Receveur.nom}
-                lienPP={message.message.Receveur.lienPP}
+                  key={message.id}
+                  message={message.contenu}
+                  username={message.nom}
+                  lienPP={message.lienPP}
                 />
               );
             }
-          })}
-        </div>
+          })
+        ) : (
+          <p>Pas de message dans {infosConv}</p>
+        )}
       </div>
-    </>
+    </div>
   );
-
 };
 
 export default ConversationChat;

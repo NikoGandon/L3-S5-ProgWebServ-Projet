@@ -2,11 +2,11 @@ import React from "react";
 import Content from "./sectionHome/Content";
 import ServeurBar from "./sectionHome/serveurBar";
 import BarreLat from "./sectionHome/barreLat";
-import Logout from "../authentification/logout"
+import Logout from "../authentification/logout";
+
 import { ContextUserProvider } from "../../contexts/user.context";
 
 import "../../../src/cssGeneral.css";
-
 
 /**
  * @desc Affiche l'interface de l'utilisateur
@@ -17,23 +17,22 @@ import "../../../src/cssGeneral.css";
  *
  */
 const Home = () => {
-
   return (
     <>
-    <div class="grid">
-      <ContextUserProvider>
-        <div id="barreServeur">
-          <ServeurBar />
-        </div>
-        <div id="barreLaterale">
-          <BarreLat />
-        </div>
-        <div id="content">
-          <h1>Content</h1>
-          <Content />
-          <Logout />
-        </div>
-      </ContextUserProvider>
+      <div className="grid">
+        <ContextUserProvider>
+          <div id="barreServeur">
+            <ServeurBar />
+          </div>
+          <div id="barreLaterale">
+            <BarreLat />
+          </div>
+          <div id="content">
+            <h1>Content</h1>
+            <Content />
+            <Logout />
+          </div>
+        </ContextUserProvider>
       </div>
     </>
   );

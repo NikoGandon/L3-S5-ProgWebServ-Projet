@@ -11,12 +11,12 @@ import CreateServeur from "../../serveur/createServeur";
  *
  */
 
-const ServeurBar = ({ onRevenirAccueil }) => {
-  const { contexteUser, contexteID, updateContexte, handleServeurSelect } =
+const ServeurBar = () => {
+  const { handleServeurSelect, handleRevenirAccueil } =
     useContext(UserContext);
   const [serveurs, setServeurs] = useState([]);
 
-  useEffect(() => {
+  const ajouterServeur = () => {
     axios
       .get("https://localhost:3000/user/get-serveurs")
       .then((res) => {
@@ -25,11 +25,15 @@ const ServeurBar = ({ onRevenirAccueil }) => {
       .catch((err) => {
         console.log(err);
       });
+  };
+
+  useEffect(() => {
+    ajouterServeur();
   }, []);
 
   return (
     <>
-      <div className="button_home" onClick={onRevenirAccueil}>
+      <div className="button_home" onClick={() =>{handleRevenirAccueil()}}>
         <img src="../../../images/plus.png" alt="Home" />
       </div>
       {serveurs.length > 0
@@ -47,7 +51,7 @@ const ServeurBar = ({ onRevenirAccueil }) => {
           ))
         : "pas de serveur"}
       <div className="createServeur">
-        <CreateServeur />
+        <CreateServeur ajouterServeur={ajouterServeur} />
       </div>
     </>
   );

@@ -20,13 +20,18 @@ const barreLatServeur = ({ handleClick }) => {
         },
       })
       .then((res) => {
-        setSalons(res.data);
-        handleServeurSelect(contexteID, salons[0].idSalon);
+        setSalons(res.data.salons);
       })
       .catch((err) => {
         console.log(err);
       });
   }, [contexteID]);
+
+  useEffect(() => {
+    if (salons.length > 0) {
+      handleSelectSalon(salons[0].id);
+    }
+  }, []);
 
   const handleSelectSalon = (idSalon) => {
     handleServeurSelect(contexteID, idSalon);
@@ -38,16 +43,16 @@ const barreLatServeur = ({ handleClick }) => {
         ? salons.map((salon) => {
             return (
               <p
-                key={salon.idSalon}
+                key={salon.id}
                 onClick={() => {
-                  handleSelectSalon(contexteID, salon.idSalon);
+                  handleSelectSalon(contexteID, salon.id);
                 }}
               >
-                {salon.nomSalon}
+                {salon.nom}
               </p>
             );
           })
-        : null}
+        : "il n'y a pas de salon"}
     </>
   );
 };
