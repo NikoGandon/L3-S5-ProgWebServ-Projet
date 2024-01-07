@@ -58,8 +58,9 @@ const Serveur = () => {
   };
 
   useEffect(() => {
-    loadServeur();
-    loadSalon();
+    loadServeur().then(() => {
+      loadSalon();
+    });
   }, [contexteID, contexteSalon]);
 
   return (

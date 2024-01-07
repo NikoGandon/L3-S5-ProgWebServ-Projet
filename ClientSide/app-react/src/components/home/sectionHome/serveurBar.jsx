@@ -11,8 +11,8 @@ import CreateServeur from "../../serveur/createServeur";
  *
  */
 
-const ServeurBar = ({ onRevenirAccueil }) => {
-  const { contexteUser, contexteID, updateContexte, handleServeurSelect } =
+const ServeurBar = () => {
+  const { handleServeurSelect, handleRevenirAccueil } =
     useContext(UserContext);
   const [serveurs, setServeurs] = useState([]);
 
@@ -33,7 +33,7 @@ const ServeurBar = ({ onRevenirAccueil }) => {
 
   return (
     <>
-      <div className="button_home" onClick={onRevenirAccueil}>
+      <div className="button_home" onClick={() =>{handleRevenirAccueil()}}>
         <img src="../../../images/plus.png" alt="Home" />
       </div>
       {serveurs.length > 0
