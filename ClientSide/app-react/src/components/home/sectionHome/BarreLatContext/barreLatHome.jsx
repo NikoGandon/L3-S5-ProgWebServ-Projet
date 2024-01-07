@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useContext } from "react";
 import axios from "../../../../utils/axiosConf";
 import { UserContext } from "../../../../contexts/user.context";
+import CreateGroupe from "../../../groupe/createGroupe";
 
 /**
  * @desc Section d'un groupe
@@ -46,6 +47,22 @@ const BarreLatHome = ({ handleClick }) => {
 
   console.log(groupesMembre);
 
+  const [groupes, setGroupes] = useState([]);
+  const ajouterGroupe = () => {
+    axios
+      .get("https://localhost:3000/user/get-DM")
+      .then((res) => {
+        setGroupes(res.data.Groupe);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  useEffect(() => {
+    ajouterGroupe();
+  }, []);
+
   return (
     <>
       <div className="barreLatHome">
@@ -63,6 +80,9 @@ const BarreLatHome = ({ handleClick }) => {
           ) : (
             <p>Commencez à discuter !</p>
           )}
+        </div>
+        <div className="createGroupe">
+          <CreateGroupe ajouterGroupe={ajouterGroupe} />
         </div>
       </div>
     </>
