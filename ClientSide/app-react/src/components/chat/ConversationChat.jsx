@@ -78,16 +78,19 @@ const ConversationChat = () => {
     socket.on("incomingMessage", (newMessage) => {
       console.log("_________newMessage________", newMessage);
       if (newMessage) {
+        console.log("newMessage", newMessage);
         setMessages((prevMessages) => [
-          ...(prevMessages + { newMessage, nomSalon: infosConv }),
+          ...prevMessages, newMessage 
         ]);
-      }
+      } 
     });
 
     return () => {
       socket.off("incomingMessage");
     };
   }, [contexteID, contexteSalon, socket]);
+
+  console.log("messages: ", messages);
 
   return (
     <div className="messageConv">
