@@ -57,7 +57,7 @@ const ServeurBar = () => {
               <p>{serveur.id}</p>
               <img
                 id="logoServeur"
-                src="../../public/image/serverLogo.png" //{serveur.imgLink}
+                src={serveur.imgLink} //{serveur.imgLink}
                 alt={serveur.nomServeur}
               />
               <div className="NomServeur">Coucou, {serveur.nomServeur}</div>
