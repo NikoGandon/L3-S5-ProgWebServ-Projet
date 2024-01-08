@@ -53,12 +53,10 @@ async function handleSocketConnection(socket, io) {
       const date = format(newMessage.createdAt, "dd/MM/yyyy HH:mm");
 
       io.in(room).emit("incomingMessage", {
-        newMessage: {
-          id: newMessage.id,
-          contenu: newMessage.contenu,
-          date: date,
-          username: user.username,
-        },
+        id: newMessage.id,
+        contenu: newMessage.contenu,
+        date: date,
+        username: user.username,
       });
     }
   );
