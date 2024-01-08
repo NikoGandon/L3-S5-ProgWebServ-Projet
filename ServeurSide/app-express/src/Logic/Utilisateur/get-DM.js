@@ -28,10 +28,15 @@ const getGroupes = async (req, res) => {
         where: { id: groupesMembre[i].groupeId },
       });
 
+      const countUtilisateurs = await MembreGroupeModel.count({
+        where: { groupeId: groupesMembre[i].groupeId },
+      });
+
       Groupes.push({
         id: groupe.id,
         nomGroupe: groupe.nom,
         imgLink: groupe.lienImage,
+        nbUser: countUtilisateurs
       });
     }
 

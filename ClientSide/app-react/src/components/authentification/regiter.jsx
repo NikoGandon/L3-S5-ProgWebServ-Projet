@@ -65,35 +65,46 @@ const Regiter = () => {
 
   return (
     <>
-      <h1>Inscription</h1>
+    <div id="LoginRegister">
+        <div id="contentLoginRegister">
+
+      <h2>Inscription</h2>
       {error ? <p className="error">{error}</p> : null}
       <form className="formsAuth" onSubmit={handleSubmit}>
-        <label htmlFor="username">username</label>
         <input
           type="text"
           id="username"
+          className="input"
           name="username"
+          placeholder="Nom d'utilisateur"
           value={username}
           onChange={handleUsernameChange}
         />
-        <label htmlFor="email">email</label>
+        <p></p>
         <input
           type="email"
           id="email"
+          className="input"
           name="email"
+          placeholder="Email"
           value={email}
           onChange={handleEmailChange}
         />
-        <label htmlFor="password">Mot de passe</label>
+        <p></p>
         <input
           type="password"
+          className="input"
           id="password"
           name="password"
+          placeholder="Mot de passe"
           value={password}
           onChange={handlePasswordChange}
         />
-        <button type="submit">S'inscrire</button>
+        <p></p>
+        <button type="submit" id="submitButton">S'inscrire</button>
       </form>
+      </div>
+      </div>
     </>
   );
 };

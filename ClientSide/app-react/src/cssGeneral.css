@@ -1,3 +1,8 @@
+body{
+    font-family: 'Uni Sans', sans-serif;
+    font-weight: 400;
+}
+
 .grid{
     display: grid;
     grid-template-areas: 
@@ -55,16 +60,17 @@
 #barreLaterale{
     grid-area: barreLaterale;
     background-color: #282b30;
+    text-align: center;
     color: white;
 }
 
-#nomDuServeurDiv #nomServeurTitle{
-    padding-left: 5%;
+#AucunMessage{
+    text-align: center;
+    color: white;
 }
 
 #nomDuServeurDiv #barre{
     border: 0.5px solid #1e2124;
-
 }
 
 /*=======================*/
@@ -103,7 +109,7 @@
     height: 200px; /* Hauteur de la zone de défilement */
     overflow: auto; /* Cache le débordement */
     width: 100%;
-    height: 50vh;
+    height: 75vh;
     position: relative;
   }
 
@@ -129,6 +135,12 @@
     padding-left: 5%;
 }
 
+/*-------- TITRE DU SERVEUR (au dessus de message)--------*/
+
+.titleNameServeur{
+    text-align: center;
+    color: white;
+}
 
 /* ---------------------------------------------------------------- FIXME START ---------------------------------------------------------------- */
 .other_message, .own_message{
@@ -163,3 +175,115 @@
 }
 
 /* ---------------------------------------------------------------- FIXME END---------------------------------------------------------------- */
+
+
+#zoneAccueil {
+    position: relative; /* Pour que les éléments enfants soient positionnés relativement à celui-ci */
+    height: 100vh;
+  }
+  
+  #arrierePlanFlou {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('../public/image/bg.png');
+    filter: blur(5px);
+    background-size: cover;
+    background-position: center;
+  }
+  
+  #contenuAccueil {
+    text-align: center;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #282b30;
+    padding-left: 80px;
+    padding-right: 80px;
+    padding-top: 30px;
+    padding-bottom: 30px;
+    border-radius: 10px;
+  }
+
+  #contenuAccueil h3{
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  }
+
+  #contenuAccueil #message_bienvenue{
+    color: rgb(208, 208, 208);
+    padding-bottom: 20px;
+  }
+
+
+#parametres{
+    color:#4682B4;
+    font-size: 13px;
+}
+
+#deconnexion{
+    border: none;
+    background-color: #5865f2;
+    color: white;
+    font-size: 15px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-right: 150px;
+    padding-left: 150px;
+    border-radius: 5px;
+    margin-bottom: 15px;
+}
+
+
+
+/* ---------------------------------------------------------------- Login et register ---------------------------------------------------------------- */
+
+#LoginRegister{
+    width: 100%;
+    height: 100vh;
+    background-image: url('../public/image/bg.png');
+    background-size: cover;
+    background-position: center;
+}
+
+#contentLoginRegister{
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #282b30;
+    padding-left: 5%;
+    padding-right: 5%;
+    padding-top: 2%;
+    padding-bottom: 2%;
+    border-radius: 10px;
+}
+
+#LoginRegister #contentLoginRegister .input{
+    border: none;
+    background-color: #202225;
+    color: white;
+    font-size: 15px;
+    padding-top: 4%;
+    padding-bottom: 4%;
+    padding-left: 10px;
+    width: 50vh;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+
+#LoginRegister #contentLoginRegister #submitButton{
+    border: none;
+    background-color: #5865f2;
+    color: white;
+    font-size: 15px;
+    padding-top: 4%;
+    padding-bottom: 4%;
+    width: 100%;
+    border-radius: 5px;
+}
