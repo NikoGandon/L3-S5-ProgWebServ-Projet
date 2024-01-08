@@ -7,26 +7,23 @@ import CreateGroupe from "../../../groupe/createGroupe";
  * @desc Affiche tous les Groupes et MP dont l'utilisateur est membre
  *       trié par ordre chronologique
  */
+
 const BarreLatHome = ({ handleClick }) => {
   const [groupesMembre, setGroupesMembre] = useState([]);
-  const { handleGroupeSelect } = useContext(UserContext);
 
-  const [groupes, setGroupes] = useState([]);
-  const ajouterGroupe = () => {
+  useEffect(() => {
     axios
       .get("https://localhost:3000/user/get-DM")
       .then((res) => {
-        setGroupes(res.data.Groupes);
-        console.log(groupes);
+        console.log(res.data.Groupes);
+        setGroupesMembre(res.data.Groupes);
       })
       .catch((err) => {
         console.log(err);
       });
-  };
-
-  useEffect(() => {
-    ajouterGroupe();
   }, []);
+
+  console.log(groupesMembre);
 
   const [groupes, setGroupes] = useState([]);
   const [messages, setMessages] = useState("");
@@ -40,9 +37,11 @@ const BarreLatHome = ({ handleClick }) => {
       .catch((err) => {
         console.log(err);
       });
-  }, []);
+  };
 
-  console.log(groupesMembre);
+  useEffect(() => {
+    ajouterGroupe();
+  }, []);
 
   return (
     <>
