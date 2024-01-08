@@ -6,6 +6,8 @@ const { infoToken } = require("../../Middleware/AuthToken");
 const MessageSalonModel = require("../../Model/Message/MessageSalon.model");
 const MessageModel = require("../../Model/Message/Message.model");
 
+const { format } = require("date-fns");
+
 async function getInfoSalon(req, res, idServeur, idSalon) {
   const serveur = await Serveur.findOne({ where: { id: idServeur } });
 
@@ -40,16 +42,18 @@ async function getInfoSalon(req, res, idServeur, idSalon) {
       where: { id: messageMod.userId },
     });
 
+    const date = format(messageMod.createdAt, "dd/MM/yyyy HH:mm");
+
+// TODO: à rempalacer dans un fichier
     if (user) {
-      console.log(messageMod);
       Messages.push({
         id: messageMod.id,
         contenu: messageMod.contenu,
-        date: messageMod.createdAt,
+        date: date,
         username: user.username,
+        isOwner: messageMod.userId == infoToken(req).id,
       });
     } else console.log("User non trouvé.");
-    console.log(Messages);
   }
 
   return res.status(200).json({ messages: Messages, nomSalon: salon.nom });
@@ -68,9 +72,6 @@ async function GetServeur(req, res) {
     const idServeur = req.query.idServeur;
     const idSalon = req.query.idSalon;
 
-    console.log("id : " + id);
-    console.log("idServeur : " + idServeur);
-    console.log("idSalon : " + idSalon);
 
     const serveur = await Serveur.findOne({
       where: { id: idServeur },

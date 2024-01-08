@@ -96,14 +96,13 @@ io.on("connection", (socket) => {
 
   const user = socket.request.cookies.authToken;
 
-  socket.on("clientConnection", () => {
-    console.log("Client has connected");
-  });
-
   socket.data.userId = infoToken(null, user).id;
 
   handleSocketConnection(socket, io);
+
+
 });
+
 
 httpsServer.listen(HTTPS_PORT, () => {
   console.log("HTTPS Server running on port " + HTTPS_PORT);
