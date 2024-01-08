@@ -1,9 +1,50 @@
-const express = require("express");
-const router = express.Router();
 const Groupe = require("../../Model/Groupe.model");
 const Membre = require("../../Model/Lien/MembreGroupe.model");
 const Message = require("../../Model/Message/Message.model");
-const MessageGroupe = require("../../Model/Lien/MessageGroupe.model");
+const MessageGroupe = require("../../Model/Message/MessageGroupe.model");
+const UserModel = require("../../Model/User.model");
+
+const { infoToken } = require("../../Middleware/AuthToken");
+
+async function recupererMessageGroupe(req, res, idGroupe, idUser) {
+  try {
+    const MessageGroupe = await MessageGroupe.findAll({
+      where: {
+        groupeId: idGroupe,
+      },
+    });
+
+    let Messages = [];
+
+    for (const messageGroupe of MessageGroupe) {
+      const messageMod = await Message.findOne({
+        where: { id: messageGroupe.idMessage },
+      });
+
+      const user = await UserModel.findOne({
+        where: { id: messageMod.userId },
+      });
+
+      const date = format(messageMod.createdAt, "dd/MM/yyyy HH:mm");
+
+      if (user) {
+        Messages.push({
+          id: messageMod.id,
+          contenu: messageMod.contenu,
+          date: date,
+          username: user.username,
+          isOwner: messageMod.userId == infoToken(req).id,
+        });
+      }
+    }
+
+    return res.status(200).json({ messages: Messages });
+  } catch (error) {
+    return res
+      .status(500)
+      .json({ error: "Erreur lors de la récupération de message" + error });
+  }
+}
 
 /**
  * @description Page du groupe
@@ -14,13 +55,38 @@ const MessageGroupe = require("../../Model/Lien/MessageGroupe.model");
 
 async function pagegroupe(req, res) {
   try {
-    const idGroupe = req.body.idGroupe;
+    const idGroupe = req.params.idGroupe;
     const LeGroupe = await Groupe.findByPk(idGroupe);
+    const idUser = infoToken(req).id;
+
+    const estMembre = await Membre.findOne({
+      where: {
+        userId: idUser,
+        groupeId: idGroupe,
+      },
+    });
+
+    if (!estMembre) {
+      return res.status(404).json({ error: "Vous n'êtes pas membre" });
+    }
+
+    const membres = await Membre.findAll({
+      where: {
+        groupeId: idGroupe,
+      },
+    });
 
     if (!LeGroupe) {
       return res.status(404).json({ error: "Groupe non trouvé" });
     }
-    return res.status(201).json(LeGroupe);
+
+    const messagegroupe = recupererMessageGroupe(req, res);
+
+    return res.status(201).json({
+      groupe: LeGroupe,
+      membreListe: membres,
+      messages: messagegroupe,
+    });
   } catch (error) {
     return res
       .status(500)
@@ -37,12 +103,16 @@ async function pagegroupe(req, res) {
 
 async function creergroupe(req, res) {
   try {
+    const idUser = infoToken(req).id;
     const newGroup = await Groupe.create({
       nom: req.body.nom,
-      idCreateur: req.body.idCreateur,
+      lienImage: req.body.lienImage,
+      idCreateur: idUser,
     });
+
     return res.status(201).json(newGroup);
   } catch (error) {
+    console.log(error);
     return res
       .status(500)
       .json({ error: "Erreur lors de la création du groupe" });
