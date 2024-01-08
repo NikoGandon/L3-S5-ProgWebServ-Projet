@@ -7,7 +7,7 @@ import CreateGroupe from "../../../groupe/createGroupe";
  * @desc Section d'un groupe
  * @returns
  */
-const GroupeBox = ({ nomGroupe, nbMembres, idGroupe, handleClick }) => {
+const GroupeBox = ({ nomGroupe, idGroupe, handleClick, nbUser }) => {
   return (
     <button
       className="btn_find_groupe"
@@ -19,7 +19,7 @@ const GroupeBox = ({ nomGroupe, nbMembres, idGroupe, handleClick }) => {
         <img className="icon_mp" src="../../../images/singe.jpg" />
         <div className="name_mp_box">
           <p className="name_mp">{nomGroupe}</p>
-          <p className="name_mp">{nbMembres} membres</p>
+          <p className="name_mp">{nbUser} membres</p>
         </div>
       </div>
     </button>
@@ -32,27 +32,11 @@ const GroupeBox = ({ nomGroupe, nbMembres, idGroupe, handleClick }) => {
  */
 const BarreLatHome = ({ handleClick }) => {
   const [groupesMembre, setGroupesMembre] = useState([]);
-
-  useEffect(() => {
-    axios
-      .get("https://localhost:3000/user/get-DM")
-      .then((res) => {
-        console.log(res.data.Groupes);
-        setGroupesMembre(res.data.Groupes);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, []);
-
-  console.log(groupesMembre);
-
-  const [groupes, setGroupes] = useState([]);
   const ajouterGroupe = () => {
     axios
       .get("https://localhost:3000/user/get-DM")
       .then((res) => {
-        setGroupes(res.data.Groupe);
+        setGroupesMembre(res.data.Groupes);
       })
       .catch((err) => {
         console.log(err);
@@ -71,9 +55,9 @@ const BarreLatHome = ({ handleClick }) => {
             groupesMembre.map((item) => (
               <GroupeBox
                 key={item.id}
-                nomGroupe={item.nom}
-                nbMembres={item.nbMembres}
+                nomGroupe={item.nomGroupe}
                 idGroupe={item.id}
+                nbUser={item.nbUser}
                 handleClick={handleClick}
               />
             ))
