@@ -93,6 +93,15 @@
 
 /*=======================*/
 
+.scroll-zone {
+    width: 300px; /* Largeur de la zone de défilement */
+    height: 200px; /* Hauteur de la zone de défilement */
+    overflow: auto; /* Cache le débordement */
+    width: 100%;
+    height: 50vh;
+    position: relative;
+  }
+
 .div_create_serveur{
     height: 60px;
     padding-bottom: 10px;

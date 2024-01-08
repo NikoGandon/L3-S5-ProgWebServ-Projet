@@ -70,7 +70,11 @@ const Serveur = () => {
 
       <div className="messageList">
         <p>Bienvenue dans {nomServeur}</p>
-        {contexteSalon != null && <ConversationChat />}
+        <div class="scroll-zone">
+          <div class="content-message">
+            {contexteSalon != null && <ConversationChat />}
+          </div>
+        </div>
       </div>
       <div className="barreChat">{contexteSalon != null && <BarreChat />}</div>
     </>
