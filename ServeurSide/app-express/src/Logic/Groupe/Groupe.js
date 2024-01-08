@@ -44,6 +44,10 @@ async function creergroupe(req, res) {
       lienImage: req.body.lienImage,
       idCreateur: idUser,
     });
+    const membre = await Membre.create({
+      userId: idUser,
+      groupeId: newGroup.id
+    });
     return res.status(201).json(newGroup);
   } catch (error) {
     console.log(error);
