@@ -65,9 +65,6 @@ const Regiter = () => {
 
   return (
     <>
-    <div id="LoginRegister">
-        <div id="contentLoginRegister">
-
       <h2>Inscription</h2>
       {error ? <p className="error">{error}</p> : null}
       <form className="formsAuth" onSubmit={handleSubmit}>
@@ -103,8 +100,6 @@ const Regiter = () => {
         <p></p>
         <button type="submit" id="submitButton">S'inscrire</button>
       </form>
-      </div>
-      </div>
     </>
   );
 };

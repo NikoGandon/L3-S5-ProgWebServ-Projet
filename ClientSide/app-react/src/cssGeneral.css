@@ -287,3 +287,79 @@ body{
     width: 100%;
     border-radius: 5px;
 }
+
+#LoginRegister #contentLoginRegister #compte{
+    color: rgb(150, 150, 150);
+    font-size: 15px;
+    padding-top: 4%;
+}
+
+#LoginRegister #contentLoginRegister #compte:hover{
+    color: white;
+}
+
+#connectGoogle {
+    display: flex; /* Utilisation de Flexbox */
+    align-items: center; /* Alignement vertical du contenu */
+    justify-content: center; /* Alignement horizontal du contenu */
+    border: none;
+    background-color: white;
+    color: rgb(150, 150, 150);
+    font-size: 15px;
+    margin-top: 6%;
+    padding-top: 4%;
+    padding-bottom: 4%;
+    width: 100%;
+    border-radius: 5px;
+  }
+
+
+
+  /* ---------------------------------------------------------------- Home Unconnected ---------------------------------------------------------------- */
+
+  #homeUnconnected{
+    width: 100%;
+    height: 100vh;
+    background-image: url('../public/image/bg.png');
+    background-size: cover;
+    background-position: center;
+}
+
+#homeUnconnected #contenthomeUnconnected{
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #282b30;
+    padding-left: 3%;
+    padding-right: 3%;
+    padding-top: 2%;
+    padding-bottom: 2%;
+    border-radius: 10px;
+
+    
+}
+
+#homeUnconnected #contenthomeUnconnected #homeUnconnectedButton{
+    margin-top: 6%;
+    border: none;
+    background-color: #5865f2;
+    color: white;
+    font-size: 15px;
+    padding-top: 4%;
+    padding-bottom: 4%;
+    width: 100%;
+    border-radius: 5px;
+    
+}
+
+#imgHomeUnconnected{
+    width: 50vh;
+    height: 50vh;
+    border-radius: 10px;
+    object-fit: cover; /* Ajuste l'image sans déformation en rognant */
+    object-position: center; /* Centre l'image dans le conteneur */
+}
