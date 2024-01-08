@@ -41,7 +41,11 @@ const ServeurBar = ({ onRevenirAccueil }) => {
               }}
             >
               <p>{serveur.id}</p>
-              <img src={serveur.imgLink} alt={serveur.nomServeur} />
+              <img
+                id="logoServeur"
+                src={serveur.imgLink} //{serveur.imgLink}
+                alt={serveur.nomServeur}
+              />
               <div className="NomServeur">Coucou, {serveur.nomServeur}</div>
             </div>
           ))
