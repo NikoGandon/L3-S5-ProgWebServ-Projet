@@ -28,8 +28,6 @@ const Home = () => {
             <BarreLat />
           </div>
           <div id="content">
-            <h1>Content</h1>
-            <Logout />
             <Content />
           </div>
         </ContextUserProvider>

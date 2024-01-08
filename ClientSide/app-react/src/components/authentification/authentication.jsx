@@ -44,8 +44,8 @@ export default function Authentication() {
         ) : (
           <Register onSwitch={handleSwitch} />
         )}
-        <button onClick={handleSwitch}> {isLogin ? ("Je n'ai pas de compte") : ("J'ai un compte")} </button>
-        <OAuth2 />
+        <button id="compte" onClick={handleSwitch}> {isLogin ? ("Je n'ai pas de compte") : ("J'ai un compte")} </button>
+        <OAuth2 id="OAuth2"/>
       </div>
     </>
   );
