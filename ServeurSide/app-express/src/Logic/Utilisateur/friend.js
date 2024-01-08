@@ -17,7 +17,6 @@ const getFriend = async (req, res) => {
       return res.status(402).json({ error: "Vous n'êtes pas connecté" });
     }
 
-    // Utilisez Op.or correctement
     const friends = await FriendModels.findAll({
       where: {
         [Op.or]: [{ userId: user }, { friendId: user }],
@@ -58,8 +57,6 @@ const addFriend = async (req, res) => {
     if (!Ami) {
       return res.status(404).json({ error: "Aucun utilisateur trouvé avec le nom spécifié." });
     }
-    console.log("-----------");
-    console.log(Ami.id);
     await FriendModels.create({
       userId: idUser,
       friendId: Ami.id,

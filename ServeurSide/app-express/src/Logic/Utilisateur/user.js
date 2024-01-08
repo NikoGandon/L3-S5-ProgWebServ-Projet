@@ -1,6 +1,7 @@
 const UserModel = require("../../Model/User.model");
 
 const { infoToken } = require("../../Middleware/AuthToken");
+const { hash } = require("../../Utils/hasher");
 
 /**
  * @description Récupère les informations de l'utilisateur
@@ -51,7 +52,7 @@ async function updateInformation(req, res) {
       user.email = email;
     }
     if (password) {
-      user.password = password;
+      user.password = await hash(password);
     }
     if (bio) {
       user.bio = bio;
