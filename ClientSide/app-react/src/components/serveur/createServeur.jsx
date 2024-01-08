@@ -25,14 +25,14 @@ const Form = ({ onSubmit }) => {
         <input
           className="input_create_serveur"
           type="text"
-          placeholder="Nom du serveur"
+          placeholder="Nom"
           value={nom}
           onChange={(e) => setNom(e.target.value)}
         />
         <input
           className="input_create_serveur"
           type="text"
-          placeholder="Description du serveur"
+          placeholder="Description"
           value={description}
           onChange={(e) => setDescription(e.target.value)}
         />
@@ -40,7 +40,7 @@ const Form = ({ onSubmit }) => {
         <input
           className="input_create_serveur"
           type="text"
-          placeholder="Image du serveur"
+          placeholder="Image"
           value={image}
           onChange={(e) => setImage(e.target.value)}
         />
@@ -80,12 +80,14 @@ const CreateServeur = ({ ajouterServeur }) => {
   return (
     <>
       <div className="div_create_serveur" onClick={handleBoutonCreate}>
-        <button>
-          {/* <img className="icon_create_serveur" src="../../../images/plus.png" /> */}
-          <p className="name_create_serveur">✚</p>
-        </button>
+        <div>
+          <button>
+            {/* <img className="icon_create_serveur" src="../../../images/plus.png" /> */}
+            <p className="name_create_serveur">✚</p>
+          </button>
+        </div>
+        {isFormVisible && <Form onSubmit={handleSubmit} />}
       </div>
-      {isFormVisible && <Form onSubmit={handleSubmit} />}
     </>
   );
 };

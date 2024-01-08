@@ -1,6 +1,9 @@
 body{
     font-family: 'Uni Sans', sans-serif;
     font-weight: 400;
+
+    /* contain all in 1 screen height */
+    min-height: 100vh;
 }
 
 .grid{
@@ -10,8 +13,8 @@ body{
      "barreServeur barreLaterale contenu"
      "barreServeur barreLaterale contenu";
 
-    grid-template-columns: 100px 250px auto;
-    height: 100vh;
+    grid-template-columns: 5% 20% auto;
+    height: 100%;
 }
 
 #content{
@@ -30,31 +33,52 @@ body{
 
 #barreServeur{
     grid-area: barreServeur;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     background-color: #1e2124;
     text-align: center;
-
     color: white;
 }
 
-#barreServeur #logo{
-    padding-top: 10px;
-    background-color: #1e2124;
-    color: red;
-    width: 60px;
-    height: 60px;
+#serveur {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+#logoServeur{
+    width: 75%;
 }
 
-#logoServeur{
-    width: 50px;
-    height: 50px;
-    border-image-repeat: repeat;
+#serveur_desc{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: 10px;
 }
+
+#serveur_desc p {
+    margin: 0;
+    font-weight: bolder;
+}
+
+
+#barreServeur #logo{
+    padding-top: 7%;
+    padding-bottom: 7%;
+    background-color: #1e2124;
+    color: rgb(221, 46, 46);
+    width: 60%;
+    height: 60%;
+}
+
+
 
 #barreServeur #barre{
-    margin-top: 10px;
-    margin-right: 30%;
-    margin-left: 30%;
-    border: 1px solid #36393e;
+    border: 0.5px solid #5e6f80;
+    margin-top: 1%;
+    margin-bottom: 1%;
 }
 
 #barreLaterale{
@@ -102,7 +126,20 @@ body{
     padding-right: 10px;
 }
 
+.createServeur {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+.input_create_serveur {
+    text-align: center;
+    max-width: 100%;
+}
+
 /*=======================*/
+
 
 .scroll-zone {
     width: 300px; /* Largeur de la zone de défilement */
@@ -113,18 +150,17 @@ body{
     position: relative;
   }
 
-.div_create_serveur{
-    height: 60px;
-    padding-bottom: 10px;
-    padding-top: 10px;
-}
 
-.div_create_serveur button{
+
+.div_create_serveur div button{
     border: none;
     border-radius: 100%;
     background-color: #282b30;
-    height: 60px;
-    width: 60px;
+}
+
+.name_create_serveur {
+    color: white;
+    font-size: 20px;
 }
 
 #salonDesign{
@@ -208,6 +244,16 @@ body{
     border-radius: 10px;
   }
 
+  #contenuAccueil {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+  }
+
+  #messages {    
+    height: 100%;
+  }
+
   #contenuAccueil h3{
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   }
@@ -223,7 +269,13 @@ body{
     font-size: 13px;
 }
 
-#deconnexion{
+.bouton_param, .bouton_profil {
+    display: flex;
+    flex-direction: column;
+}
+
+#deconnexion, #parametres{
+    display: flex;
     border: none;
     background-color: #5865f2;
     color: white;
@@ -234,6 +286,12 @@ body{
     padding-left: 150px;
     border-radius: 5px;
     margin-bottom: 15px;
+}
+
+#deconnexion:hover{
+    /* transition au rouge en 1s */
+    transition: background-color 0.3s;
+    background-color: #f02b4c;
 }
 
 

@@ -1,4 +1,4 @@
-import React , {useContext} from "react";
+import React , {useContext, useEffect, useState} from "react";
 import { UserContext} from "../../contexts/user.context";
 import axios from "../../utils/axiosConf";
 
@@ -20,22 +20,41 @@ const Accueil = () => {
     }
   };
 
+  const { infoUser, setInfoUser }  = useState();
+
+  useEffect (() => {
+      try {
+        const response = axios.get("https://localhost:3000/user/me");
+        
+        if (response.status === 200) {
+          console.log("me :", response.data);
+          setInfoUser(response.data);
+        }
+      } catch (error) {
+        console.error("Erreur lors de la récupération de l'utilisateur :", error);
+      }
+  }); // Add a closing parenthesis here
+
   return (
     <>
       <div id="zoneAccueil">
         <div id="arrierePlanFlou"></div>
         <div id="contenuAccueil">
-          <h3>Bienvenue sur discord</h3>
-          <p id="message_bienvenue">Amuse-toi bien mon ami</p>
-          <div className="button_param" onClick={() => handleParam()}>
-            <button id="deconnexion" onClick={handleSubmit}>Déconnexion</button>
+          <div id="messages">
+            <h3>Bienvenue sur discord</h3>
+            <p id="message_bienvenue">Amuse-toi bien mon ami </p>  
+          </div>
+          <div className="button_param" onClick={() => handleParam()}>      
+            <div className="button_profil" onClick={()=>{handleProfil()}}>
+              <p id="username">PLACEHOLDER InfoUser.username</p> {/* {infoUser.username} */}
+              <img id="lienPP" src="../../public/image/serverLogo.png" alt="Profil" /> {/* {infoUser.lienPP} https://localhost:3000/fichier/user/${lienPP}*/}
+            </div>
             <a alt="Param" id="parametres">Paramètres</a>
+            <button id="deconnexion" onClick={handleSubmit}>Déconnexion</button>
           </div>
         </div>
       </div>
-      <div className="button_profil" onClick={()=>{handleProfil()}}>
-        <img src="../../public/image/serverLogfo.png" alt="Profil" />
-      </div>
+
     </>
   );
 };
