@@ -5,9 +5,9 @@ const UserContext = createContext({
   contexteID: null,
   contexteSalon: null,
   handleServeurSelect: () => {},
-  handleMPSelect: () => {},
   handleGroupeSelect: () => {},
   handleParam: () => {},
+  handleProfil: () => {},
   handleRevenirAccueil: () => {},
   updateContext: () => {},
 });
@@ -27,16 +27,16 @@ const ContextUserProvider = (props) => {
     });
   }
 
-  function handleMPSelect(id) {
-    setContext({ contexteUser: "MP", contexteID: id });
-  }
-
   function handleGroupeSelect(id) {
     setContext({ contexteUser: "groupe", contexteID: id });
   }
 
   function handleParam() {
     setContext({ contexteUser: "param", contexteID: null });
+  }
+
+  function handleProfil() {
+    setContext({ contexteUser: "profil", contexteID: null });
   }
 
   const handleRevenirAccueil = () => {
@@ -49,9 +49,9 @@ const ContextUserProvider = (props) => {
     contexteSalon: context.contexteSalon,
     serveurs: context.serveurs,
     handleServeurSelect,
-    handleMPSelect,
     handleGroupeSelect,
     handleParam,
+    handleProfil,
     handleRevenirAccueil,
     updateContext: setContext,
   };
