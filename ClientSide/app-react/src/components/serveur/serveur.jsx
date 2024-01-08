@@ -65,11 +65,9 @@ const Serveur = () => {
 
   return (
     <>
-      <h1 className="titleNameServeur"></h1>
+      <h3 className="titleNameServeur">Bienvenue sur {nomServeur}</h3>
       <div className="memberList">{/*<MemberList membres={membres} />*/}</div>
-
       <div className="messageList">
-        <p>Bienvenue dans {nomServeur}</p>
         <div class="scroll-zone">
           <div class="content-message">
             {contexteSalon != null && <ConversationChat />}
