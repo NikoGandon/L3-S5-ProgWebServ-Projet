@@ -12,8 +12,7 @@ import CreateServeur from "../../serveur/createServeur";
  */
 
 const ServeurBar = () => {
-  const { handleServeurSelect, handleRevenirAccueil } =
-    useContext(UserContext);
+  const { handleServeurSelect, handleRevenirAccueil } = useContext(UserContext);
   const [serveurs, setServeurs] = useState([]);
 
   const ajouterServeur = () => {
@@ -33,8 +32,18 @@ const ServeurBar = () => {
 
   return (
     <>
-      <div className="button_home" onClick={() =>{handleRevenirAccueil()}}>
-        <img id="logo" src="../../public/image/discord.png" width="80px" height="80px"/>
+      <div
+        className="button_home"
+        onClick={() => {
+          handleRevenirAccueil();
+        }}
+      >
+        <img
+          id="logo"
+          src="../../public/image/discord.png"
+          width="80px"
+          height="80px"
+        />
         <div id="barre"></div>
       </div>
       {serveurs.length > 0
@@ -47,9 +56,10 @@ const ServeurBar = () => {
             >
               <p>{serveur.id}</p>
               <img
-              id = "logoServeur"
-              src="../../public/image/serverLogo.png"//{serveur.imgLink}
-              alt={serveur.nomServeur} />
+                id="logoServeur"
+                src="../../public/image/serverLogo.png" //{serveur.imgLink}
+                alt={serveur.nomServeur}
+              />
               <div className="NomServeur">Coucou, {serveur.nomServeur}</div>
             </div>
           ))

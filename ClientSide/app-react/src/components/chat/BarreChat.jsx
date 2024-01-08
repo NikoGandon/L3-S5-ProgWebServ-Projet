@@ -42,20 +42,20 @@ const FormChat = ({ sendMessage }) => {
  */
 const Chat = () => {
   const { contexteUser, contexteID, contexteSalon } = useContext(UserContext);
-
+  console.log("connect");
   const socket = io("https://localhost:3000", {
     transports: ["websocket"],
   });
 
+  const contextToLoad = contexteSalon || contexteID;
+
   useEffect(() => {
-    socket.emit("joinRoom", {
-      roomType: contexteUser,
-      roomId: contexteSalon || contexteID,
-    });
-    /*
+    socket.emit("joinRoom", contexteUser, contextToLoad);
+
     return () => {
-      socket.disconnect();
-    };*/
+      console.log("disconnect");
+      socket.close();
+    };
   }, [contexteUser, contexteID, contexteSalon, socket]);
 
   const sendMessage = (message) => {
