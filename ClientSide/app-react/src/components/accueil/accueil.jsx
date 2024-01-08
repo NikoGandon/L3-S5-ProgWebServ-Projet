@@ -3,7 +3,7 @@ import { UserContext} from "../../contexts/user.context";
 import axios from "../../utils/axiosConf";
 
 const Accueil = () => {
-  const { handleParam } = useContext(UserContext);
+  const { handleParam, handleProfil } = useContext(UserContext);
 
   const handleSubmit = async () => {
     try {
