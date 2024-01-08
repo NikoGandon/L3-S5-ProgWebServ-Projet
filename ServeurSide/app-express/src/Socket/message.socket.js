@@ -1,366 +1,141 @@
-/*async function getConversationMessages(idCouple) {
-  try {
-    const messages = await Message.findAll({
-      where: {
-        idCouple: idCouple,
-      },
-      order: [["envoyé", "ASC"]], // Trie par date si nécessaire
-    });
-
-    return messages;
-  } catch (error) {
-    console.error(
-      "Erreur lors de la récupération des messages de la conversation :",
-      error
-    );
-    throw error;
-  }
-}
-
-module.exports = { getConversationMessages };
-io.on("connexion", (socket) => {
-  socket.on("privateMessage", async (data) => {
-    const { idCouple, idMessage, contenu } = data;
-    try {
-      // Validation du message pour voir si message vide
-      if (!contenu.trim()) {
-        throw new Error("Le contenu du message est vide.");
-      }
-
-      await Messagemodel.create({
-        idUserRe: socket.user.id, // user qui reçoit le message
-        idCouple: idCouple,
-        idMessage: idMessage,
-        contenu: contenu,
-      });
-
-      // Envoie du message au destinataire
-      io.to(idCouple).emit("privateMessage", {
-        idUserRe: socket.user.id, // envoie le message à tout les socket ayant l'id du receveur
-        idMessage: idMessage,
-      });
-    } catch (error) {
-      // Gestion des erreurs
-      socket.emit("errorMessage", { message: error.message });
-      console.error("Erreur lors de l'envoi du message :", error);
-    }
-  });
-  io.on("connexion", (socket) => {
-    socket.on("conversation entre le couple", (idCouple) => {
-      socket.join(idCouple);
-    });
-  });
-});
-socket.on("suppMessage", async (idMessage) => {
-  try {
-    const message = await Message.findByPk(idMessage);
-
-    if (!message) {
-      throw new Error("Le message n'existe pas.");
-    }
-
-    // Vérifie si l'utilisateur actuel est autorisé à supprimer ce message
-    if (message.idCouple !== socket.user.id) {
-      throw new Error(
-        "L'utilisateur n'est pas autorisé à supprimer ce message."
-      );
-    }
-
-    // Supprime le message dans la base de données
-    await Message.destroy({
-      where: { id: idMessage },
-    });
-
-    io.emit("Message supprimé", idMessage);
-  } catch (error) {
-    // Gestion des erreurs
-    console.error("Erreur lors de la suppression du message :", error);
-  }
-});
-io.on("connexion", (socket) => {
-  socket.on("Recevoir message", (data) => {
-    const { idCouple, idMessage } = data;
-    // Sauvegarde du message dans la base de données avec Sequelize
-    // Envoie du message à l'utilisateur destinataire
-    io.to(idCouple).emit("Recevoir message", {
-      idCouple: socket.user.id,
-      idMessage,
-    });
-  });
-});
-// partie groupe
-async function getGroupMessages(idGroup) {
-  try {
-    const messages = await Message.findAll({
-      where: {
-        idGroup: idGroup, // Récupère tous les messages liés à ce groupe
-      },
-      order: [["envoyé", "ASC"]],
-    });
-    return messages;
-  } catch (error) {
-    console.error(
-      "Erreur lors de la récupération des messages du groupe :",
-      error
-    );
-    throw error;
-  }
-}
-module.exports = { getGroupMessages };
-
-socket.on("envoiemessagegr", async ({ idGroup, contenu }) => {
-  try {
-    // Vérification si l'utilisateur appartient au groupe
-    const userestGroup = await UserGroup.findOne({
-      where: {
-        userId: socket.user.id,
-        idGroup: idGroup,
-      },
-    });
-
-    if (!userestGroup) {
-      throw new Error("L'utilisateur ne fait pas partie de ce groupe.");
-    }
-    const newMessage = await Message.create({
-      idGroup: idGroup,
-      idUser: socket.user.id,
-      contenu: contenu,
-    });
-
-    // Émission d'un événement pour informer les membres du groupe du nouveau message dans le groupe
-    io.to(idGroup).emit("groupMessage", newMessage);
-  } catch (error) {
-    console.error("Erreur lors de l'envoi du message dans le groupe :", error);
-    socket.emit("envoiemessagegr", { message: error.message });
-  }
-});
-socket.on("deleteGroupMessage", async ({ idMessage, idGroup }) => {
-  try {
-    // Vérification si l'utilisateur a le droit de supprimer le message (par exemple : est-il l'auteur du message ?)
-    const isMessageAuteur = await Message.findOne({
-      where: {
-        idMessage: idMessage,
-        idUser: socket.user.id,
-      },
-    });
-
-    if (!isMessageAuteur || idUser !== idCreateur) {
-      throw new Error(
-        "L'utilisateur n'est pas autorisé à supprimer ce message."
-      );
-    }
-
-    // Suppression du message dans la base de données
-    await Message.destroy({
-      where: {
-        idMessage: idMessage,
-        idGroup: idGroup,
-      },
-    });
-
-    // Émission d'un événement pour informer les clients du groupe de la suppression du message
-    io.to(idGroup).emit("groupMessageDeleted", idMessage);
-  } catch (error) {
-    console.error(
-      "Erreur lors de la suppression du message dans le groupe :",
-      error
-    );
-    socket.emit("deleteGroupMessageError", { message: error.message });
-  }
-});
-// partie serveur
-io.on("connection", (socket) => {
-  console.log("Nouvelle connexion:", socket.id);
-
-  // Événement lorsque l'utilisateur se connecte à un serveur spécifique
-  socket.on("user_connected", ({ idUser, idServeur }) => {
-    if (!servers[idServeur]) {
-      servers[idServeur] = {};
-    }
-
-    servers[idServeur][socket.id] = idUser;
-
-    io.to(idServeur).emit("user_list", Object.values(servers[idServeur]));
-    socket.join(idServeur);
-  });
-
-  // Événement pour envoyer un message dans un serveur spécifique
-  socket.on("chat_message", ({ idMessage, idServeur }) => {
-    io.to(idServeur).emit("chat_message", {
-      idUser: servers[idServeur][socket.id],
-      idMessage,
-    });
-  });
-});
-socket.on("suppmessage", ({ idMessage, idServeur }) => {
-  io.to(idServeur).emit("suppmessage", { idMessage });
-});
-
-socket.on("voirmessage", ({ idMessage, idServeur }) => {
-  io.to(idServeur).emit("voirmessage", {
-    idUser: idUser[socket.id],
-    idMessage,
-  });
-});*/
-
-/////////////////////// Reset ///////////////////////////
-
 const MessageModele = require("../Model/Message/Message.model");
 const MessageGroupeModele = require("../Model/Message/MessageGroupe.model");
 const MembreGroupeModele = require("../Model/Lien/MembreGroupe.model");
+const GroupeModele = require("../Model/Groupe.model");
+const UserModele = require("../Model/User.model");
 
-const { socketConfig } = require("../Config/ioSocket");
-const { Server } = require("socket.io");
+const { format } = require("date-fns");
 
+async function handleSocketConnection(socket, io) {
+  let newMessage = null;
 
-function handleGroupeMessage(socket) {
-  const io = new Server(socket.Server, socketConfig);
-  socket.on("envoiemessagegr", async ({ idGroup, contenu }) => {
-    try {
-      const userestGroup = await MembreGroupeModele.findOne({
-        where: {
-          userId: socket.user.id,
-          groupeId: idGroup,
-        },
-      });
-
-      if (!userestGroup) {
-        throw new Error("L'utilisateur ne fait pas partie de ce groupe.");
+  socket.on(
+    "sendMessage",
+    async ({ roomType, roomId, contenu, serveurId = null }) => {
+      if (!contenu.trim()) {
+        console.log("error");
+        io.emit("Error sending", {
+          message: "Le contenu du message est vide.",
+        });
       }
-      const newMessage = await MessageModele.create({
-        userId: socket.user.id,
+
+      if (roomType == null || roomId == null) {
+        console.log("error");
+        io.emit("Error sending", {
+          message: "Le type ou l'id de la room est invalide.",
+        });
+      }
+
+      newMessage = await MessageModele.create({
+        userId: socket.data.userId,
         contenu: contenu,
       });
 
-      const newMessageGroupe = await MessageGroupeModele.create({
-        messageId: newMessage.id,
-        groupeId: idGroup,
-      });
+      console.log("donnée recu", roomType, roomId, contenu, serveurId);
 
-      io.to(idGroup).emit("groupMessage", newMessage);
-    } catch (error) {
-      console.error(
-        "Erreur lors de l'envoi du message dans le groupe :",
-        error
-      );
-      socket.emit("envoiemessagegr", { message: error.message });
-    }
-  });
-
-  socket.on("deleteGroupMessage", async ({ idMessage, idGroup }) => {
-    try {
-      const isMessageAuteur = await MessageModele.findOne({
-        where: {
-          id: idMessage,
-          userId: socket.user.id,
-        },
-      });
-
-      if (!isMessageAuteur) {
-        throw new Error(
-          "L'utilisateur n'est pas autorisé à supprimer ce message."
-        );
+      if (roomType === "groupe") {
+        handleGroupeMessage(socket, io, roomId, newMessage);
+      } else if (roomType === "serveur") {
+        handleSalonMessage(socket, io, roomId, serveurId, newMessage);
       }
 
-      await Message.destroy({
-        where: {
-          id: idMessage,
-        },
+      //socket?.serveurId?.io?.emit("incomingMessage", newMessage);
+
+      const user = await UserModele.findOne({
+        where: { id: socket.data.userId },
       });
 
-      await MessageGroupeModele.destroy({
-        where: {
-          messageId: idMessage,
-          groupeId: idGroup,
-        },
+      console.log("Message envoyé from API:", {
+        message: newMessage,
+        username: user.username,
       });
 
-      io.to(idGroup).emit("groupMessageDeleted", idMessage);
-    } catch (error) {
-      console.error(
-        "Erreur lors de la suppression du message dans le groupe :",
-        error
-      );
-      socket.emit("deleteGroupMessageError", { message: error.message });
+      const date = format(newMessage.createdAt, "dd/MM/yyyy HH:mm");
+
+      io.in(room).emit("incomingMessage", {
+        id: newMessage.id,
+        contenu: newMessage.contenu,
+        date: date,
+        username: user.username,
+      });
     }
+  );
+
+  let room = "";
+
+  socket.on("joinRoom", (contextUser, contextSalon) => {
+    room = `${contextUser}-${contextSalon}`;
+    console.log("//////////////////////////////////////user joined ", room);
+    socket.join(room);
+  });
+}
+
+async function handleGroupeMessage(socket, io, idContext, newMessage) {
+  const groupe = await GroupeModele.findOne({ where: { id: idContext } });
+
+  const userestGroup = await MembreGroupeModele.findOne({
+    where: {
+      userId: socket.data.userId,
+      groupeId: idContext,
+    },
+  });
+
+  if (!groupe || !userestGroup) {
+    newMessage.destroy();
+    throw new Error(
+      "Le groupe n'existe pas ou l'utilisateur n'est pas membre."
+    );
+  }
+
+  await MessageGroupeModele.create({
+    messageId: newMessage.id,
+    groupeId: idContext,
+  }).catch((error) => {
+    newMessage.destroy();
+    throw new Error("Erreur lors de la création du message dans le groupe.");
   });
 }
 
 const MembreServeurModele = require("../Model/MembreServeur.model");
 const MessageSalonModele = require("../Model/Message/MessageSalon.model");
+const SalonModele = require("../Model/Salon.model");
 
-function handleSalonMessage(socket) {
-  const io = new Server(socket.Server, socketConfig);
-  io.on("envoieMessageSrv", async ({ idSalon, contenu }) => {
-    try {
-      const userestSrv = await MembreServeurModele.findOne({
-        where: {
-          idUser: socket.user.id,
-          idSalon: idSalon,
-        },
-      });
-
-      if (!userestSrv) {
-        throw new Error("L'utilisateur ne fait pas partie de ce serveur.");
-      }
-
-      const newMessage = await MessageModele.create({
-        idUser: socket.user.id,
-        contenu: contenu,
-      });
-
-      await MessageSalonModele.create({
-        idMessage: newMessage.id,
-        idSalon: idSalon,
-      });
-
-      io.to(idSalon).emit("serveurMessage", newMessage);
-    } catch (error) {
-      console.error(
-        "Erreur lors de l'envoi du message dans le serveur :",
-        error
-      );
-      socket.emit("envoieMessageSrv", { message: error.message });
-    }
+async function handleSalonMessage(
+  socket,
+  io,
+  idContext,
+  serveurId,
+  newMessage
+) {
+  const salon = await SalonModele.findOne({
+    attributes: ["id", "nom", "description", "idServeur"],
+    where: {
+      id: idContext,
+      idServeur: serveurId,
+    },
   });
 
-  socket.on("deleteServeurMessage", async ({ idMessage, idSalon }) => {
-    try {
-      const isMessageAuteur = await MessageModele.findOne({
-        where: {
-          id: idMessage,
-          userId: socket.user.id,
-        },
-      });
+  const userestSrv = await MembreServeurModele.findOne({
+    where: {
+      idUser: socket.data.userId,
+      idServeur: serveurId,
+    },
+  });
 
-      if (!isMessageAuteur) {
-        throw new Error(
-          "L'utilisateur n'est pas autorisé à supprimer ce message."
-        );
-      }
+  if (!salon || !userestSrv) {
+    newMessage.destroy();
+    throw new Error(
+      "Le salon ou serveur n'existe pas ou l'utilisateur n'est pas membre du serveur."
+    );
+  }
 
-      await Message.destroy({
-        where: {
-          id: idMessage,
-        },
-      });
-
-      await MessageSalonModele.destroy({
-        where: {
-          idMessage: idMessage,
-          idSalon: idSalon,
-        },
-      });
-
-      io.to(idSalon).emit("serveurMessageDeleted", idMessage);
-    } catch (error) {
-      console.error(
-        "Erreur lors de la suppression du message dans le serveur :",
-        error
-      );
-      socket.emit("deleteServeurMessageError", { message: error.message });
-    }
+  await MessageSalonModele.create({
+    idMessage: newMessage.id,
+    idSalon: idContext,
+  }).catch((error) => {
+    newMessage.destroy();
+    throw new Error("Erreur lors de la création du message dans le serveur.");
   });
 }
 
-module.exports = { handleGroupeMessage, handleSalonMessage };
+module.exports = { handleSocketConnection };
