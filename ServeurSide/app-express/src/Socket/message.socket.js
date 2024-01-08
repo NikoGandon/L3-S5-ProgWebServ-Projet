@@ -2,6 +2,7 @@ const MessageModele = require("../Model/Message/Message.model");
 const MessageGroupeModele = require("../Model/Message/MessageGroupe.model");
 const MembreGroupeModele = require("../Model/Lien/MembreGroupe.model");
 const GroupeModele = require("../Model/Groupe.model");
+const { format } = require("date-fns");
 
 async function handleSocketConnection(socket, io) {
   socket.on(
@@ -26,9 +27,8 @@ async function handleSocketConnection(socket, io) {
         handleSalonMessage(socket, roomId, serveurId, newMessage);
       }
 
-      console.log("Message envoyé :", newMessage);
+      const date = format(newMessage.createdAt, "dd/MM/yyyy HH:mm");
 
-      io.to(roomId).emit("newMessage", newMessage);
     }
   );
 }
