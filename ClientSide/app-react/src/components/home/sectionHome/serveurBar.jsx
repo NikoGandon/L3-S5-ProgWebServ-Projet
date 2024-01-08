@@ -34,7 +34,8 @@ const ServeurBar = () => {
   return (
     <>
       <div className="button_home" onClick={() =>{handleRevenirAccueil()}}>
-        <img src="../../../images/plus.png" alt="Home" />
+        <img id="logo" src="../../public/image/discord.png" width="80px" height="80px"/>
+        <div id="barre"></div>
       </div>
       {serveurs.length > 0
         ? serveurs.map((serveur) => (
@@ -45,7 +46,10 @@ const ServeurBar = () => {
               }}
             >
               <p>{serveur.id}</p>
-              <img src={serveur.imgLink} alt={serveur.nomServeur} />
+              <img
+              id = "logoServeur"
+              src="../../public/image/serverLogo.png"//{serveur.imgLink}
+              alt={serveur.nomServeur} />
               <div className="NomServeur">Coucou, {serveur.nomServeur}</div>
             </div>
           ))
