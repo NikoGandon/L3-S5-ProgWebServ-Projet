@@ -46,22 +46,44 @@ const BarreLatHome = ({ handleClick }) => {
 
   console.log(groupesMembre);
 
+  const [groupes, setGroupes] = useState([]);
+  const [messages, setMessages] = useState("");
+
+  const ajouterGroupe = () => {
+    axios
+      .get("https://localhost:3000/user/get-DM")
+      .then((res) => {
+        setGroupes(res.data.Groupe);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
+
+  console.log(groupesMembre);
+
   return (
     <>
       <div className="barreLatHome">
         <div className="box_mp">
-          {groupesMembre && groupesMembre.length > 0 ? (
-            groupesMembre.map((item) => (
-              <GroupeBox
-                key={item.id}
-                nomGroupe={item.nom}
-                nbMembres={item.nbMembres}
-                idGroupe={item.id}
-                handleClick={handleClick}
-              />
-            ))
+          {groupes ? (
+            groupes.length > 0 ? (
+              groupes.map((item) => (
+                <div
+                  key={item.id}
+                  onClick={() => {
+                    handleGroupeSelect(item.id);
+                  }}
+                >
+                  <p>{item.id}</p>
+                  <div className="NomGroupe">Groupe: {item.nomGroupe}</div>
+                </div>
+              ))
+            ) : (
+              <p>Commencez à discuter !</p>
+            )
           ) : (
-            <p>Commencez à discuter !</p>
+            <p>{messages}</p>
           )}
         </div>
       </div>
