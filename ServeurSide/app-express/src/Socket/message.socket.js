@@ -2,38 +2,77 @@ const MessageModele = require("../Model/Message/Message.model");
 const MessageGroupeModele = require("../Model/Message/MessageGroupe.model");
 const MembreGroupeModele = require("../Model/Lien/MembreGroupe.model");
 const GroupeModele = require("../Model/Groupe.model");
+const UserModele = require("../Model/User.model");
+
 const { format } = require("date-fns");
 
 async function handleSocketConnection(socket, io) {
+  let newMessage = null;
+
   socket.on(
     "sendMessage",
     async ({ roomType, roomId, contenu, serveurId = null }) => {
       if (!contenu.trim()) {
-        throw new Error("Le contenu du message est vide.");
+        console.log("error");
+        io.emit("Error sending", {
+          message: "Le contenu du message est vide.",
+        });
       }
 
       if (roomType == null || roomId == null) {
-        throw new Error("Le type ou l'id de la room est invalide.");
+        console.log("error");
+        io.emit("Error sending", {
+          message: "Le type ou l'id de la room est invalide.",
+        });
       }
 
-      const newMessage = await MessageModele.create({
+      newMessage = await MessageModele.create({
         userId: socket.data.userId,
         contenu: contenu,
       });
 
+      console.log("donnée recu", roomType, roomId, contenu, serveurId);
+
       if (roomType === "groupe") {
-        handleGroupeMessage(socket, roomId, newMessage);
+        handleGroupeMessage(socket, io, roomId, newMessage);
       } else if (roomType === "serveur") {
-        handleSalonMessage(socket, roomId, serveurId, newMessage);
+        handleSalonMessage(socket, io, roomId, serveurId, newMessage);
       }
+
+      //socket?.serveurId?.io?.emit("incomingMessage", newMessage);
+
+      const user = await UserModele.findOne({
+        where: { id: socket.data.userId },
+      });
+
+      console.log("Message envoyé from API:", {
+        message: newMessage,
+        username: user.username,
+      });
 
       const date = format(newMessage.createdAt, "dd/MM/yyyy HH:mm");
 
+      io.in(room).emit("incomingMessage", {
+        newMessage: {
+          id: newMessage.id,
+          contenu: newMessage.contenu,
+          date: date,
+          username: user.username,
+        },
+      });
     }
   );
+
+  let room = "";
+
+  socket.on("joinRoom", (contextUser, contextSalon) => {
+    room = `${contextUser}-${contextSalon}`;
+    console.log("//////////////////////////////////////user joined ", room);
+    socket.join(room);
+  });
 }
 
-async function handleGroupeMessage(socket, idContext, newMessage) {
+async function handleGroupeMessage(socket, io, idContext, newMessage) {
   const groupe = await GroupeModele.findOne({ where: { id: idContext } });
 
   const userestGroup = await MembreGroupeModele.findOne({
@@ -63,7 +102,13 @@ const MembreServeurModele = require("../Model/MembreServeur.model");
 const MessageSalonModele = require("../Model/Message/MessageSalon.model");
 const SalonModele = require("../Model/Salon.model");
 
-async function handleSalonMessage(socket, idContext, serveurId, newMessage) {
+async function handleSalonMessage(
+  socket,
+  io,
+  idContext,
+  serveurId,
+  newMessage
+) {
   const salon = await SalonModele.findOne({
     attributes: ["id", "nom", "description", "idServeur"],
     where: {
