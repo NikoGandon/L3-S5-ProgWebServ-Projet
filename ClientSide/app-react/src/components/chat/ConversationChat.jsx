@@ -3,7 +3,6 @@ import { io } from "socket.io-client";
 import axios from "../../utils/axiosConf";
 
 import { UserContext } from "../../contexts/user.context";
-import { SocketContext } from "../../contexts/socketio.context";
 
 const FormatMessage = (message) => {
   return {

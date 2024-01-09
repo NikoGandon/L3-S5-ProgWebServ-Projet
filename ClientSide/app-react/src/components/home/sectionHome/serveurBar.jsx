@@ -54,18 +54,20 @@ const ServeurBar = () => {
                 handleServeurSelect(serveur.id);
               }}
             >
-              <p>{serveur.id}</p>
+              <div id="divBackgroundServeur">
+
+              <p>{serveur.nomServeur} </p>
               <img
                 id="logoServeur"
                 src="../../public/image/serverLogo.png" //{serveur.imgLink}
                 alt={serveur.nomServeur}
               />
-              <div className="NomServeur">Coucou, {serveur.nomServeur}</div>
+              </div>
             </div>
           ))
         : "pas de serveur"}
       <div className="createServeur">
-        <CreateServeur ajouterServeur={ajouterServeur} />
+        <CreateServeur />
       </div>
     </>
   );

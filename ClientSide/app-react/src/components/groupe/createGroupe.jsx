@@ -2,7 +2,7 @@ import React, { useState, useContext } from "react";
 import axios from "../../utils/axiosConf";
 import PopUp from "../pop-up/pop-up.model";
 
-import { PopupContext } from "../../contexts/popup.context";
+// import { PopupContext } from "../../contexts/popup.context";
 
 import "../../../src/cssGeneral.css";
 
@@ -10,19 +10,19 @@ const Form = ({ onSubmit }) => {
   const [nom, setNom] = useState("");
   const [image, setImage] = useState("");
 
-  const {closePopup} = useContext(PopupContext);
+  // const {closePopup} = useContext(PopupContext);
 
   const handleSubmit = (e) => {
     e.preventDefault();
     onSubmit({ nom, image });
-    closePopup();
+    // closePopup();
   };
 
   return (
     <PopUp>
-      <form className="form_create_serveur" onSubmit={handleSubmit}>
+      <form className="form_create_groupe" onSubmit={handleSubmit}>
         <input
-          className="input_create_serveur"
+          className="input_create_groupe"
           type="text"
           placeholder="Nom du groupe"
           value={nom}
@@ -30,7 +30,7 @@ const Form = ({ onSubmit }) => {
         />
         {/* Ajouter une entrée pour l'image */}
         <input
-          className="input_create_serveur"
+          className="input_create_groupe"
           type="text"
           placeholder="Image du groupe"
           value={image}
@@ -45,11 +45,11 @@ const Form = ({ onSubmit }) => {
 const CreateGroupe = ({ ajouterGroupe }) => {
   const [isFormVisible, setIsFormVisible] = useState(false);
 
-  const { openPopup } = useContext(PopupContext);
+  // const { openPopup } = useContext(PopupContext);
 
   const handleBoutonCreate = () => {
     setIsFormVisible(!isFormVisible);
-    openPopup();
+    // openPopup();
   };
 
   const handleSubmit = (data) => {
@@ -66,14 +66,15 @@ const CreateGroupe = ({ ajouterGroupe }) => {
       .catch((error) => {
         console.error("Erreur lors de la création du groupe", error);
       });
+      
   };
 
   return (
     <>
-      <div className="div_create_serveur" onClick={handleBoutonCreate}>
-        <button>
+      <div className="div_create_groupe" onClick={handleBoutonCreate}>
+        <button className="button_create_groupe">
           {/* <img className="icon_create_serveur" src="../../../images/plus.png" /> */}
-          <p className="name_create_serveur">✚</p>
+          Créer un groupe
         </button>
       </div>
       {isFormVisible && <Form onSubmit={handleSubmit} />}

@@ -3,11 +3,11 @@ import React, { useContext } from "react";
 import Serveur from "../../serveur/serveur";
 import Groupe from "../../groupe/groupe";
 import Profil from "../../user/profil";
+import Amis from "../../user/amis.jsx";
 import Param from "../../user/param.jsx";
 import Acceuil from "../../accueil/accueil.jsx";
 
 import { UserContext } from "../../../contexts/user.context";
-import { ContextSocketProvider } from "../../../contexts/socketio.context";
 
 const Content = () => {
   const { contexteUser } = useContext(UserContext);
@@ -30,6 +30,9 @@ const Content = () => {
     case "acceuil":
       content = <Acceuil />;
       break;
+    case "amis":
+      content = <Amis />;
+      break;
     default:
       content = <Acceuil />;
       break;
@@ -37,7 +40,7 @@ const Content = () => {
 
   return (
     <>
-      <ContextSocketProvider>{content}</ContextSocketProvider>
+      {content}
     </>
   );
 };

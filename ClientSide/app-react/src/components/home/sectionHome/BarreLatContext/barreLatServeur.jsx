@@ -42,9 +42,11 @@ const barreLatServeur = ({ handleClick }) => {
   return (
     <>
     <div id="nomDuServeurDiv">
+      <img src="../../public/image/ajouterMembre.png" width="50px" height="50px"></img>
       <h3 id="nomServeurTitle">Serveur</h3>
-      <div id="barre"></div>
+      <img src="../../public/image/Paramètres.png" width="50px" height="50px"></img>
       </div>
+      <div id="barre"></div>
 
       {salons.length > 0
         ? salons.map((salon) => {

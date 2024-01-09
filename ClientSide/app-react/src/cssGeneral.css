@@ -69,6 +69,12 @@ body{
     color: white;
 }
 
+#nomDuServeurDiv{
+    display: flex; /* Utilisation de Flexbox */
+    align-items: center; /* Alignement vertical au centre */
+    justify-content: center; /* Centre horizontalement */
+}
+
 #nomDuServeurDiv #barre{
     border: 0.5px solid #1e2124;
 }
@@ -107,6 +113,13 @@ body{
 .scroll-zone {
     width: 300px; /* Largeur de la zone de défilement */
     height: 200px; /* Hauteur de la zone de défilement */
+    overflow: auto; /* Cache le débordement */
+    width: 100%;
+    height: 75vh;
+    position: relative;
+  }
+
+  .scroll-zone-groupes {
     overflow: auto; /* Cache le débordement */
     width: 100%;
     height: 75vh;
@@ -189,7 +202,7 @@ body{
     width: 100%;
     height: 100%;
     background-image: url('../public/image/bg.png');
-    filter: blur(5px);
+    /*filter: blur(5px);*/
     background-size: cover;
     background-position: center;
   }
@@ -363,3 +376,195 @@ body{
     object-fit: cover; /* Ajuste l'image sans déformation en rognant */
     object-position: center; /* Centre l'image dans le conteneur */
 }
+
+#PopUp{
+    background-color: red;
+}
+
+
+/* ---------------------------------------------------------------- Bouton CREATE GROUPE ---------------------------------------------------------------- */
+
+.div_create_groupe .button_create_groupe{
+    border: none;
+    margin-top: 6%;
+    padding-top: 6%;
+    padding-bottom: 6%;
+    padding-left: 20%;
+    padding-right: 20%;
+    border-radius: 10px;
+    background-color: #36393f;
+}
+
+.div_create_groupe .button_create_groupe:hover{
+    background-color: #424549;
+}
+
+#conversation{
+    font-size: 14px;
+    font-weight: 800;
+    color: rgb(180, 180, 180)
+}
+
+
+#bouttonAmis{
+    border: none;
+    margin-top: 5%;
+    padding-top: 1%;
+    padding-bottom: 1%;
+    padding-left: 20%;
+    padding-right: 20%;
+    border-radius: 10px;
+    background-color: #303238;
+}
+
+#bouttonAmis:hover{
+    background-color: #36393f;
+}
+
+#bouttonAmis img,
+#textAmi {
+  display: inline;
+  vertical-align: middle;
+  margin: 5px;
+  /* Autres styles nécessaires */
+}
+
+#textAmi{
+    color: white;
+    font-size: 15px;
+    font-weight: 800;
+}
+
+#divBackgroundServeur:hover{
+    background-color: #36393f;
+    margin-left: 10px;
+    margin-right: 10px;
+    border-radius: 10px;
+}
+
+#divProfile {
+    display: flex;
+    align-items: center;
+    justify-content: left;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    background-color: #1a1b1e;
+    padding-top: 8%;
+    padding-bottom: 8%;
+    box-sizing: border-box;
+}
+
+#divProfile img{
+    padding-left: 10%;
+    padding-right: 5%;
+}
+  
+  .barreLatHome {
+    position: relative;
+    min-height: 100vh;
+  }
+
+
+
+
+/* ---------------------------------------------------------------- Zone AMIS ---------------------------------------------------------------- */
+
+#zoneAmis{
+    position: relative; /* Pour que les éléments enfants soient positionnés relativement à celui-ci */
+    height: 100vh;
+}
+
+#contenuAmis{
+    text-align: center;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #282b30;
+    padding-left: 10%;
+    padding-right: 10%;
+    padding-top: 1%;
+    padding-bottom: 1%;
+    border-radius: 10px;
+}
+
+#barre{
+    margin-bottom: 7%;
+    margin-right: 40%;
+    margin-left: 40%;
+    border: 1px solid #595d68;
+}
+
+#liste_ami {
+    display: flex;
+    flex-direction: column;
+    overflow: auto; /* Cache le débordement */
+    width: 100%;
+    height: 50vh;
+    position: relative;
+    /* Autres styles */
+  }
+
+  #liste_ami div {
+    display: flex;
+    align-items: center; /* Centrer verticalement */
+    /* Autres styles */
+  }
+  
+  #liste_ami img {
+    width: 30px;
+    height: 30px;
+    /* Autres styles */
+  }
+  
+  #liste_ami p {
+    margin-left: 10px;
+    /* Autres styles */
+  }
+
+  #backgroundAmi{
+    background-color: #36393f;
+    border-radius: 10px;
+    padding-left: 20vh;
+    padding-right: 20vh;
+    margin-bottom: 2%;
+  }
+
+  .div_add_ami button{
+    border: none;
+    background-color: #5865f2;
+    color: white;
+    font-size: 15px;
+    padding-top: 2%;
+    padding-bottom: 2%;
+    padding-right: 35%;
+    padding-left: 35%;
+    border-radius: 5px;
+    margin-bottom: 5%;
+  }
+
+  .name_add_ami{
+    color: white;
+    font-weight: 800;
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  #deconnexion:hover{
+    transition: background-color 0.3s;
+    background-color: #f02b4c;
+  }
