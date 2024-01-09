@@ -1,4 +1,8 @@
 const FriendModels = require("../../Model/Lien/FriendUser.model");
+const UserModel = require("../../Model/User.model");
+const {Op} = require("sequelize");
+
+const { infoToken } = require("../../Middleware/AuthToken");
 
 /**
  * @description Récupère les amis de l'utilisateur
@@ -8,16 +12,33 @@ const FriendModels = require("../../Model/Lien/FriendUser.model");
  */
 const getFriend = async (req, res) => {
   try {
-    const user = await UserModels.findById(req.body.id);
+    const user = infoToken(req).id;
     if (!user) {
-      return null;
+      return res.status(402).json({ error: "Vous n'êtes pas connecté" });
     }
-    const friends = await FriendModels.findAll({ where: { userId: idUser } });
-    return friends;
+
+    const friends = await FriendModels.findAll({
+      where: {
+        [Op.or]: [{ userId: user }, { friendId: user }],
+      },
+    });
+
+    let amis = [];
+
+    for (const friend of friends) {
+      const myFriend = await UserModel.findByPk(friend.friendId);
+      amis.push({
+        username: myFriend.username,
+        lienPP: myFriend.lienPP,
+      });
+    }
+    return res.status(200).json({ amis: amis });
   } catch (error) {
-    return null;
+    console.log(error);
+    return res.status(500).json({ error: "Erreur serveur" });
   }
 };
+
 
 /**
  * @description Ajoute un ami à l'utilisateur
@@ -28,10 +49,22 @@ const getFriend = async (req, res) => {
 
 const addFriend = async (req, res) => {
   try {
-    const user = await UserModels.findById(id);
+    const idUser = infoToken(req).id;
+    const nomAmi = req.body.nom;
+    const Ami = await UserModel.findOne({
+      where: { username: nomAmi }
+    })
+    if (!Ami) {
+      return res.status(404).json({ error: "Aucun utilisateur trouvé avec le nom spécifié." });
+    }
+    await FriendModels.create({
+      userId: idUser,
+      friendId: Ami.id,
+    });
 
-    return !!user;
+    return res.status(200).json({ message: "Ami ajouté avec succès." });
   } catch (error) {
+    console.log(error);
     return false;
   }
 };
@@ -45,7 +78,7 @@ const addFriend = async (req, res) => {
 
 const removeFriend = async (req, res) => {
   try {
-    const user = await UserModels.findById(id);
+    const user = await UserModel.findById(id);
     if (!user) {
       return false;
     }
