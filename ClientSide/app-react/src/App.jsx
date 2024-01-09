@@ -25,8 +25,8 @@ import "./App.css";
 import HomeUnconnected from "./components/home/homeUnconnected";
 import Home from "./components/home/home";
 
-import  ContextPopUpProvider  from "./contexts/popup.context";
-import PopUpContainer from "./components/containers/popup.container";
+import { PopupProvider } from "./contexts/popup.context";
+import Popup from "./components/pop-up/pop-up.model";
 
 function App() {
   const [estConnecte, setEstConnecte] = useState(false);
@@ -63,10 +63,10 @@ function App() {
           exact
           element={
             estConnecte ? (
-              <ContextPopUpProvider>
-                <PopUpContainer />
+              <PopupProvider>
+                <Popup />
                 <Home />
-              </ContextPopUpProvider>
+              </PopupProvider>
             ) : (
               <HomeUnconnected connectionState="false" />
             )

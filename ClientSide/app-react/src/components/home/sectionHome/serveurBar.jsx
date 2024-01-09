@@ -65,7 +65,7 @@ const ServeurBar = () => {
           ))
         : "pas de serveur"}
       <div className="createServeur">
-        <CreateServeur ajouterServeur={ajouterServeur} />
+        <CreateServeur />
       </div>
     </>
   );

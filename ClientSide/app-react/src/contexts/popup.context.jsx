@@ -1,47 +1,32 @@
-import React, { useState, createContext } from "react";
+import React, { createContext, useContext, useState } from 'react';
 
-export const PopupContext = createContext(
-  {
-    contextePopup: {
-      popup: false,
-    },
-    openPopup: () => {},
-    closePopup: () => {},
-    handlePopup: () => {},
-  },
-  () => {}
-);
+const PopupContext = createContext();
 
-const ContextPopUpProvider = (props) => {
-  const [contextePopup, setContextePopup] = useState({
-    popup: false,
-  });
+export const PopupProvider = ({ children }) => {
+  const [showPopup, setShowPopup] = useState(false);
+  const [popupComponent, setPopupComponent] = useState(null);
 
-  const openPopup = () => {
-    setContextePopup((prevState) => ({
-      popup: true,
-    }));
+  const openPopup = (component) => {
+    setPopupComponent(component);
+    setShowPopup(true);
   };
 
   const closePopup = () => {
-    setContextePopup((prevState) => ({
-      popup: false,
-    }));
-  };
-
-  const handlePopup = (popup) => {
-    setContextePopup({
-      popup: popup,
-    });
+    setShowPopup(false);
+    setPopupComponent(null);
   };
 
   return (
-    <PopupContext.Provider
-      value={{ contextePopup, openPopup, closePopup, handlePopup }}
-    >
-      {props.children}
+    <PopupContext.Provider value={{ showPopup, popupComponent, openPopup, closePopup }}>
+      {children}
     </PopupContext.Provider>
   );
 };
 
-export default ContextPopUpProvider;
+export const usePopup = () => {
+  const context = useContext(PopupContext);
+  if (!context) {
+    throw new Error('usePopup must be used within a PopupProvider');
+  }
+  return context;
+};
