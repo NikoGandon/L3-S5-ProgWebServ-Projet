@@ -29,14 +29,15 @@ const Form = ({ onSubmit }) => {
   };
 
   return (
-      <form className="form_create_groupe" 
+      <form className="form_create_serveur" 
         onSubmit={(e) => {
           e.preventDefault();
           handleSubmit();
         }}
       >
+        <h2>Créer un groupe</h2>
         <input
-          className="input_create_groupe"
+          className="input_create_serveur"
           type="text"
           placeholder="Nom du groupe"
           value={nom}
@@ -44,13 +45,13 @@ const Form = ({ onSubmit }) => {
         />
         {/* Ajouter une entrée pour l'image */}
         <input
-          className="input_create_groupe"
+          className="input_create_serveur"
           type="text"
           placeholder="Image du groupe"
           value={image}
           onChange={(e) => setImage(e.target.value)}
         />
-        <button type="submit">Créer le groupe</button>
+        <button type="submit" className="submit_create_serveur">Créer le groupe</button>
       </form>
   );
 };
