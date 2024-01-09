@@ -4,7 +4,6 @@ const { Op } = require("sequelize");
 
 const UserModel = require("../../Model/User.model");
 const AdminModel = require("../../Model/SuperAdmin.model");
-const BanModel = require("../../Model/Administration/BanSite.model");
 
 const { compare } = require("../../Utils/hasher");
 
@@ -31,14 +30,6 @@ passport.use(
         });
       }
 
-      const isBanned = await BanModel.findOne({
-        where: { idUser: existsUser.id },
-      });
-      
-      if (isBanned) {
-        return done(null, false, { message: "Vous êtes banni" });
-      }
-
       const validate = compare(password, existsUser.password);
 
       if (!validate) {
@@ -56,9 +47,7 @@ passport.use(
 
       return done(null, existsUser, { message: "Connexion réussi" });
     } catch (error) {
-      return done(null, null, {
-        message: "Erreur lors de la connexion : " + error,
-      });
+      return done(error);
     }
   })
 );

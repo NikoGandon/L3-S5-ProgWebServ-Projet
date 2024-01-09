@@ -1,8 +1,6 @@
 const sequelize = require("../Config/db");
 const { DataTypes } = require("sequelize");
 
-const MembreServeur = require("./MembreServeur.model");
-
 /**
  * @desc Modele de la table serveur
  * @typedef Serveur
@@ -53,11 +51,7 @@ const Serveur = sequelize.define(
       defaultValue: function () {
         return "ressources/serveur/" + this.id + "_LOG.json";
       },
-    },
-    idCreateur: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-    },
+    }
   },
   {
     freezeTableName: true,
@@ -65,13 +59,6 @@ const Serveur = sequelize.define(
   }
 );
 
-Serveur.afterCreate(async (serveur) => {
-  await MembreServeur.create({
-    idUser: serveur.idCreateur,
-    idServeur: serveur.id,
-  });
-});
-
-Serveur.sync({alter: true});
+Serveur.sync();
 
 module.exports = Serveur;

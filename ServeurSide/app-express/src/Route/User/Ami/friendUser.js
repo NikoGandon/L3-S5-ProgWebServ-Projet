@@ -1,6 +1,6 @@
 const express = require("express");
 const friendRouteur = express.Router();
-const {getFriend,addFriend} = "../../Logic/Utilisateur/friend";
+
 /**
  * @swagger
  * /User/friend:
@@ -10,7 +10,7 @@ const {getFriend,addFriend} = "../../Logic/Utilisateur/friend";
  *
  */
 
-friendRouteur.get("/", (req,res) => {getFriend(req,res)});
+friendRouteur.get("/", () => {});
 
 /**
  * @swagger
@@ -21,7 +21,7 @@ friendRouteur.get("/", (req,res) => {getFriend(req,res)});
  *
  */
 
-friendRouteur.post("/", (req,res) => {addFriend(req,res)});
+friendRouteur.post("/", () => {});
 
 /**
  * @swagger

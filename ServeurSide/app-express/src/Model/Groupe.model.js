@@ -2,7 +2,6 @@ const sequelize = require("../Config/db");
 const { DataTypes } = require("sequelize");
 
 const UserModel = require("./User.model");
-const Membre = require("./Lien/MembreGroupe.model");
 
 /**
  * @desc Modele de la table groupe
@@ -37,7 +36,7 @@ const Groupe = sequelize.define(
     idCreateur: {
       type: DataTypes.INTEGER,
       allowNull: false,
-    },
+    }
   },
   {
     freezeTableName: true,
@@ -45,15 +44,7 @@ const Groupe = sequelize.define(
   }
 );
 
-Groupe.belongsTo(UserModel, { foreignKey: "idCreateur", as: "createur" });
-
-Groupe.afterCreate(async (groupe) => {
-  console.log(groupe.idCreateur);
-  await Membre.create({
-    userId: groupe.idCreateur,
-    groupeId: groupe.id,
-  });
-});
+Groupe.belongsTo(UserModel, { foreignKey: "idCreateur" });
 
 Groupe.sync();
 
