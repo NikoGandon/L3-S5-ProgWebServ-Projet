@@ -1,6 +1,6 @@
 const express = require("express");
 const friendRouteur = express.Router();
-
+const {getFriend,addFriend} = require("../../../Logic/Utilisateur/friend");
 /**
  * @swagger
  * /User/friend:

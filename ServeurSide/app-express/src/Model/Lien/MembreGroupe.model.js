@@ -20,8 +20,11 @@ const MembreGroupe = sequelize.define(
   }
 );
 
-UserModel.belongsToMany(GroupeModel, { through: MembreGroupe });
-GroupeModel.belongsToMany(UserModel, { through: MembreGroupe });
+UserModel.hasMany(MembreGroupe, { foreignKey: "userId" });
+//GroupeModel.hasMany(MembreGroupe, { foreignKey: "groupeId" });
+
+MembreGroupe.belongsTo(UserModel, { foreignKey: "userId", as: "utilisateur" });
+//MembreGroupe.belongsTo(GroupeModel, { foreignKey: "groupeId", as: "groupe" });
 
 MembreGroupe.sync();
 
