@@ -37,6 +37,9 @@ const BarreLat = () => {
     case "param":
       element = <BarreLatHome handleClick={handleClickGroupe}/>;
       break;
+    case "profil":
+      element = <BarreLatHome handleClick={handleClickGroupe}/>;
+    break;
     default:
   }
 
