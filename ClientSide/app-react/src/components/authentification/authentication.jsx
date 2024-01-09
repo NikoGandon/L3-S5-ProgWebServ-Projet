@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import "../../cssGeneral.css";
 import {
   BrowserRouter as Router,
   Route,
@@ -38,14 +39,16 @@ export default function Authentication() {
           </Outlet>
         }/>
       </Routes>
-      <div>
+      <div id="LoginRegister">
+      <div id="contentLoginRegister">
         {isLogin ? (
-          <Login onSwitch={handleSwitch} />
+          <Login onSwitch={handleSwitch} id="submitButton"/>
         ) : (
-          <Register onSwitch={handleSwitch} />
+          <Register onSwitch={handleSwitch} id="submitButton"/>
         )}
-        <button id="compte" onClick={handleSwitch}> {isLogin ? ("Je n'ai pas de compte") : ("J'ai un compte")} </button>
         <OAuth2 id="OAuth2"/>
+        <a id="compte" onClick={handleSwitch}> {isLogin ? ("Vous n'avez pas de compte ?") : ("Vous avez déjà un compte ?")} </a>
+      </div>
       </div>
     </>
   );

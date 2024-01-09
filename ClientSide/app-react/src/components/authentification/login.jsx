@@ -57,34 +57,29 @@ const Login = () => {
   return (
     <>
       {isLogged ? <Navigate to="/" /> : null}
-      <div id="LoginRegister">
-        <div id="contentLoginRegister">
-
-
       <h2>Connexion</h2>
       <form className="formsAuth" onSubmit={handleSubmit}>
+        <p></p>
         <input
-          className="input"
           type="identifier"
           id="identifier"
-          placeholder="Identifiant"
+          placeholder="Nom d'utilisateur"
+          className="input"
           value={identifier}
           onChange={handleidentifierChange}
         />
         <p></p>
         <input
-          className="input"
+          placeholder="Mot de passe"
           type="password"
           id="password"
-          placeholder="Mot de passe"
+          className="input"
           value={password}
           onChange={handlePasswordChange}
         />
         <p></p>
         <button type="submit" id="submitButton">Se connecter</button>
       </form>
-      </div>
-      </div>
     </>
   );
 };

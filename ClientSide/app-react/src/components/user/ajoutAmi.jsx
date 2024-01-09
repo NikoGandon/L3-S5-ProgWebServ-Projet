@@ -8,13 +8,12 @@ import "../../../src/cssGeneral.css";
 
 const Form = ({ onSubmit }) => {
   const [nom, setNom] = useState("");
-  const [image, setImage] = useState("");
 
   const {closePopup} = useContext(PopupContext);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    onSubmit({ nom, image });
+    onSubmit({nom});
     closePopup();
   };
 
@@ -24,25 +23,17 @@ const Form = ({ onSubmit }) => {
         <input
           className="input_create_serveur"
           type="text"
-          placeholder="Nom du groupe"
+          placeholder="nom de l'ami"
           value={nom}
           onChange={(e) => setNom(e.target.value)}
         />
-        {/* Ajouter une entrée pour l'image */}
-        <input
-          className="input_create_serveur"
-          type="text"
-          placeholder="Image du groupe"
-          value={image}
-          onChange={(e) => setImage(e.target.value)}
-        />
-        <button type="submit">Créer le groupe</button>
+        <button type="submit">Ajouter ami</button>
       </form>
     </PopUp>
   );
 };
 
-const CreateGroupe = ({ ajouterGroupe }) => {
+const AddFriend = ({ ajouterAmi }) => {
   const [isFormVisible, setIsFormVisible] = useState(false);
 
   const { openPopup } = useContext(PopupContext);
@@ -53,22 +44,18 @@ const CreateGroupe = ({ ajouterGroupe }) => {
   };
 
   const handleSubmit = (data) => {
-    if (data.image == "") {
-      data.image = "https://cdn.pixabay.com/photo/2016/04/15/18/05/computer-1331579_960_720.png";
-    }
-
+    console.log(data.nom);
     axios
-      .post("https://localhost:3000/Groupe", {
+      .post("https://localhost:3000/User/friend", {
         nom: data.nom,
-        lienImage: data.image,
       })
       .then((res) => {
-        console.log("Groupe créé avec succès", res.data);
-        ajouterGroupe();
+        console.log("Amitiée créé avec succès", res.data);
+        ajouterAmi();
         setIsFormVisible(false);
       })
       .catch((error) => {
-        console.error("Erreur lors de la création du groupe", error);
+        console.error("Erreur dans l'amitiée", error);
       });
   };
 
@@ -76,7 +63,6 @@ const CreateGroupe = ({ ajouterGroupe }) => {
     <>
       <div className="div_create_serveur" onClick={handleBoutonCreate}>
         <button>
-          {/* <img className="icon_create_serveur" src="../../../images/plus.png" /> */}
           <p className="name_create_serveur">✚</p>
         </button>
       </div>
@@ -85,4 +71,4 @@ const CreateGroupe = ({ ajouterGroupe }) => {
   );
 };
 
-export default CreateGroupe;
+export default AddFriend;

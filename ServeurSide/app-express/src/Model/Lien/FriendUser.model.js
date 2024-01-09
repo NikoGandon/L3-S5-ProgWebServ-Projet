@@ -1,8 +1,10 @@
-const { Sequelize, DataTypes } = require("../../Config/db");
+const sequelize = require("../../Config/db");
+const { DataTypes } = require("sequelize");
+
 
 const UserModel = require("../User.model");
 
-const FriendUser = Sequelize.define(
+const FriendUser = sequelize.define(
   "FriendUser",
   {},
   {

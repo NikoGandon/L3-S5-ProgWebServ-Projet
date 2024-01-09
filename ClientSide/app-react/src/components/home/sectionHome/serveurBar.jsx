@@ -48,19 +48,22 @@ const ServeurBar = () => {
       </div>
       {serveurs.length > 0
         ? serveurs.map((serveur) => (
-            <div
+            <div id="serveur"
               key={serveur.id}
               onClick={() => {
-                handleServeurSelect(serveur.id);
-              }}
-            >
-              <p>{serveur.id}</p>
+                handleServeurSelect(serveur.id); }} >
+            
               <img
                 id="logoServeur"
-                src="../../public/image/serverLogo.png" //{serveur.imgLink}
+                src={serveur.imgLink} //{serveur.imgLink}
                 alt={serveur.nomServeur}
-              />
-              <div className="NomServeur">Coucou, {serveur.nomServeur}</div>
+                />
+              <div id="serveur_desc">
+                <p>{serveur.id}</p>
+                <div className="NomServeur">
+                  <p>{serveur.nomServeur}</p>
+                </div>
+              </div>
             </div>
           ))
         : "pas de serveur"}

@@ -24,6 +24,7 @@ const OAuth2 = () => {
 
   return (
     <button id="connectGoogle" onClick={handleGoogle}>
+      <img src="../../public/image/google.png" width="30px" height="30px"></img>
       Se connecter avec google
     </button>
   );

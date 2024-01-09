@@ -61,6 +61,12 @@ const CreateServeur = ({ ajouterServeur }) => {
   };
 
   const handleSubmit = (data) => {
+    if (data.description === "") {
+      data.description = "Aucune description";
+    }
+    if (data.image === "") {
+      data.image = "../../public/image/serverLogo.png";
+    }
     axios
       .post("https://localhost:3000/Serveur/", {
         nom: data.nom,
