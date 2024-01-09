@@ -61,9 +61,9 @@ const AddFriend = ({ ajouterAmi }) => {
 
   return (
     <>
-      <div className="div_create_serveur" onClick={handleBoutonCreate}>
+      <div className="div_add_ami" onClick={handleBoutonCreate}>
         <button>
-          <p className="name_create_serveur">✚</p>
+          <p className="name_add_ami">Ajouter un ami</p>
         </button>
       </div>
       {isFormVisible && <Form onSubmit={handleSubmit} />}

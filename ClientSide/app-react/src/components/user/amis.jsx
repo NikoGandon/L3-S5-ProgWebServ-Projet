@@ -22,24 +22,31 @@ const Amis = () => {
 
   return (
     <>
-      <h1>Amis</h1>
+    <div id="zoneAmis">
+    <div id="arrierePlanFlou">
+        <div id="contenuAmis">
+
+      <h2>Amis</h2>
+      <div id="barre"></div>
       <div id="liste_ami">
-        <p>Liste Ami : </p>
         {amis.length > 0
         ? amis.map((ami) => (
-            <div key={ami.username}>
-              <p>{ami.username}</p>
-              <img
+            <div key={ami.username} id="backgroundAmi">
+                <img
                 id="logoServeur"
-                src={ami.imgLink}
+                src="../../public/image/amis.png"//{ami.imgLink}
                 alt={ami.lienPP}
               />
+              <p>{ami.username}</p>
             </div>
           ))
         : "pas d'ami :("}
       </div>
       <div className="addAmi">
         <AddFriend ajouterAmi={ajouterAmi} />
+      </div>
+      </div>
+      </div>
       </div>
     </>
   );
