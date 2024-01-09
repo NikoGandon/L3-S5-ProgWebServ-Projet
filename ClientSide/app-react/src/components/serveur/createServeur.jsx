@@ -35,6 +35,7 @@ const Form = ({ onSubmit }) => {
         handleSubmit();
       }}
     >
+      <h2>Créer un serveur</h2>
       <input
         className="input_create_serveur"
         type="text"
