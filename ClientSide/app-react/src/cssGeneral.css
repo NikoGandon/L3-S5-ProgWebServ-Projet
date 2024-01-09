@@ -75,10 +75,6 @@ body{
     justify-content: center; /* Centre horizontalement */
 }
 
-#nomDuServeurDiv #barre{
-    border: 0.5px solid #1e2124;
-}
-
 /*=======================*/
 
 #formChat{
@@ -147,11 +143,17 @@ body{
 }
 
 #salonDesign{
-    background-color: #424549;
+    background-color: #303238;
     border-radius: 10px;
-    margin-left: 5%;
-    margin-right: 5%;
+    margin: 0 auto; /* Cela centrera horizontalement l'élément */
     padding-left: 5%;
+    padding-right: 5%;
+    width: 68%;
+    max-width: 90%;
+}
+
+#salonDesign{
+    background-color: #36393f;
 }
 
 /*-------- TITRE DU SERVEUR (au dessus de message)--------*/
@@ -631,7 +633,90 @@ body{
     margin-bottom: 3%;
   }
 
+  .form_create_serveur h2{
+    color: white;
 
+  }
+
+
+
+
+
+
+  #bouttonMembre{
+    border: none;
+    margin-top: 5%;
+    padding-top: 1%;
+    padding-bottom: 1%;
+    padding-left: 18%;
+    padding-right: 18%;
+    border-radius: 10px;
+    background-color: #303238;
+}
+
+#bouttonMembre:hover{
+    background-color: #36393f;
+}
+
+#bouttonMembre img,
+#textMembre {
+  display: inline;
+  vertical-align: middle;
+  margin: 5px;
+  /* Autres styles nécessaires */
+}
+
+#textMembre{
+    color: white;
+    font-size: 15px;
+    font-weight: 800;
+}
+
+
+
+
+
+
+  #bouttonParametres{
+    border: none;
+    margin-top: 5%;
+    padding-top: 1%;
+    padding-bottom: 1%;
+    padding-left: 12%;
+    padding-right: 12%;
+    border-radius: 10px;
+    background-color: #303238;
+}
+
+#bouttonParametres:hover{
+    background-color: #36393f;
+}
+
+#bouttonParametres img,
+#textParametres {
+  display: inline;
+  vertical-align: middle;
+  margin: 5px;
+  /* Autres styles nécessaires */
+}
+
+#textParametres{
+    color: white;
+    font-size: 15px;
+    font-weight: 800;
+}
+
+
+#backgroundInfo{
+    margin-top: 5%;
+    margin-bottom: 5%;
+    background-color: #36393f;
+    border-radius: 10px;
+    padding-left: 20vh;
+    padding-right: 20vh;
+    padding-top: 2vh;
+    padding-bottom: 2vh;
+}
 
 
 
