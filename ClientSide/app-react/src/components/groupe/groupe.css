@@ -3,6 +3,11 @@
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
+    border-radius: 10px;
+    margin: 0 auto;
+    padding-left: 5%;
+    padding-right: 5%;
+    max-width: 90%;
     width: 100%;
     padding: 2%;
   }
@@ -25,7 +30,6 @@
   }
   
   .icon_mp {
-    /* Styles pour l'image */
     width: 30px;
     height: 30px;
     background-color: #BA55D3;
