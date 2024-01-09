@@ -35,7 +35,7 @@ const GroupeBox = ({ nomGroupe, idGroupe, handleClick, nbUser }) => {
  *       trié par ordre chronologique
  */
 const BarreLatHome = ({ handleClick }) => {
-  const { handleAmis } = useContext(UserContext);
+  const { handleAmis,handleProfil } = useContext(UserContext);
 
   const [groupesMembre, setGroupesMembre] = useState([]);
   const ajouterGroupe = () => {
@@ -85,7 +85,7 @@ const BarreLatHome = ({ handleClick }) => {
           </div>
 
 
-          <div id="divProfile">
+          <div id="divProfile" onClick={()=>{handleProfil()}}>
             <img src="../../public/image/amis.png" width="30px" height="30px"></img>
             Profile
         </div>

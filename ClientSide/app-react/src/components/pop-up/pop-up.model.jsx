@@ -22,7 +22,6 @@ const Popup = () => {
   return showPopup ? (
     <div className="popup-container">
       <div className="popup-content" ref={popupRef}>
-        <p>Contenu de la fenêtre pop-up :</p>
         {popupComponent}
         <button onClick={closePopup}>Fermer</button>
       </div>

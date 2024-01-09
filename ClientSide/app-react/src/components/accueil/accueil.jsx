@@ -35,9 +35,6 @@ const Accueil = () => {
           </div>
         </div>
       </div>
-      <div className="button_profil" onClick={()=>{handleProfil()}}>
-        <img src="../../public/image/serverLogfo.png" alt="Profil" />
-      </div>
     </>
   );
 };
