@@ -42,11 +42,17 @@ const barreLatServeur = ({ handleClick }) => {
   return (
     <>
     <div id="nomDuServeurDiv">
-      <img src="../../public/image/ajouterMembre.png" width="50px" height="50px"></img>
       <h3 id="nomServeurTitle">Serveur</h3>
-      <img src="../../public/image/Paramètres.png" width="50px" height="50px"></img>
       </div>
-      <div id="barre"></div>
+      <button id="bouttonMembre">
+          <img src="../../public/image/ajouterMembre.png" width="35px" height="35px"></img>
+          <p id="textMembre">Ajouter</p>
+         </button>
+         <button id="bouttonParametres">
+          <img src="../../public/image/Paramètres.png" width="35px" height="35px"></img>
+          <p id="textParametres">Paramètres</p>
+         </button>
+         <p id="conversation">Salons</p>
 
       {salons.length > 0
         ? salons.map((salon) => {
@@ -59,7 +65,7 @@ const barreLatServeur = ({ handleClick }) => {
                   handleSelectSalon(contexteID, salon.id);
                 }}
               >
-                {salon.nom}
+                ✎ {salon.nom}
               </p>
               </div>
             );
