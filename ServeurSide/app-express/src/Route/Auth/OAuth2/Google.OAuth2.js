@@ -1,6 +1,16 @@
 const routerGoogleAuth = require("express").Router();
 
+const { createToken } = require("../../../Middleware/AuthToken");
 const passportGoogleAuth = require("../../../Middleware/Passport/passportOAuth2");
+const session = require("express-session");
+
+routerGoogleAuth.use(
+  session({
+    secret: "coucou",
+    resave: false,
+    saveUninitialized: false,
+  })
+);
 
 routerGoogleAuth.get(
   "/",
@@ -9,24 +19,47 @@ routerGoogleAuth.get(
   })
 );
 
-routerGoogleAuth.get(
-  "/callback",
-  passportGoogleAuth.authenticate("googleOAuth", {
-    failureRedirect: "/auth/google/failed",
-    successRedirect: "/auth/google/connected",
-  })
-);
+routerGoogleAuth.get("/callback", (req, res, next) => {
+  passportGoogleAuth.authenticate(
+    "googleOAuth",
+    {
+      failureRedirect: "http://localhost:5173/auth/failed",
+    },
+    (err, user, info) => {
+      if (err) {
+        console.log(err);
+        return res.status(400).json({
+          message: err,
+        });
+      }
+      console.log("User connected");
 
-routerGoogleAuth.get("/auth/google/failed", (req, res) => {
-  res.status(401).json({
-    message: "Echec de l'authentification",
-  });
-});
+      if (!user) {
+        console.log(info.message);
+        return res.status(400).json({
+          message: info.message,
+        });
+      }
 
-routerGoogleAuth.get("/connected", (req, res) => {
-  res.status(200).json({
-    message: "Connexion réussi",
-  });
+      const token = createToken(user);
+
+      let dateExpiration = new Date();
+      dateExpiration = dateExpiration.setDate(dateExpiration.getMonth() + 6);
+
+      console.log("token:", token);
+
+      res.cookie("authToken", token, {
+        domain: "localhost",
+        path: "/",
+        httpOnly: true,
+        secure: true,
+        sameSite: "None",
+        maxAge: dateExpiration,
+      });
+
+      return res.redirect("https://localhost:5173/auth/success");
+    }
+  )(req, res, next);
 });
 
 module.exports = routerGoogleAuth;

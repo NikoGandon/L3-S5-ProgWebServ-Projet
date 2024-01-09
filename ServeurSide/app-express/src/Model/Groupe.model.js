@@ -45,7 +45,7 @@ const Groupe = sequelize.define(
   }
 );
 
-Groupe.belongsTo(UserModel, { foreignKey: "idCreateur" });
+Groupe.belongsTo(UserModel, { foreignKey: "idCreateur", as: "createur" });
 
 Groupe.afterCreate(async (groupe) => {
   console.log(groupe.idCreateur);

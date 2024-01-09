@@ -17,7 +17,7 @@ async function getInformation(req, res) {
       return res.status(500).json({ message: "Erreur interne." });
     }
     if (!user) {
-      return res.status(401).json({ message: "Utilisateur non trouvé." });
+      return res.status(202).json({ message: "Utilisateur non trouvé." });
     }
   });
   return res.status(200).json({
@@ -39,11 +39,10 @@ async function getInformation(req, res) {
 
 async function updateInformation(req, res) {
   const { username, email, password, bio } = req.body;
-  const token = infoToken(req);
-  const id = token.id;
+  const id = infoToken(req).id;
   const user = await UserModel.findOne({ id: id });
   if (!user) {
-    return res.status(401).json({ message: "Utilisateur non trouvé." });
+    return res.status(202).json({ message: "Utilisateur non trouvé." });
   }
   try {
     if (username) {
@@ -77,7 +76,7 @@ async function deleteUser(req, res) {
   const id = token.id;
   const user = await UserModel.findOne({ id: id });
   if (!user) {
-    return res.status(401).json({ message: "Utilisateur non trouvé." });
+    return res.status(202).json({ message: "Utilisateur non trouvé." });
   }
   try {
     await user.delete();
