@@ -7,7 +7,6 @@ import Param from "../../user/param.jsx";
 import Acceuil from "../../accueil/accueil.jsx";
 
 import { UserContext } from "../../../contexts/user.context";
-import { ContextSocketProvider } from "../../../contexts/socketio.context";
 
 const Content = () => {
   const { contexteUser } = useContext(UserContext);
@@ -37,7 +36,7 @@ const Content = () => {
 
   return (
     <>
-      <ContextSocketProvider>{content}</ContextSocketProvider>
+      {content}
     </>
   );
 };

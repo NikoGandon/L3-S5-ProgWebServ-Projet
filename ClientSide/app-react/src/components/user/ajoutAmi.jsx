@@ -2,18 +2,19 @@ import React, { useState, useContext } from "react";
 import axios from "../../utils/axiosConf";
 import PopUp from "../pop-up/pop-up.model";
 
-import { PopupContext } from "../../contexts/popup.context";
+//import { PopupContext } from "../../contexts/popup.context";
 
 import "../../../src/cssGeneral.css";
+import { usePopup } from "../../contexts/popup.context";
 
 const Form = ({ onSubmit }) => {
   const [nom, setNom] = useState("");
 
-  const {closePopup} = useContext(PopupContext);
+  //const {closePopup} = useContext(PopupContext);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    onSubmit({nom});
+    onSubmit({ nom });
     closePopup();
   };
 
@@ -36,7 +37,7 @@ const Form = ({ onSubmit }) => {
 const AddFriend = ({ ajouterAmi }) => {
   const [isFormVisible, setIsFormVisible] = useState(false);
 
-  const { openPopup } = useContext(PopupContext);
+  const { openPopup } = usePopup();
 
   const handleBoutonCreate = () => {
     setIsFormVisible(!isFormVisible);
