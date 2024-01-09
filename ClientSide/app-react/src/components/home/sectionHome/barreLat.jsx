@@ -31,11 +31,11 @@ const BarreLat = () => {
     case "serveur":
       element = <BarreLatServeur handleClick={handleClickServeur}/>;
       break;
-      case "amis":
-        element = <BarreLatHome handleClick={handleClickGroupe}/>;
-        break;
+    case "amis":
+      element = <BarreLatHome handleClick={handleClickGroupe}/>;
+      break;
     case "param":
-      element = <p>"{contexteUser}</p>;
+      element = <BarreLatHome handleClick={handleClickGroupe}/>;
       break;
     default:
   }
