@@ -103,9 +103,9 @@ routerServeur.get("/", (req, res) => {
  */
 
 routerServeur.post("/", (req, res) => {
-  if (!req.body.nom || !req.body.description || !req.body.lienImage) {
+  if (!req.body.nom) {
     return res.status(400).json({
-      message: "Veuillez remplir tous les champs",
+      message: "Ajouter un nom de serveur",
     });
   }
   CreateServeur(req, res);
