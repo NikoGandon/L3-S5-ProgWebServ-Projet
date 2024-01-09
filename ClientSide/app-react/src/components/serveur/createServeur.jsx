@@ -21,6 +21,7 @@ const Form = ({ onSubmit }) => {
         console.log("Serveur créé avec succès", res.data);
         onSubmit();
         closePopup();
+        window.location.reload();
       })
       .catch((error) => {
         console.error("Erreur lors de la création du serveur", error);
