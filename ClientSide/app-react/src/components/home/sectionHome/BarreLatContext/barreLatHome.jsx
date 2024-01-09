@@ -35,6 +35,8 @@ const GroupeBox = ({ nomGroupe, idGroupe, handleClick, nbUser }) => {
  *       trié par ordre chronologique
  */
 const BarreLatHome = ({ handleClick }) => {
+  const { handleAmis } = useContext(UserContext);
+
   const [groupesMembre, setGroupesMembre] = useState([]);
   const ajouterGroupe = () => {
     axios
@@ -53,12 +55,12 @@ const BarreLatHome = ({ handleClick }) => {
 
   return (
     <>
-      <div className="barreLatHome">
-      
-      <button id="bouttonAmis">
-        <img src="../../public/image/amis.png" width="35px" height="35px"></img>
-        <p id="textAmi">Amis</p>
-      </button>
+      <div className="barreLatHome" >
+
+        <button id="bouttonAmis" onClick={handleAmis}>
+          <img src="../../public/image/amis.png" width="35px" height="35px"></img>
+          <p id="textAmi">Amis</p>
+         </button>
 
       <p id="conversation">Conversation</p>
         <div className="box_mp">
