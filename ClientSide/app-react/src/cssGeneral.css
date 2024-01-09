@@ -69,6 +69,12 @@ body{
     color: white;
 }
 
+#nomDuServeurDiv{
+    display: flex; /* Utilisation de Flexbox */
+    align-items: center; /* Alignement vertical au centre */
+    justify-content: center; /* Centre horizontalement */
+}
+
 #nomDuServeurDiv #barre{
     border: 0.5px solid #1e2124;
 }
@@ -189,7 +195,7 @@ body{
     width: 100%;
     height: 100%;
     background-image: url('../public/image/bg.png');
-    filter: blur(5px);
+    /*filter: blur(5px);*/
     background-size: cover;
     background-position: center;
   }
@@ -362,4 +368,73 @@ body{
     border-radius: 10px;
     object-fit: cover; /* Ajuste l'image sans déformation en rognant */
     object-position: center; /* Centre l'image dans le conteneur */
+}
+
+#PopUp{
+    background-color: red;
+}
+
+
+/* ---------------------------------------------------------------- Bouton CREATE GROUPE ---------------------------------------------------------------- */
+
+.div_create_groupe{
+   
+}
+
+.div_create_groupe .button_create_groupe{
+    border: none;
+    margin-top: 6%;
+    padding-top: 6%;
+    padding-bottom: 6%;
+    padding-left: 20%;
+    padding-right: 20%;
+    border-radius: 10px;
+    background-color: #36393f;
+}
+
+.div_create_groupe .button_create_groupe:hover{
+    background-color: #424549;
+}
+
+#conversation{
+    font-size: 14px;
+    font-weight: 800;
+    color: rgb(180, 180, 180)
+}
+
+
+#bouttonAmis{
+    border: none;
+    margin-top: 5%;
+    padding-top: 1%;
+    padding-bottom: 1%;
+    padding-left: 20%;
+    padding-right: 20%;
+    border-radius: 10px;
+    background-color: #303238;
+}
+
+#bouttonAmis:hover{
+    background-color: #36393f;
+}
+
+#bouttonAmis img,
+#textAmi {
+  display: inline;
+  vertical-align: middle;
+  margin: 5px;
+  /* Autres styles nécessaires */
+}
+
+#textAmi{
+    color: white;
+    font-size: 15px;
+    font-weight: 800;
+}
+
+#divBackgroundServeur:hover{
+    background-color: #36393f;
+    margin-left: 10px;
+    margin-right: 10px;
+    border-radius: 10px;
 }
