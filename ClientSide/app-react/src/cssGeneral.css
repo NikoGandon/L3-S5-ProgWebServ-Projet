@@ -556,25 +556,74 @@ body{
 
 /* ---------------------------------------------------------------- Fenetre pop up ---------------------------------------------------------------- */
 
-.popup-container {
+.popup-bg {
     position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    z-index: 9999;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.85);
+    z-index: 999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .popup-container {
+    background-color: #36393f;
+    padding: 20px;
+    border-radius: 10px;
   }
   
   .popup-content {
-    color: red;
     text-align: center;
-    /* Ajoutez d'autres styles de contenu si nécessaire */
+    /* Autres styles nécessaires */
+  }
+
+  .popup-close{
+    border: none;
+    background-color: #f02b4c;
+    color: white;
+    font-size: 15px;
+    padding-top: 4%;
+    padding-bottom: 4%;
+    width: 100%;
+    border-radius: 5px;
   }
 
 
 
 
+  .form_create_serveur{
+    display: flex;
+    flex-direction: column;
+  }
 
+  .form_create_serveur .input_create_serveur{
+    border: none;
+    background-color: #202225;
+    color: white;
+    font-size: 15px;
+    padding-top: 4%;
+    padding-bottom: 4%;
+    padding-left: 10px;
+    width: 50vh;
+    border-radius: 5px;
+    margin-bottom: 3%;
+  }
 
+  .form_create_serveur .submit_create_serveur{
+    border: none;
+    background-color: #5865f2;
+    color: white;
+    font-size: 15px;
+    padding-top: 4%;
+    padding-bottom: 4%;
+    padding-right: 35%;
+    padding-left: 35%;
+    border-radius: 5px;
+    margin-bottom: 3%;
+  }
 
 
 

@@ -20,10 +20,12 @@ const Popup = () => {
   }, [closePopup]);
 
   return showPopup ? (
+    <div className="popup-bg">
     <div className="popup-container">
       <div className="popup-content" ref={popupRef}>
         {popupComponent}
-        <button onClick={closePopup}>Fermer</button>
+        <button onClick={closePopup} className="popup-close">Fermer</button>
+      </div>
       </div>
     </div>
   ) : null;

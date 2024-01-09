@@ -57,7 +57,7 @@ const Form = ({ onSubmit }) => {
         value={image}
         onChange={(e) => setImage(e.target.value)}
       />
-      <button type="submit">Créer le serveur</button>
+      <button type="submit" className="submit_create_serveur">Créer le serveur</button>
     </form>
   );
 };
