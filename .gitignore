@@ -80,7 +80,3 @@ typings/
 
 # Ignore gitla-ci pour éviter une fusion avec celle de ServeurSide
 .gitlab-ci.yml
-
-.vite/
-
-.DS_STORE

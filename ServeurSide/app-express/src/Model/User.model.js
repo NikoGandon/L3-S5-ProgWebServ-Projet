@@ -36,7 +36,7 @@ const User = sequelize.define(
 
     password: {
       type: DataTypes.STRING,
-      allowNull: true,
+      allowNull: false,
     },
 
     lienPP: {

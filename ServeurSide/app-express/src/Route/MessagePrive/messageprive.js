@@ -1,22 +1,18 @@
 const express = require("express");
 const routerMessagePrive = express.Router();
 
-const { verifyToken } = require("../../Middleware/AuthToken");
-
-const { getConversation } = require("../../Logic/MessagePrive/messagePrive");
-
 /**
  * @swagger
  * /groupe:
  * get:
  * description: Utilisé pour voir la conversation privée
  * responses:
- *
+ * 
  */
 
-routerMessagePrive.get("/", (req, res) => {
-  getConversation(req, res);
-});
+routerGroupe.get("/", (req, res) => {
+    res.send("Message Page");
+  });
 
 /**
  * @swagger
@@ -24,12 +20,12 @@ routerMessagePrive.get("/", (req, res) => {
  * get:
  * description: Utilisé pour envoyer un message
  * responses:
- *
+ * 
  */
 
-routerMessagePrive.post("/", (req, res) => {
-  res.send("Envoi de message");
-});
+routerGroupe.post("/", (req, res) => {
+    res.send("Envoi de message");
+  });
 
 /**
  * @swagger
@@ -37,11 +33,22 @@ routerMessagePrive.post("/", (req, res) => {
  * get:
  * description: Utilisé pour supprimer un message
  * responses:
- *
+ * 
  */
 
-routerMessagePrive.post("/", (req, res) => {
-  res.send("Supprimer un message");
-});
+routerGroupe.post("/", (req, res) => {
+    res.send("Supprimer un message");
+  });
 
-module.exports = routerMessagePrive;
+/**
+ * @swagger
+ * /groupe:
+ * get:
+ * description: Utilisé pour recevoir un message
+ * responses:
+ * 
+ */
+
+routerGroupe.post("/", (req, res) => {
+    res.send("Recevoir un message");
+  });

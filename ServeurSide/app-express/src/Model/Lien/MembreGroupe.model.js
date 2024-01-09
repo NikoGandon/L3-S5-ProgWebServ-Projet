@@ -1,8 +1,8 @@
 const sequelize = require("../../Config/db");
 const { DataTypes } = require("sequelize");
 
-const Groupe = require("../Groupe.model");
-const User = require("../User.model");
+const GroupeModel = require("../Groupe.model");
+const UserModel = require("../User.model");
 
 /**
  * @desc Modele de la table membre_groupe liant les utilisateurs aux groupes
@@ -13,27 +13,15 @@ const User = require("../User.model");
 
 const MembreGroupe = sequelize.define(
   "MembreGroupe",
-  {
-    userId: {
-      type: DataTypes.INTEGER,
-      primaryKey: true,
-    },
-    groupeId: {
-      type: DataTypes.INTEGER,
-      primaryKey: true,
-    },
-  },
+  {},
   {
     freezeTableName: true,
     timestamps: false,
   }
 );
 
-User.hasMany(MembreGroupe, { foreignKey: "userId" });
-//Groupe.hasMany(MembreGroupe, { foreignKey: "groupeId" });
-
-MembreGroupe.belongsTo(User, { foreignKey: "userId", as: "utilisateur" });
-//MembreGroupe.belongsTo(Groupe, { foreignKey: "groupeId", as: "groupe" });
+UserModel.belongsToMany(GroupeModel, { through: MembreGroupe });
+GroupeModel.belongsToMany(UserModel, { through: MembreGroupe });
 
 MembreGroupe.sync();
 

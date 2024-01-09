@@ -30,6 +30,7 @@ const Salon = sequelize.define(
     idServeur: {
       type: DataTypes.INTEGER,
       allowNull: false,
+      primaryKey: true,
     },
   },
   {

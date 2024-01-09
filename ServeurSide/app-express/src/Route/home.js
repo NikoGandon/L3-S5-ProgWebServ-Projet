@@ -1,7 +1,7 @@
 const express = require("express");
 const routerHome = express.Router();
 
-const { checkToken, verifyToken, verifyAdminToken } = require("../Middleware/AuthToken");
+const { verifyToken, verifyAdminToken } = require("../Middleware/AuthToken");
 const routerUser = require("./User/User");
 const routerSupAdmin = require("./Administrateur/administrateur");
 const routerAuth = require("./Auth/Auth");

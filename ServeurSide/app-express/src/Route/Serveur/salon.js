@@ -1,12 +1,6 @@
 const express = require("express");
 const salonRoute = express();
 
-const { GetMessagesSalon } = require("../../logic/Serveur/GetMessagesSalon");
-const { CreateSalon } = require("../../logic/Serveur/CreateSalon");
-const { DeleteSalon } = require("../../logic/Serveur/DeleteSalon");
-const { ModifySalon } = require("../../logic/Serveur/ModifySalon");
-
-
 /**
  * @swagger
  * /serveur/salon:
@@ -18,12 +12,7 @@ const { ModifySalon } = require("../../logic/Serveur/ModifySalon");
  */
 
 salonRoute.get("/", (req, res) => {
-  if (!req.body.nom || !req.body.description || !req.body.idServeur) {
-    res.status(400).json({
-      message: "Veuillez remplir tous les champs",
-    });
-  }
-  GetMessagesSalon(req, res);
+  res.send("Récupération de l'interface du salon");
 });
 
 /**
@@ -37,12 +26,7 @@ salonRoute.get("/", (req, res) => {
  */
 
 salonRoute.post("/", (req, res) => {
-  if (!req.body.nom || !req.body.description || !req.body.idServeur) {
-    res.status(400).json({
-      message: "Veuillez remplir tous les champs",
-    });
-  }
-  CreateSalon(req, res);
+  res.send("Création d'un salon");
 });
 
 /**
@@ -56,12 +40,7 @@ salonRoute.post("/", (req, res) => {
  */
 
 salonRoute.put("/", (req, res) => {
-  if (!req.body.idSalon || (!req.body.nom && !req.body.description)) {
-    res.status(400).json({
-      message: "Veuillez remplir tous les champs",
-    });
-  }
-  ModifySalon(req, res);
+  res.send("Modification d'un salon");
 });
 
 /**
@@ -75,12 +54,7 @@ salonRoute.put("/", (req, res) => {
  */
 
 salonRoute.delete("/", (req, res) => {
-  if (!req.body.idSalon) {
-    res.status(400).json({
-      message: "Veuillez remplir tous les champs",
-    });
-  }
-  DeleteSalon(req, res);
+  res.send("Suppression d'un salon");
 });
 
 module.exports = salonRoute;
