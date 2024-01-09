@@ -32,14 +32,15 @@ const Form = ({ onSubmit }) => {
         handleSubmit();
       }}
       >
+        <h2>Ajouter un ami</h2>
         <input
           className="input_create_serveur"
           type="text"
-          placeholder="nom de l'ami"
+          placeholder="Nom de l'ami"
           value={nom}
           onChange={(e) => setNom(e.target.value)}
         />
-        <button type="submit">Ajouter ami</button>
+        <button type="submit" className="submit_create_serveur">Ajouter ami</button>
       </form>
   );
 };
