@@ -10,25 +10,31 @@ const { hash } = require("../../Utils/hasher");
  * @returns
  */
 async function getInformation(req, res) {
-  const token = infoToken(req);
-  const id = token.id;
-  const info = await UserModel.findOne({ id: id }, (err, user) => {
-    if (err) {
-      return res.status(500).json({ message: "Erreur interne." });
-    }
-    if (!user) {
+  try {
+    const token = infoToken(req);
+    const id = token.id;
+
+    const info = await UserModel.findOne({ where: { id: id } });
+
+    if (!info) {
       return res.status(202).json({ message: "Utilisateur non trouvé." });
     }
-  });
-  return res.status(200).json({
-    infoUser: {
-      email: info.email,
-      bio: info.bio,
-      lienPP: info.lienPP,
-      lienParam: info.lienParametre,
-    },
-  });
+
+    return res.status(200).json({
+      infoUser: {
+        username: info.username,
+        email: info.email,
+        bio: info.bio,
+        lienPP: info.lienPP,
+        lienParam: info.lienParametre,
+      },
+    });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ message: "Erreur interne." });
+  }
 }
+
 
 /**
  * @description Modifie les informations de l'utilisateur
