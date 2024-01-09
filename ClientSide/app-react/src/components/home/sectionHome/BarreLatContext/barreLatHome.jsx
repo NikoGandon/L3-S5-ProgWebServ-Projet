@@ -7,8 +7,11 @@ import CreateGroupe from "../../../groupe/createGroupe";
  * @desc Section d'un groupe
  * @returns
  */
+
 const GroupeBox = ({ nomGroupe, idGroupe, handleClick, nbUser }) => {
   return (
+    <div id="liste_groupe">
+
     <button
       className="btn_find_groupe"
       onClick={() => {
@@ -16,13 +19,14 @@ const GroupeBox = ({ nomGroupe, idGroupe, handleClick, nbUser }) => {
       }}
     >
       <div className="div_find_groupe">
-        <img className="icon_mp" src="../../../images/singe.jpg" />
+        <img className="icon_mp" src="../../../image/groupe.png" />
         <div className="name_mp_box">
           <p className="name_mp">{nomGroupe}</p>
           <p className="name_mp">{nbUser} membres</p>
         </div>
       </div>
     </button>
+    </div>
   );
 };
 
@@ -31,6 +35,8 @@ const GroupeBox = ({ nomGroupe, idGroupe, handleClick, nbUser }) => {
  *       trié par ordre chronologique
  */
 const BarreLatHome = ({ handleClick }) => {
+  const { handleAmis } = useContext(UserContext);
+
   const [groupesMembre, setGroupesMembre] = useState([]);
   const ajouterGroupe = () => {
     axios
@@ -49,7 +55,15 @@ const BarreLatHome = ({ handleClick }) => {
 
   return (
     <>
-      <div className="barreLatHome">
+      <div className="barreLatHome" >
+
+        <button id="bouttonAmis" onClick={handleAmis}>
+          <img src="../../public/image/amis.png" width="35px" height="35px"></img>
+          <p id="textAmi">Amis</p>
+         </button>
+
+      <p id="conversation">Conversation</p>
+      <div className="scroll-zone-groupes">
         <div className="box_mp">
           {groupesMembre && groupesMembre.length > 0 ? (
             groupesMembre.map((item) => (
@@ -65,9 +79,18 @@ const BarreLatHome = ({ handleClick }) => {
             <p id="AucunMessage">Vous n'avez aucun message</p>
           )}
         </div>
-        <div className="createGroupe">
-          <CreateGroupe ajouterGroupe={ajouterGroupe} />
+          <div className="createGroupe">
+            <CreateGroupe ajouterGroupe={ajouterGroupe} />
+          </div>
+          </div>
+
+
+          <div id="divProfile">
+            <img src="../../public/image/amis.png" width="30px" height="30px"></img>
+            Profile
         </div>
+
+
       </div>
     </>
   );

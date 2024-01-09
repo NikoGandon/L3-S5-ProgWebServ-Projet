@@ -3,6 +3,7 @@ import React, { useContext } from "react";
 import Serveur from "../../serveur/serveur";
 import Groupe from "../../groupe/groupe";
 import Profil from "../../user/profil";
+import Amis from "../../user/amis.jsx";
 import Param from "../../user/param.jsx";
 import Acceuil from "../../accueil/accueil.jsx";
 
@@ -28,6 +29,9 @@ const Content = () => {
       break;
     case "acceuil":
       content = <Acceuil />;
+      break;
+    case "amis":
+      content = <Amis />;
       break;
     default:
       content = <Acceuil />;
