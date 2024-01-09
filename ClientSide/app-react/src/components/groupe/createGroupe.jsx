@@ -53,10 +53,6 @@ const CreateGroupe = ({ ajouterGroupe }) => {
   };
 
   const handleSubmit = (data) => {
-    if (data.image == "") {
-      data.image = "https://cdn.pixabay.com/photo/2016/04/15/18/05/computer-1331579_960_720.png";
-    }
-
     axios
       .post("https://localhost:3000/Groupe", {
         nom: data.nom,

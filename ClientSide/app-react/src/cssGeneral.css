@@ -1,22 +1,20 @@
-body {
+body{
     font-family: 'Uni Sans', sans-serif;
     font-weight: 400;
-
-    min-height: 100vh;
 }
 
-.grid {
+.grid{
     display: grid;
-    grid-template-areas:
-        "barreServeur barreLaterale contenu"
-        "barreServeur barreLaterale contenu"
-        "barreServeur barreLaterale contenu";
+    grid-template-areas: 
+     "barreServeur barreLaterale contenu"
+     "barreServeur barreLaterale contenu"
+     "barreServeur barreLaterale contenu";
 
-    grid-template-columns: 5% 20% auto;
-    height: 100%;
+    grid-template-columns: 100px 250px auto;
+    height: 100vh;
 }
 
-#content {
+#content{
     grid-area: contenu;
     background-color: #36393e;
 
@@ -30,81 +28,54 @@ body {
     color: white;
 }
 
-#serveur {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 100%;
-}
-
-#logoServeur {
-    width: 75%;
-}
-
-#serveur_desc {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    font-size: 10px;
-}
-
-#serveur_desc p {
-    margin: 0;
-    font-weight: bolder;
-}
-
-#barreServeur #logo {
-    padding-top: 7%;
-    padding-bottom: 7%;
+#barreServeur{
+    grid-area: barreServeur;
     background-color: #1e2124;
-    color: rgb(221, 46, 46);
-    width: 60%;
-    height: 60%;
+    text-align: center;
+
+    color: white;
 }
 
-#logoServeur {
+#barreServeur #logo{
+    padding-top: 10px;
+    background-color: #1e2124;
+    color: red;
+    width: 60px;
+    height: 60px;
+}
+
+#logoServeur{
     width: 50px;
     height: 50px;
     border-image-repeat: repeat;
 }
 
-#barreServeur #barre {
-    border: 0.5px solid #5e6f80;
-    margin-top: 1%;
-    margin-bottom: 1%;
+#barreServeur #barre{
+    margin-top: 10px;
+    margin-right: 30%;
+    margin-left: 30%;
+    border: 1px solid #36393e;
 }
 
-#barreLaterale {
+#barreLaterale{
     grid-area: barreLaterale;
     background-color: #282b30;
     text-align: center;
     color: white;
 }
 
-.createServeur {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 100%;
-}
-
-.input_create_serveur {
-    text-align: center;
-    max-width: 100%;
-}
-
-#AucunMessage {
+#AucunMessage{
     text-align: center;
     color: white;
 }
 
-#nomDuServeurDiv #barre {
+#nomDuServeurDiv #barre{
     border: 0.5px solid #1e2124;
 }
 
 /*=======================*/
 
-#formChat {
+#formChat{
     position: absolute;
     bottom: 5%;
     width: 70%;
@@ -115,12 +86,12 @@ body {
     transform: translateX(-50%);
 }
 
-#formChat #envoyer {
+#formChat #envoyer{
     background-color: #424549;
     border: none;
 }
 
-#formChat #zoneDeText #zoneEnvoieMessage {
+#formChat #zoneDeText #zoneEnvoieMessage{
     color: white;
     border: none;
     display: inline;
@@ -134,35 +105,29 @@ body {
 /*=======================*/
 
 .scroll-zone {
-    width: 300px;
-    /* Largeur de la zone de défilement */
-    height: 200px;
-    /* Hauteur de la zone de défilement */
-    overflow: auto;
-    /* Cache le débordement */
+    width: 300px; /* Largeur de la zone de défilement */
+    height: 200px; /* Hauteur de la zone de défilement */
+    overflow: auto; /* Cache le débordement */
     width: 100%;
     height: 75vh;
     position: relative;
-}
+  }
 
-.div_create_serveur {
+.div_create_serveur{
     height: 60px;
     padding-bottom: 10px;
     padding-top: 10px;
 }
 
-.div_create_serveur div button {
+.div_create_serveur button{
     border: none;
     border-radius: 100%;
     background-color: #282b30;
+    height: 60px;
+    width: 60px;
 }
 
-.name_create_serveur {
-    color: white;
-    font-size: 20px;
-}
-
-#salonDesign {
+#salonDesign{
     background-color: #424549;
     border-radius: 10px;
     margin-left: 5%;
@@ -172,30 +137,26 @@ body {
 
 /*-------- TITRE DU SERVEUR (au dessus de message)--------*/
 
-.titleNameServeur {
+.titleNameServeur{
     text-align: center;
     color: white;
 }
 
 /* ---------------------------------------------------------------- FIXME START ---------------------------------------------------------------- */
-.other_message,
-.own_message {
+.other_message, .own_message{
     margin-bottom: 3px;
-    padding-top: 1px;
+    padding-top : 1px;
     background-color: #5e667c;
     color: rgb(195, 206, 44);
 }
-
 /* ---------------------------------------------------------------- FIXME ---------------------------------------------------------------- */
-.own_message_text,
-.other_message_text {
+.own_message_text, .other_message_text{
     margin-left: 25px;
     margin-top: 5px;
     padding: 6px;
 }
-
 /* ---------------------------------------------------------------- FIXME ---------------------------------------------------------------- */
-.dateMessage {
+.dateMessage{
     font-style: italic;
     padding: 0;
     margin: 0;
@@ -203,7 +164,6 @@ body {
     font-size: 15px;
     color: black;
 }
-
 /* ---------------------------------------------------------------- FIXME ---------------------------------------------------------------- */
 .username {
     font-style: italic;
@@ -211,19 +171,18 @@ body {
     color: rgb(160, 207, 184);
     margin-left: 10px;
     margin-bottom: 0;
-    padding: 0;
+    padding :0;
 }
 
 /* ---------------------------------------------------------------- FIXME END---------------------------------------------------------------- */
 
 
 #zoneAccueil {
-    position: relative;
-    /* Pour que les éléments enfants soient positionnés relativement à celui-ci */
+    position: relative; /* Pour que les éléments enfants soient positionnés relativement à celui-ci */
     height: 100vh;
-}
-
-#arrierePlanFlou {
+  }
+  
+  #arrierePlanFlou {
     position: absolute;
     top: 0;
     left: 0;
@@ -233,19 +192,9 @@ body {
     filter: blur(5px);
     background-size: cover;
     background-position: center;
-}
-
-#contenuAccueil {
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-}
-
-#messages {
-    height: 100%;
-}
-
-#contenuAccueil {
+  }
+  
+  #contenuAccueil {
     text-align: center;
     position: absolute;
     top: 50%;
@@ -257,30 +206,24 @@ body {
     padding-top: 30px;
     padding-bottom: 30px;
     border-radius: 10px;
-}
+  }
 
-#contenuAccueil h3 {
+  #contenuAccueil h3{
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-}
+  }
 
-#contenuAccueil #message_bienvenue {
+  #contenuAccueil #message_bienvenue{
     color: rgb(208, 208, 208);
     padding-bottom: 20px;
-}
+  }
 
 
-#parametres {
-    color: #4682B4;
+#parametres{
+    color:#4682B4;
     font-size: 13px;
 }
 
-.bouton_param, .bouton_profil {
-    display: flex;
-    flex-direction: column;
-}
-
-#deconnexion, #parametres{
-    display: flex;
+#deconnexion{
     border: none;
     background-color: #5865f2;
     color: white;
@@ -293,15 +236,11 @@ body {
     margin-bottom: 15px;
 }
 
-#deconnexion:hover{
-    /* transition au rouge en 1s */
-    transition: background-color 0.3s;
-    background-color: #f02b4c;
-}
+
 
 /* ---------------------------------------------------------------- Login et register ---------------------------------------------------------------- */
 
-#LoginRegister {
+#LoginRegister{
     width: 100%;
     height: 100vh;
     background-image: url('../public/image/bg.png');
@@ -309,7 +248,7 @@ body {
     background-position: center;
 }
 
-#contentLoginRegister {
+#contentLoginRegister{
     display: flex;
     flex-direction: column;
     text-align: center;
@@ -325,7 +264,7 @@ body {
     border-radius: 10px;
 }
 
-#LoginRegister #contentLoginRegister .input {
+#LoginRegister #contentLoginRegister .input{
     border: none;
     background-color: #202225;
     color: white;
@@ -338,7 +277,7 @@ body {
     margin-bottom: 10px;
 }
 
-#LoginRegister #contentLoginRegister #submitButton {
+#LoginRegister #contentLoginRegister #submitButton{
     border: none;
     background-color: #5865f2;
     color: white;
@@ -360,12 +299,6 @@ body {
 }
 
 #connectGoogle {
-    display: flex;
-    /* Utilisation de Flexbox */
-    align-items: center;
-    /* Alignement vertical du contenu */
-    justify-content: center;
-    /* Alignement horizontal du contenu */
     display: flex; /* Utilisation de Flexbox */
     align-items: center; /* Alignement vertical du contenu */
     justify-content: center; /* Alignement horizontal du contenu */
@@ -378,13 +311,6 @@ body {
     padding-bottom: 4%;
     width: 100%;
     border-radius: 5px;
-}
-
-
-
-/* ---------------------------------------------------------------- Home Unconnected ---------------------------------------------------------------- */
-
-#homeUnconnected {
   }
 
 
