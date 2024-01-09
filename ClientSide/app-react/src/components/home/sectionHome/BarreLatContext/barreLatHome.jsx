@@ -63,6 +63,7 @@ const BarreLatHome = ({ handleClick }) => {
          </button>
 
       <p id="conversation">Conversation</p>
+      <div className="scroll-zone-groupes">
         <div className="box_mp">
           {groupesMembre && groupesMembre.length > 0 ? (
             groupesMembre.map((item) => (
@@ -81,6 +82,15 @@ const BarreLatHome = ({ handleClick }) => {
           <div className="createGroupe">
             <CreateGroupe ajouterGroupe={ajouterGroupe} />
           </div>
+          </div>
+
+
+          <div id="divProfile">
+            <img src="../../public/image/amis.png" width="30px" height="30px"></img>
+            Profile
+        </div>
+
+
       </div>
     </>
   );

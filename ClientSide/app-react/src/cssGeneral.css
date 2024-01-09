@@ -119,6 +119,13 @@ body{
     position: relative;
   }
 
+  .scroll-zone-groupes {
+    overflow: auto; /* Cache le débordement */
+    width: 100%;
+    height: 75vh;
+    position: relative;
+  }
+
 .div_create_serveur{
     height: 60px;
     padding-bottom: 10px;
@@ -377,10 +384,6 @@ body{
 
 /* ---------------------------------------------------------------- Bouton CREATE GROUPE ---------------------------------------------------------------- */
 
-.div_create_groupe{
-   
-}
-
 .div_create_groupe .button_create_groupe{
     border: none;
     margin-top: 6%;
@@ -438,3 +441,130 @@ body{
     margin-right: 10px;
     border-radius: 10px;
 }
+
+#divProfile {
+    display: flex;
+    align-items: center;
+    justify-content: left;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    background-color: #1a1b1e;
+    padding-top: 8%;
+    padding-bottom: 8%;
+    box-sizing: border-box;
+}
+
+#divProfile img{
+    padding-left: 10%;
+    padding-right: 5%;
+}
+  
+  .barreLatHome {
+    position: relative;
+    min-height: 100vh;
+  }
+
+
+
+
+/* ---------------------------------------------------------------- Zone AMIS ---------------------------------------------------------------- */
+
+#zoneAmis{
+    position: relative; /* Pour que les éléments enfants soient positionnés relativement à celui-ci */
+    height: 100vh;
+}
+
+#contenuAmis{
+    text-align: center;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #282b30;
+    padding-left: 10%;
+    padding-right: 10%;
+    padding-top: 1%;
+    padding-bottom: 1%;
+    border-radius: 10px;
+}
+
+#barre{
+    margin-bottom: 7%;
+    margin-right: 40%;
+    margin-left: 40%;
+    border: 1px solid #595d68;
+}
+
+#liste_ami {
+    display: flex;
+    flex-direction: column;
+    overflow: auto; /* Cache le débordement */
+    width: 100%;
+    height: 50vh;
+    position: relative;
+    /* Autres styles */
+  }
+
+  #liste_ami div {
+    display: flex;
+    align-items: center; /* Centrer verticalement */
+    /* Autres styles */
+  }
+  
+  #liste_ami img {
+    width: 30px;
+    height: 30px;
+    /* Autres styles */
+  }
+  
+  #liste_ami p {
+    margin-left: 10px;
+    /* Autres styles */
+  }
+
+  #backgroundAmi{
+    background-color: #36393f;
+    border-radius: 10px;
+    padding-left: 20vh;
+    padding-right: 20vh;
+    margin-bottom: 2%;
+  }
+
+  .div_add_ami button{
+    border: none;
+    background-color: #5865f2;
+    color: white;
+    font-size: 15px;
+    padding-top: 2%;
+    padding-bottom: 2%;
+    padding-right: 35%;
+    padding-left: 35%;
+    border-radius: 5px;
+    margin-bottom: 5%;
+  }
+
+  .name_add_ami{
+    color: white;
+    font-weight: 800;
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  #deconnexion:hover{
+    transition: background-color 0.3s;
+    background-color: #f02b4c;
+  }
