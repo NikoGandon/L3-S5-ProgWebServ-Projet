@@ -43,38 +43,48 @@ const Param = () => {
 
   return (
     <>
-      <h1>Param-User</h1>
+    <div id="zoneParam">
+    <div id="arrierePlanFlou">
+        <div id="contenuParam">
+      <h2>Paramètres</h2>
       <form className="formsParam" onSubmit={handleSubmit}>
-      <label htmlFor="identifier">Nouveau Pseudo: </label>
         <input
+          className="input_param"
           type="identifier"
           id="identifier"
+          placeholder="Nouveau Pseudo"
           value={identifier}
           onChange={handleidentifierChange}
         /><br></br>
-      <label htmlFor="email">Nouveau Email: </label>
         <input
+          className="input_param"
           type="email"
           id="email"
+          placeholder="Nouveau Email"
           value={email}
           onChange={handleemailChange}
         /><br></br>
-      <label htmlFor="bio">Nouvelle bio: </label>
         <input
+          className="input_param"
           type="bio"
           id="bio"
+          placeholder="Nouvelle biographie"
           value={bio}
           onChange={handlebioChange}
         /><br></br>
-      <label htmlFor="password">Nouveau Code: </label>
         <input
+          className="input_param"
           type="password"
           id="password"
+          placeholder="Nouveau Mot de passe"
           value={code}
           onChange={handleCodeChange}
         /><br></br>
-        <button type="submit">Valider</button>
+        <button type="submit" className="submit_param">Valider</button>
       </form>
+      </div>
+      </div>
+      </div>
     </>
   );
 };

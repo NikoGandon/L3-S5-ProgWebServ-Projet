@@ -578,7 +578,7 @@ body{
   }
   
   .popup-container {
-    background-color: #36393f;
+    background-color: #282b30;
     padding: 20px;
     border-radius: 10px;
   }
@@ -651,7 +651,8 @@ body{
     padding-left: 18%;
     padding-right: 18%;
     border-radius: 10px;
-    background-color: #303238;
+    background-color: rgba(48, 50, 56, 0.5);
+    background-image: url('../public/image/bandeauAccueil.png');
 }
 
 #bouttonMembre:hover{
@@ -718,6 +719,53 @@ body{
     padding-bottom: 2vh;
 }
 
+
+
+#zoneParam{
+  position: relative; /* Pour que les éléments enfants soient positionnés relativement à celui-ci */
+  height: 100vh;
+}
+
+#contenuParam{
+  text-align: center;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #282b30;
+  padding-left: 10%;
+  padding-right: 10%;
+  padding-top: 1%;
+  padding-bottom: 1%;
+  border-radius: 10px;
+}
+
+.input_param{
+  border: none;
+    background-color: #202225;
+    color: white;
+    font-size: 15px;
+    padding-top: 4%;
+    padding-bottom: 4%;
+    padding-left: 10px;
+    width: 50vh;
+    border-radius: 5px;
+    margin-bottom: 3%;
+}
+
+
+
+.submit_param{
+  border: none;
+    background-color: #5865f2;
+    color: white;
+    font-size: 15px;
+    padding-top: 4%;
+    padding-bottom: 4%;
+    width: 100%;
+    border-radius: 5px;
+    margin-bottom: 4%;
+}
 
 
 
