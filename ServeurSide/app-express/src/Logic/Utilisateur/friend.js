@@ -19,7 +19,7 @@ const getFriend = async (req, res) => {
 
     const friends = await FriendModels.findAll({
       where: {
-        [Op.or]: [{ userId: user }, { friendId: user }],
+        userId: user
       },
     });
 
@@ -60,6 +60,10 @@ const addFriend = async (req, res) => {
     await FriendModels.create({
       userId: idUser,
       friendId: Ami.id,
+    });
+    await FriendModels.create({
+      userId: Ami.id,
+      friendId: idUser,
     });
 
     return res.status(200).json({ message: "Ami ajouté avec succès." });
