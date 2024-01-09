@@ -1,26 +1,37 @@
 import React, { useState, useContext } from "react";
 import axios from "../../utils/axiosConf";
-import PopUp from "../pop-up/pop-up.model";
-
-//import { PopupContext } from "../../contexts/popup.context";
+import { usePopup } from "../../contexts/popup.context";
 
 import "../../../src/cssGeneral.css";
-import { usePopup } from "../../contexts/popup.context";
 
 const Form = ({ onSubmit }) => {
   const [nom, setNom] = useState("");
 
-  //const {closePopup} = useContext(PopupContext);
+  const { closePopup } = usePopup();
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    onSubmit({ nom });
-    closePopup();
+  const handleSubmit = () => {
+    axios
+      .post("https://localhost:3000/User/friend", {
+        nom: nom,
+      })
+      .then((res) => {
+        console.log("Amitiée créé avec succès", res.data);
+        onSubmit();
+        closePopup();
+        window.location.reload();
+      })
+      .catch((error) => {
+        console.error("Erreur dans l'amitiée", error);
+      });
   };
 
   return (
-    <PopUp>
-      <form className="form_create_serveur" onSubmit={handleSubmit}>
+      <form className="form_create_serveur"
+        onSubmit={(e) => {
+        e.preventDefault();
+        handleSubmit();
+      }}
+      >
         <input
           className="input_create_serveur"
           type="text"
@@ -30,35 +41,19 @@ const Form = ({ onSubmit }) => {
         />
         <button type="submit">Ajouter ami</button>
       </form>
-    </PopUp>
   );
 };
 
 const AddFriend = ({ ajouterAmi }) => {
   const [isFormVisible, setIsFormVisible] = useState(false);
-
   const { openPopup } = usePopup();
 
   const handleBoutonCreate = () => {
     setIsFormVisible(!isFormVisible);
-    openPopup();
+    openPopup(<Form onSubmit={() => setIsFormVisible(false)} />);
   };
 
-  const handleSubmit = (data) => {
-    console.log(data.nom);
-    axios
-      .post("https://localhost:3000/User/friend", {
-        nom: data.nom,
-      })
-      .then((res) => {
-        console.log("Amitiée créé avec succès", res.data);
-        ajouterAmi();
-        setIsFormVisible(false);
-      })
-      .catch((error) => {
-        console.error("Erreur dans l'amitiée", error);
-      });
-  };
+  
 
   return (
     <>
@@ -67,7 +62,6 @@ const AddFriend = ({ ajouterAmi }) => {
           <p className="name_add_ami">Ajouter un ami</p>
         </button>
       </div>
-      {isFormVisible && <Form onSubmit={handleSubmit} />}
     </>
   );
 };
