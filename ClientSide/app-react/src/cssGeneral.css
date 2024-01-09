@@ -349,13 +349,13 @@ body {
     border-radius: 5px;
 }
 
-#LoginRegister #contentLoginRegister #compte {
+#LoginRegister #contentLoginRegister #compte{
     color: rgb(150, 150, 150);
     font-size: 15px;
     padding-top: 4%;
 }
 
-#LoginRegister #contentLoginRegister #compte:hover {
+#LoginRegister #contentLoginRegister #compte:hover{
     color: white;
 }
 
@@ -366,6 +366,9 @@ body {
     /* Alignement vertical du contenu */
     justify-content: center;
     /* Alignement horizontal du contenu */
+    display: flex; /* Utilisation de Flexbox */
+    align-items: center; /* Alignement vertical du contenu */
+    justify-content: center; /* Alignement horizontal du contenu */
     border: none;
     background-color: white;
     color: rgb(150, 150, 150);
@@ -382,6 +385,13 @@ body {
 /* ---------------------------------------------------------------- Home Unconnected ---------------------------------------------------------------- */
 
 #homeUnconnected {
+  }
+
+
+
+  /* ---------------------------------------------------------------- Home Unconnected ---------------------------------------------------------------- */
+
+  #homeUnconnected{
     width: 100%;
     height: 100vh;
     background-image: url('../public/image/bg.png');
@@ -389,7 +399,7 @@ body {
     background-position: center;
 }
 
-#homeUnconnected #contenthomeUnconnected {
+#homeUnconnected #contenthomeUnconnected{
     display: flex;
     flex-direction: column;
     text-align: center;
@@ -404,10 +414,10 @@ body {
     padding-bottom: 2%;
     border-radius: 10px;
 
-
+    
 }
 
-#homeUnconnected #contenthomeUnconnected #homeUnconnectedButton {
+#homeUnconnected #contenthomeUnconnected #homeUnconnectedButton{
     margin-top: 6%;
     border: none;
     background-color: #5865f2;
@@ -417,15 +427,13 @@ body {
     padding-bottom: 4%;
     width: 100%;
     border-radius: 5px;
-
+    
 }
 
-#imgHomeUnconnected {
+#imgHomeUnconnected{
     width: 50vh;
     height: 50vh;
     border-radius: 10px;
-    object-fit: cover;
-    /* Ajuste l'image sans déformation en rognant */
-    object-position: center;
-    /* Centre l'image dans le conteneur */
+    object-fit: cover; /* Ajuste l'image sans déformation en rognant */
+    object-position: center; /* Centre l'image dans le conteneur */
 }
