@@ -1,35 +1,85 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import React from "react";
+import { useState, useEffect } from "react";
+import {
+  BrowserRouter as Router,
+  Route,
+  Routes,
+  Navigate,
+} from "react-router-dom";
+import axios from "./utils/axiosConf";
+import { io } from "socket.io-client";
+
+const socket = io("https://localhost:3000", {
+  transports: ["websocket"],
+  rejectUnauthorized: false,
+});
+
+socket.on("connect", () => {
+  console.log("Connected to server");
+});
+
+socket.emit("connection");
+
+import "./App.css";
+
+import HomeUnconnected from "./components/home/homeUnconnected";
+import Home from "./components/home/home";
+
+import { PopupProvider } from "./contexts/popup.context";
+import Popup from "./components/pop-up/pop-up.model";
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [estConnecte, setEstConnecte] = useState(false);
+
+  useEffect(() => {
+    const checkAuthentication = async () => {
+      try {
+        console.log("Vérification de l'authentification...");
+        const response = await axios.get(
+          "https://localhost:3000/auth/check-auth"
+        );
+
+        console.log("fin du fetch...");
+
+        if (response.data.authenticated) {
+          setEstConnecte(true);
+        }
+      } catch (error) {
+        console.error(
+          "Erreur lors de la vérification de l'authentification :",
+          error
+        );
+      }
+    };
+
+    checkAuthentication();
+  }, []);
 
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    <Router>
+      <Routes>
+        <Route
+          path="*"
+          exact
+          element={
+            estConnecte ? (
+              <PopupProvider>
+                <Popup />
+                <Home />
+              </PopupProvider>
+            ) : (
+              <HomeUnconnected connectionState="false" />
+            )
+          }
+        />
+        <Route path="/accueil" element={<Navigate to="/" />} />
+        {/*<Route path="/auth" element={<Authentication />} />
+        <Route path="/auth/success" element={<LoginSuccess />} />
+        <Route path="/parametre" element={<Parametre />} />
+        <Route path="/auth/login/success" element={<LoginSuccess />} />
+        <Route path="/groupe" element={<Groupe />} />*/}
+      </Routes>
+    </Router>
+  );
 }
-
-export default App
+export default App;

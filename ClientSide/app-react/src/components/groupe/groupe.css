@@ -1,0 +1,45 @@
+#liste_groupe {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 10px;
+    margin: 0 auto;
+    padding-left: 5%;
+    padding-right: 5%;
+    max-width: 90%;
+    width: 100%;
+    padding: 2%;
+  }
+  
+  .btn_find_groupe {
+    width: 90%;
+    border-radius: 10px;
+    border: none;
+    background-color: #282b30;
+  }
+
+  .btn_find_groupe:hover {
+    background-color: #202225;
+  }
+  
+  .div_find_groupe {
+    display: flex;
+    align-items: center;
+    width: 100%;
+  }
+  
+  .icon_mp {
+    width: 30px;
+    height: 30px;
+    background-color: #BA55D3;
+    padding: 5%;
+    margin-right: 10px;
+    border-radius: 100%;
+  }
+
+.name_mp{
+    color: white;
+    display: flex;
+}
+  

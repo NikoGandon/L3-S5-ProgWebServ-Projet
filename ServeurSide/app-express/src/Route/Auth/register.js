@@ -11,24 +11,23 @@ routerRegister.post("/", (req, res, next) => {
   }
 
   try {
-    passportRegister.authenticate(
-      "passportRegister",
-      (err, user, info) => {
-        if (err) {
-          return next(err);
-        }
-
-        if (!user) {
-          return res.status(400).json({
-            message: info.message,
-          });
-        }
-
-        return res.status(200).json({
-          message: info.message,
+    passportRegister.authenticate("passportRegister", (err, user, info) => {
+      if (err) {
+        return res.status(400).json({
+          error: err,
         });
       }
-    )(req, res, next);
+
+      if (!user) {
+        return res.status(202).json({
+          error: info.message,
+        });
+      }
+
+      return res.status(200).json({
+        message: info.message,
+      });
+    })(req, res, next);
   } catch (error) {
     console.log(error);
   }

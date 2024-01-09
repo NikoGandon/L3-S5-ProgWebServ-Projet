@@ -10,7 +10,7 @@ const {getFriend,addFriend} = require("../../../Logic/Utilisateur/friend");
  *
  */
 
-friendRouteur.get("/", () => {});
+friendRouteur.get("/", (req,res) => {getFriend(req,res)});
 
 /**
  * @swagger
@@ -21,7 +21,7 @@ friendRouteur.get("/", () => {});
  *
  */
 
-friendRouteur.post("/", () => {});
+friendRouteur.post("/", (req,res) => {addFriend(req,res)});
 
 /**
  * @swagger

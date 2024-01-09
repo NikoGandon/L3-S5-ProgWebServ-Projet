@@ -1,0 +1,34 @@
+import React, { useRef, useEffect } from 'react';
+import { usePopup } from '../../contexts/popup.context';
+
+const Popup = () => {
+  const { showPopup, popupComponent, closePopup } = usePopup();
+  const popupRef = useRef();
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (popupRef.current && !popupRef.current.contains(event.target)) {
+        closePopup();
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [closePopup]);
+
+  return showPopup ? (
+    <div className="popup-bg">
+    <div className="popup-container">
+      <div className="popup-content" ref={popupRef}>
+        {popupComponent}
+        <button onClick={closePopup} className="popup-close">Fermer</button>
+      </div>
+      </div>
+    </div>
+  ) : null;
+};
+
+export default Popup;

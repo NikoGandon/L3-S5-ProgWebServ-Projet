@@ -1,5 +1,3 @@
-const express = require("express");
-const router = express.Router();
 const Groupe = require("../../Model/Groupe.model");
 const Membre = require("../../Model/Lien/MembreGroupe.model");
 const Message = require("../../Model/Message/Message.model");
@@ -105,6 +103,7 @@ async function pagegroupe(req, res) {
 
 async function creergroupe(req, res) {
   try {
+    const idUser = infoToken(req).id;
     const newGroup = await Groupe.create({
       nom: req.body.nom,
       lienImage: req.body.lienImage,
@@ -113,6 +112,7 @@ async function creergroupe(req, res) {
 
     return res.status(201).json(newGroup);
   } catch (error) {
+    console.log(error);
     return res
       .status(500)
       .json({ error: "Erreur lors de la création du groupe" });

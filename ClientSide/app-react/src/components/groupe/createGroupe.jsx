@@ -1,8 +1,6 @@
 import React, { useState, useContext } from "react";
 import axios from "../../utils/axiosConf";
-import PopUp from "../pop-up/pop-up.model";
-
-import { PopupContext } from "../../contexts/popup.context";
+import { usePopup } from "../../contexts/popup.context";
 
 import "../../../src/cssGeneral.css";
 
@@ -10,17 +8,34 @@ const Form = ({ onSubmit }) => {
   const [nom, setNom] = useState("");
   const [image, setImage] = useState("");
 
-  const {closePopup} = useContext(PopupContext);
+  const { closePopup } = usePopup();
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    onSubmit({ nom, image });
-    closePopup();
+  const handleSubmit = () => {
+    axios
+      .post("https://localhost:3000/Groupe", {
+        nom: nom,
+        lienImage: image,
+      })
+      .then((res) => {
+        console.log("Groupe créé avec succès", res.data);
+        onSubmit();
+        closePopup();
+        window.location.reload();
+      })
+      .catch((error) => {
+        console.error("Erreur lors de la création du groupe", error);
+      });
+      
   };
 
   return (
-    <PopUp>
-      <form className="form_create_serveur" onSubmit={handleSubmit}>
+      <form className="form_create_serveur" 
+        onSubmit={(e) => {
+          e.preventDefault();
+          handleSubmit();
+        }}
+      >
+        <h2>Créer un groupe</h2>
         <input
           className="input_create_serveur"
           type="text"
@@ -36,51 +51,27 @@ const Form = ({ onSubmit }) => {
           value={image}
           onChange={(e) => setImage(e.target.value)}
         />
-        <button type="submit">Créer le groupe</button>
+        <button type="submit" className="submit_create_serveur">Créer le groupe</button>
       </form>
-    </PopUp>
   );
 };
 
 const CreateGroupe = ({ ajouterGroupe }) => {
   const [isFormVisible, setIsFormVisible] = useState(false);
-
-  const { openPopup } = useContext(PopupContext);
+  const { openPopup } = usePopup();
 
   const handleBoutonCreate = () => {
     setIsFormVisible(!isFormVisible);
-    openPopup();
-  };
-
-  const handleSubmit = (data) => {
-    if (data.image == "") {
-      data.image = "https://cdn.pixabay.com/photo/2016/04/15/18/05/computer-1331579_960_720.png";
-    }
-
-    axios
-      .post("https://localhost:3000/Groupe", {
-        nom: data.nom,
-        lienImage: data.image,
-      })
-      .then((res) => {
-        console.log("Groupe créé avec succès", res.data);
-        ajouterGroupe();
-        setIsFormVisible(false);
-      })
-      .catch((error) => {
-        console.error("Erreur lors de la création du groupe", error);
-      });
+    openPopup(<Form onSubmit={() => setIsFormVisible(false)} />);
   };
 
   return (
     <>
-      <div className="div_create_serveur" onClick={handleBoutonCreate}>
-        <button>
-          {/* <img className="icon_create_serveur" src="../../../images/plus.png" /> */}
-          <p className="name_create_serveur">✚</p>
+      <div className="div_create_groupe" onClick={handleBoutonCreate}>
+        <button className="button_create_groupe">
+          Créer un groupe
         </button>
       </div>
-      {isFormVisible && <Form onSubmit={handleSubmit} />}
     </>
   );
 };

@@ -1,20 +1,76 @@
 const express = require("express");
-const routerServeur = express.Router(); // Créez un nouvel objet routeur
+const routerServeur = express.Router();
 
 const banRoute = require("./ban");
 const salonRoute = require("./salon");
 const inviteRoute = require("./invite");
 
-const {CreateServeur} = require("../../logic/Serveur/CreateServeur");
-const {GetServeur} = require("../../logic/Serveur/GetServeur");
-const {DeleteServeur} = require("../../logic/Serveur/DeleteServeur");
+const { CreateServeur } = require("../../logic/Serveur/CreateServeur");
+const { GetServeur } = require("../../logic/Serveur/GetServeur");
+const { DeleteServeur } = require("../../logic/Serveur/DeleteServeur");
 const { BanMembre } = require("../../logic/Serveur/BanMembre");
 const { UnbanMembre } = require("../../logic/Serveur/UnbanMembre");
-const { CreateSalon } = require("../../logic/Serveur/CreateSalon");
-const { DeleteSalon } = require("../../logic/Serveur/DeleteSalon");
-const { InviteMembre } = require("../../logic/Serveur/InviteMembre");
+const { InviteMembre } = require("../../Logic/Serveur/AddMembre");
 const { DeleteMembre } = require("../../logic/Serveur/DeleteMembre");
-const { ModifySalon } = require("../../logic/Serveur/ModifySalon");
+const { GetSalon } = require("../../Logic/Serveur/GetSalon.js");
+
+const UserModel = require("../../Model/User.model");
+const ServeurModel = require("../../Model/Serveur.model");
+const MembreServeur = require("../../Model/MembreServeur.model");
+
+const { infoToken } = require("../../Middleware/AuthToken");
+
+/**
+ * @desc Vérifie si l'utilisateur a les droits d'administrateur
+ * @param {*} req
+ * @param {*} res
+ * @param {*} next
+ * @returns
+ */
+
+const checkAdminServ = async (req, res, next) => {
+  const id = infoToken(req).id;
+
+  const user = await UserModel.findOne({ id: id });
+  if (!user) {
+    return res.status(202).json({ message: "Utilisateur non trouvé." });
+  }
+
+  const serveur = await ServeurModel.findOne({ id: req.body.idServeur });
+  if (!serveur) {
+    return res.status(202).json({ message: "Serveur non trouvé." });
+  }
+  // TODO: a terminer
+  next();
+};
+
+const checkMembreServ = async (req, res, next) => {
+  const id = infoToken(req).id;
+
+  const user = await UserModel.findOne({ id: id });
+
+  if (!user) {
+    return res.status(202).json({ message: "Utilisateur non trouvé." });
+  }
+
+  const serveur = await ServeurModel.findOne({ id: req.body.idServeur });
+  if (!serveur) {
+    return res.status(202).json({ message: "Serveur non trouvé." });
+  }
+
+  const membre = await MembreServeur.findOne({
+    idUser: id,
+    idServeur: req.body.idServeur,
+  });
+
+  if (!membre) {
+    return res
+      .status(202)
+      .json({ message: "Vous n'êtes pas membre du serveur." });
+  }
+
+  next();
+};
 
 /**
  * @swagger
@@ -26,9 +82,11 @@ const { ModifySalon } = require("../../logic/Serveur/ModifySalon");
  */
 
 routerServeur.get("/", (req, res) => {
-  if (!req.body.idServeur) {
-      return res.status(400).json({
-      message: "Veuillez remplir tous les champs",
+  const idServeur = req.query.idServeur;
+
+  if (idServeur == undefined || idServeur == null) {
+    return res.status(400).json({
+      message: "Erreur lors de la requête.",
     });
   }
   GetServeur(req, res);
@@ -45,9 +103,9 @@ routerServeur.get("/", (req, res) => {
  */
 
 routerServeur.post("/", (req, res) => {
-    if (!req.body.nom || !req.body.description || !req.body.lienImage) {
-      res.status(400).json({
-      message: "Veuillez remplir tous les champs",
+  if (!req.body.nom) {
+    return res.status(400).json({
+      message: "Ajouter un nom de serveur",
     });
   }
   CreateServeur(req, res);
@@ -63,8 +121,8 @@ routerServeur.post("/", (req, res) => {
  *
  */
 
-routerServeur.put("/", (req, res) => {
-  res.send("Modification du serveur");
+routerServeur.put("/", checkAdminServ, (req, res) => {
+  return res.send("Modification du serveur");
 });
 
 /**
@@ -79,9 +137,9 @@ routerServeur.put("/", (req, res) => {
 
 routerServeur.delete("/", (req, res) => {
   if (!req.body.idServeur) {
-    res.status(400).json({
-    message: "Veuillez remplir tous les champs",
-  });
+    return res.status(400).json({
+      message: "Veuillez remplir tous les champs",
+    });
   }
   DeleteServeur(req, res);
 });
@@ -97,67 +155,49 @@ routerServeur.delete("/", (req, res) => {
  */
 routerServeur.post("/membre", (req, res) => {
   if (!req.body.idUser || !req.body.idServeur) {
-    res.status(400).json({
-    message: "Veuillez remplir tous les champs",
-  });
+    return res.status(400).json({
+      message: "Veuillez remplir tous les champs",
+    });
   }
   InviteMembre(req, res);
 });
 
 routerServeur.delete("/membre", (req, res) => {
   if (!req.body.idUser || !req.body.idServeur) {
-    res.status(400).json({
-    message: "Veuillez remplir tous les champs",
-  });
+    return res.status(400).json({
+      message: "Veuillez remplir tous les champs",
+    });
   }
   DeleteMembre(req, res);
 });
 
-routerServeur.delete("/salon", (req, res) => {
-  if (!req.body.idSalon) {
-    res.status(400).json({
-    message: "Veuillez remplir tous les champs",
-  });
-  }
-  DeleteSalon(req, res);
-});
-
-routerServeur.post("/salon", (req, res) => {
-  if (!req.body.nom || !req.body.description || !req.body.idServeur) {
-    res.status(400).json({
-    message: "Veuillez remplir tous les champs",
-  });
-  }
-  CreateSalon(req, res);
-});
-
-routerServeur.put("/salon", (req, res) => {
-  if (!req.body.idSalon || !req.body.nom && !req.body.description) {
-    res.status(400).json({
-    message: "Veuillez remplir tous les champs",
-  });
-  }
-  ModifySalon(req, res);
-});
-
 routerServeur.post("/ban", (req, res) => {
   if (!req.body.idUser || !req.body.idServeur || !req.body.date) {
-    res.status(400).json({
-    message: "Veuillez remplir tous les champs",
-  });
+    return res.status(400).json({
+      message: "Veuillez remplir tous les champs",
+    });
   }
   BanMembre(req, res);
 });
 
 routerServeur.delete("/ban", (req, res) => {
   if (!req.body.idUser) {
-    res.status(400).json({
-    message: "Veuillez remplir tous les champs",
-  });
+    return res.status(400).json({
+      message: "Veuillez remplir tous les champs",
+    });
   }
   UnbanMembre(req, res);
 });
 
 routerServeur.use("/invite", inviteRoute);
+
+routerServeur.get("/get-salons", (req, res) => {
+  if (!req.query.idServeur) {
+    return res.status(400).json({
+      message: "Erreur lors de la requête.",
+    });
+  }
+  GetSalon(req, res);
+});
 
 module.exports = routerServeur;
