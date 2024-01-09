@@ -21,18 +21,18 @@ const Profil = () => {
   }, []);
   return (
     <>
-      <div>
-        <p>Username: {profil.username}</p>
-      </div>
-      <div>
-        <p>Email: {profil.email}</p>
-      </div>
-      <div>
-        <p>Bio: {profil.bio}</p>
-      </div>
-      <div>
-        <p>Photo de Profil : </p>
+      <div id="zoneamis">
+        <div id="arrierePlanFlou">
+          <div id="contenuAmis">
+            <h2>Votre Profile</h2>
         <img src={profil.lienPP} width="35px" height="35px"></img>
+        <div id="backgroundInfo">
+        <p>Nom d'utilisateur: {profil.username}</p>
+        <p>Email: {profil.email}</p>
+        <p>Biographie: {profil.bio}</p>
+        </div>
+      </div>
+      </div>
       </div>
     </>
   );
