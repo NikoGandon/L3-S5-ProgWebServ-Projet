@@ -86,9 +86,9 @@ const Serveur = () => {
           {membres.length > 0 
           ? membres.map((memb) => {
             return (
-              <div>
-              <p key={memb.id}>
-                - {memb.username}
+              <div id="listeMembre">
+              <p key={memb.id} id="textMembre">
+                {memb.username}
               </p>
               </div>
             );

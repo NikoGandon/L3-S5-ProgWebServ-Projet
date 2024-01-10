@@ -84,8 +84,9 @@ body{
 
 /*=======================*/
 
-#barreChatGroupe{
-  position: absolute;
+#titleGroupe{
+  text-align: center;
+  color: white;
 }
 
 #formChat{
@@ -200,10 +201,24 @@ body{
 }
 
 #barreChatGroupe{
-  position: fixed;
-  bottom: 0;
-  left: 50%;
-  transform: translateX(-50%);
+  margin-top: 3%
+}
+
+#listeMembre{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#textMembre{
+  color: white;
+  font-size: 15px;
+  background-color: #303238;
+  width: 80%;
+  padding-top: 1%;
+  padding-bottom: 1%;
+  text-align: center;
+  border-radius: 10px;
 }
 
 /* ---------------------------------------------------------------- FIXME START ---------------------------------------------------------------- */
@@ -298,6 +313,7 @@ body{
 #parametres{
     color:#4682B4;
     font-size: 13px;
+    margin-top: 5%;
 }
 
 #deconnexion{
@@ -847,5 +863,16 @@ body{
   #deconnexion:hover{
     transition: background-color 0.3s;
     background-color: #f02b4c;
+  }
+
+  #admin{
+    color: white;
+    width: 100%;
+    padding-top: 3%;
+    padding-bottom: 3%;
+    background-color: #f02b4c;
+    border: none;
+    font-size: 15px;
+    border-radius: 5px;
   }
 

@@ -34,6 +34,12 @@ const BarreLat = () => {
     case "amis":
       element = <BarreLatHome handleClick={handleClickGroupe}/>;
       break;
+    case "admin":
+      element = <BarreLatHome handleClick={handleClickGroupe}/>;
+      break;
+    case "groupe":
+      element = <BarreLatHome handleClick={handleClickGroupe}/>;
+      break;
     case "paramserveur":
       element = <BarreLatServeur handleClick={handleClickServeur}/>;
       break;

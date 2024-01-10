@@ -123,7 +123,7 @@ const ConversationChat = () => {
             }
           })
         ) : (
-          <p>Pas de message dans {infosConv}</p>
+          <center><p>Aucun message ici</p></center>
         )}
       </div>
     </div>
