@@ -11,7 +11,7 @@ import AddMembre from "../../../serveur/addMembreServ";
 
 
 const barreLatServeur = ({ handleClick }) => {
-  const { contexteUser, contexteID, contexteSalon, handleServeurSelect } =
+  const { contexteUser, contexteID, contexteSalon, handleServeurSelect , handleParamServeur} =
     useContext(UserContext);
   const [salons, setSalons] = useState([]);
   const idServ = contexteID;
@@ -47,12 +47,12 @@ const barreLatServeur = ({ handleClick }) => {
       <h3 id="nomServeurTitle">Serveur</h3>
       </div>
       <div><AddMembre idServ={idServ}/></div>
-         <button id="bouttonParametres">
+         <button id="bouttonParametres" onClick={handleParamServeur}>
           <img src="../../public/image/Paramètres.png" width="35px" height="35px"></img>
           <p id="textParametres">Paramètres</p>
          </button>
          <p id="conversation">Salons</p>
-         <CreateSalon/>
+         <CreateSalon idServ={idServ}/>
 
       {salons.length > 0
         ? salons.map((salon) => {

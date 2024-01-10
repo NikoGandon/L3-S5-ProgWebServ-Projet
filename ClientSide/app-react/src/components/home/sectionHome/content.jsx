@@ -1,6 +1,7 @@
 import React, { useContext } from "react";
 
 import Serveur from "../../serveur/serveur";
+import ParametreServeur from "../../serveur/ParametreServeur.jsx";
 import Groupe from "../../groupe/groupe";
 import Profil from "../../user/profil";
 import Amis from "../../user/amis.jsx";
@@ -33,6 +34,11 @@ const Content = () => {
       break;
     case "amis":
       content = <Amis />;
+      break;
+    case "paramserveur":
+      content = <ParametreServeur />;
+    case "admin":
+      content = <AdminPanel />;
       break;
     case "admin":
       content = <AdminPanel />;
