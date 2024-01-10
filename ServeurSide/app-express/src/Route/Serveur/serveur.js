@@ -191,11 +191,8 @@ routerServeur.delete("/ban", (req, res) => {
 
 routerServeur.use("/invite", inviteRoute);
 
-<<<<<<< Updated upstream
-=======
 routerServeur.use("/salon", salonRoute);
 
->>>>>>> Stashed changes
 routerServeur.get("/get-salons", (req, res) => {
   if (!req.query.idServeur) {
     return res.status(400).json({
