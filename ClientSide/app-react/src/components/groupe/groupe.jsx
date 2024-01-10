@@ -28,8 +28,10 @@ const Groupe = () => {
     });
   }, []);
   return (
-    <><h3>Groupe : {groupe.nom}</h3>
-      <Conversation />
+    <><h3 id="titleGroupe">Groupe {groupe.nom}</h3>
+    <div className="scroll-zone">
+    <Conversation />
+    </div>
       <div id="barreChatGroupe">
       <BarreChat />
       </div>

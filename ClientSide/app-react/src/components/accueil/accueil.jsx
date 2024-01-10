@@ -45,18 +45,18 @@ const Accueil = () => {
           <button id="deconnexion" onClick={handleSubmit}>
             Déconnexion
           </button>
-          <div className="button_param" onClick={() => handleParam()}>
-            <a alt="Param" id="parametres">
-              Paramètres
-            </a>
-          </div>
           {admin ? (
             <div className="button_param" onClick={() => handleAdminPanel()}>
-              <a alt="Admin" id="admin">
-                Admin
-              </a>
+              <button alt="Admin" id="admin">
+                Pannel administrateur
+              </button>
             </div>
           ) : null}
+            <div className="button_param" onClick={() => handleParam()}>
+            <p alt="Param" id="parametres">
+              Paramètres
+            </p>
+          </div>
         </div>
       </div>
     </>
