@@ -49,9 +49,11 @@ const ContextUserProvider = (props) => {
   const handleRevenirAccueil = () => {
     setContext({ contexteUser: "accueil", contexteID: null });
   };
-
   const handleParamServeur = () => {
     setContext({ contexteUser: "paramserveur", contexteID: null });
+  }
+  const handleAdminPanel = () => {
+    setContext({ contexteUser: "admin", contexteID: null });
   };
 
   const handleAdminPanel = () => {

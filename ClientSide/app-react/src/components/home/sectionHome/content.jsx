@@ -37,6 +37,8 @@ const Content = () => {
       break;
     case "paramserveur":
       content = <ParametreServeur />;
+    case "admin":
+      content = <AdminPanel />;
       break;
     case "admin":
       content = <AdminPanel />;
