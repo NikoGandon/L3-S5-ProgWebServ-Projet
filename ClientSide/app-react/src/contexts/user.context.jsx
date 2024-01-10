@@ -55,11 +55,6 @@ const ContextUserProvider = (props) => {
   const handleAdminPanel = () => {
     setContext({ contexteUser: "admin", contexteID: null });
   };
-
-  const handleAdminPanel = () => {
-    setContext({ contexteUser: "admin", contexteID: null });
-  };
-
   const updateContext = {
     contexteUser: context.contexteUser,
     contexteID: context.contexteID,
