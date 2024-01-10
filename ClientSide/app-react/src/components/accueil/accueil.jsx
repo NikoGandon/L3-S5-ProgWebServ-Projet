@@ -1,11 +1,24 @@
-import React, { useContext } from "react";
-import { UserContext} from "../../contexts/user.context";
+import React, { useContext, useEffect, useState } from "react";
+import { UserContext } from "../../contexts/user.context";
 import axios from "../../utils/axiosConf";
 import AddFriend from "../user/ajoutAmi";
 
-const Accueil = () => {
+import { usePopup } from "../../contexts/popup.context";
 
-  const { handleParam, handleProfil } = useContext(UserContext);
+import AdminPanel from "./administration";
+
+const Accueil = () => {
+  const { handleParam, handleProfil, handleAdminPanel } = useContext(UserContext);
+  const [admin, setAdmin] = useState(false);
+  const { openPopup, closePopup } = usePopup();
+
+  useEffect(() => {
+    axios.get("https://localhost:3000/Administrateur/isAdmin").then((res) => {
+      if (res.data.estAdmin) {
+        setAdmin(true);
+      }
+    });
+  }, []);
 
   const handleSubmit = async () => {
     try {
@@ -29,10 +42,21 @@ const Accueil = () => {
         <div id="contenuAccueil">
           <h3>Bienvenue sur discord</h3>
           <p id="message_bienvenue">Amuse-toi bien mon ami</p>
-          <button id="deconnexion" onClick={handleSubmit}>Déconnexion</button>
+          <button id="deconnexion" onClick={handleSubmit}>
+            Déconnexion
+          </button>
           <div className="button_param" onClick={() => handleParam()}>
-            <a alt="Param" id="parametres">Paramètres</a>
+            <a alt="Param" id="parametres">
+              Paramètres
+            </a>
           </div>
+          {admin ? (
+            <div className="button_param" onClick={() => handleAdminPanel()}>
+              <a alt="Admin" id="admin">
+                Admin
+              </a>
+            </div>
+          ) : null}
         </div>
       </div>
     </>

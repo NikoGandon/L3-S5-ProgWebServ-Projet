@@ -6,6 +6,7 @@ import Profil from "../../user/profil";
 import Amis from "../../user/amis.jsx";
 import Param from "../../user/param.jsx";
 import Acceuil from "../../accueil/accueil.jsx";
+import AdminPanel from "../../accueil/administration.jsx";
 
 import { UserContext } from "../../../contexts/user.context";
 
@@ -33,16 +34,15 @@ const Content = () => {
     case "amis":
       content = <Amis />;
       break;
+    case "admin":
+      content = <AdminPanel />;
+      break;
     default:
       content = <Acceuil />;
       break;
   }
 
-  return (
-    <>
-      {content}
-    </>
-  );
+  return <>{content}</>;
 };
 
 export default Content;
