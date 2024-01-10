@@ -6,17 +6,17 @@ const UserModel = require("../../Model/User.model");
 
 const { infoToken } = require("../../Middleware/AuthToken");
 
-async function recupererMessageGroupe(req, res, idGroupe, idUser) {
+async function recupererMessageGroupe(req, res, idGroupe) {
   try {
-    const MessageGroupe = await MessageGroupe.findAll({
+    const MessagesGroupe = await MessageGroupe.findAll({
       where: {
-        groupeId: idGroupe,
+        idGroupe: idGroupe,
       },
     });
 
     let Messages = [];
 
-    for (const messageGroupe of MessageGroupe) {
+    for (const messageGroupe of MessagesGroupe) {
       const messageMod = await Message.findOne({
         where: { id: messageGroupe.idMessage },
       });
@@ -38,11 +38,10 @@ async function recupererMessageGroupe(req, res, idGroupe, idUser) {
       }
     }
 
-    return res.status(200).json({ messages: Messages });
+    return { messages: Messages };
   } catch (error) {
-    return res
-      .status(500)
-      .json({ error: "Erreur lors de la récupération de message" + error });
+    console.log(error);
+    return { error: "Erreur lors de la récupération de message" + error };
   }
 }
 
@@ -55,9 +54,13 @@ async function recupererMessageGroupe(req, res, idGroupe, idUser) {
 
 async function pagegroupe(req, res) {
   try {
-    const idGroupe = req.params.idGroupe;
+    const idGroupe = req.query.idGroupe;
     const LeGroupe = await Groupe.findByPk(idGroupe);
     const idUser = infoToken(req).id;
+
+    if (!LeGroupe) {
+      return res.status(404).json({ error: "Groupe non trouvé" });
+    }
 
     const estMembre = await Membre.findOne({
       where: {
@@ -76,18 +79,23 @@ async function pagegroupe(req, res) {
       },
     });
 
-    if (!LeGroupe) {
-      return res.status(404).json({ error: "Groupe non trouvé" });
+    for (let membre in membres) {
+      const idMembre = membres[membre].userId;
+      const user = await UserModel.findByPk(idMembre);
+      membres[membre].username = user.username;
     }
 
-    const messagegroupe = recupererMessageGroupe(req, res);
+    const messagegroupe = recupererMessageGroupe(req, res, idGroupe);
 
-    return res.status(201).json({
+    console.log(messagegroupe);
+
+    res.status(200).json({
       groupe: LeGroupe,
       membreListe: membres,
       messages: messagegroupe,
     });
   } catch (error) {
+    console.log(error);
     return res
       .status(500)
       .json({ error: "Erreur lors de la récupération de groupe" });
