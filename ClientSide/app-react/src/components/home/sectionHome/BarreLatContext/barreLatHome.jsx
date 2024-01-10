@@ -15,7 +15,7 @@ const GroupeBox = ({ nomGroupe, idGroupe, handleClick, nbUser }) => {
     <button
       className="btn_find_groupe"
       onClick={() => {
-        handleClick("groupe", idGroupe);
+        handleClick(idGroupe);
       }}
     >
       <div className="div_find_groupe">
