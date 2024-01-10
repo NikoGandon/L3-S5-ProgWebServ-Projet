@@ -11,6 +11,7 @@ const UserContext = createContext({
   handleRevenirAccueil: () => {},
   handleAmis: () => {},
   updateContext: () => {},
+  handleParamServeur: () => {},
 });
 
 const ContextUserProvider = (props) => {
@@ -48,6 +49,10 @@ const ContextUserProvider = (props) => {
     setContext({ contexteUser: "accueil", contexteID: null });
   };
 
+  const handleParamServeur = () => {
+    setContext({ contexteUser: "paramserveur", contexteID: null });
+  };
+
   const updateContext = {
     contexteUser: context.contexteUser,
     contexteID: context.contexteID,
@@ -60,6 +65,7 @@ const ContextUserProvider = (props) => {
     handleRevenirAccueil,
     handleAmis,
     updateContext: setContext,
+    handleParamServeur,
   };
 
   return (

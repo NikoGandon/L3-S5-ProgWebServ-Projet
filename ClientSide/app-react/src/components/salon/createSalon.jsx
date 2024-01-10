@@ -1,19 +1,23 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import axios from "../../utils/axiosConf";
 import { usePopup } from "../../contexts/popup.context";
-import "../../../src/cssGeneral.css";
+import { UserContext } from "../../contexts/user.context";
 
-const Form = ({ onSubmit }) => {
+const Form = ({ onSubmit , idServ}) => {
   const [nom, setNom] = useState("");
   const [description, setDescription] = useState("");
 
   const { closePopup } = usePopup();
 
   const handleSubmit = () => {
+    console.log(idServ);
+    console.log(nom);
+    console.log(description);
     axios
-      .post("https://localhost:3000/Serveur/salon/", {
-        nom,
-        description,
+      .post("https://localhost:3000/Serveur/salon", {
+        nom: nom,
+        description: description,
+        idServeur: idServ,
       })
       .then((res) => {
         console.log("Salon créé avec succès", res.data);
@@ -54,13 +58,13 @@ const Form = ({ onSubmit }) => {
   );
 };
 
-const CreateSalon = ({ ajouterSalon }) => {
+const CreateSalon = ({ idServ }) => {
   const [isFormVisible, setIsFormVisible] = useState(false);
   const { openPopup } = usePopup();
 
   const handleBoutonCreate = () => {
     setIsFormVisible(!isFormVisible);
-    openPopup(<Form onSubmit={() => setIsFormVisible(false)} />);
+    openPopup(<Form onSubmit={() => setIsFormVisible(false)} idServ={idServ}/>);
   };
 
   return (
