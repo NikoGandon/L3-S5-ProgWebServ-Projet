@@ -7,6 +7,7 @@ const UserModel = require("../../Model/User.model");
 const { infoToken } = require("../../Middleware/AuthToken");
 
 async function recupererMessageGroupe(req, res, idGroupe) {
+  const { format } = require("date-fns");
   try {
     const MessagesGroupe = await MessageGroupe.findAll({
       where: {
@@ -57,6 +58,7 @@ async function pagegroupe(req, res) {
     const idGroupe = req.query.idGroupe;
     const LeGroupe = await Groupe.findByPk(idGroupe);
     const idUser = infoToken(req).id;
+    
 
     if (!LeGroupe) {
       return res.status(404).json({ error: "Groupe non trouvé" });
@@ -86,6 +88,8 @@ async function pagegroupe(req, res) {
     }
 
     const messagegroupe = await recupererMessageGroupe(req, res, idGroupe);
+
+    console.log("REGARDE ICI ::: ", messagegroupe);
 
     res.status(200).json({
       groupe: LeGroupe,
