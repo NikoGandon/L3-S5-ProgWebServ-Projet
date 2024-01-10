@@ -96,10 +96,12 @@ async function handleGroupeMessage(socket, io, idContext, newMessage) {
   }
 
   await MessageGroupeModele.create({
-    messageId: newMessage.id,
-    groupeId: idContext,
+    idMessage: newMessage.id,
+    idGroupe: idContext,
+    idAuteur: socket.data.userId,
   }).catch((error) => {
     newMessage.destroy();
+    console.log(error);
     throw new Error("Erreur lors de la création du message dans le groupe.");
   });
 }
