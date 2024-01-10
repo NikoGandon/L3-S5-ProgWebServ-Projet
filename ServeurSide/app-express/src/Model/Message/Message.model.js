@@ -32,8 +32,9 @@ const Message = sequelize.define(
   }
 );
 
-Message.belongsTo(UserModel, { through: Message });
-UserModel.belongsToMany(Message, { through: Message });
+Message.belongsTo(UserModel, { foreignKey: 'userId' });
+UserModel.hasMany(Message);
+
 
 Message.sync();
 
