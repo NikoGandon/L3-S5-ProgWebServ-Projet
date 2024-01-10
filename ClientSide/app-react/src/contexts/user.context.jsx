@@ -9,6 +9,7 @@ const UserContext = createContext({
   handleParam: () => {},
   handleProfil: () => {},
   handleRevenirAccueil: () => {},
+  handleAdminPanel: () => {},
   handleAmis: () => {},
   updateContext: () => {},
 });
@@ -48,6 +49,10 @@ const ContextUserProvider = (props) => {
     setContext({ contexteUser: "accueil", contexteID: null });
   };
 
+  const handleAdminPanel = () => {
+    setContext({ contexteUser: "admin", contexteID: null });
+  };
+
   const updateContext = {
     contexteUser: context.contexteUser,
     contexteID: context.contexteID,
@@ -58,6 +63,7 @@ const ContextUserProvider = (props) => {
     handleParam,
     handleProfil,
     handleRevenirAccueil,
+    handleAdminPanel,
     handleAmis,
     updateContext: setContext,
   };
