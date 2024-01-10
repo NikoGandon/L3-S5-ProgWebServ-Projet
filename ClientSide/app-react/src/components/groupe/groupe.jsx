@@ -3,103 +3,6 @@ import "./groupe.css";
 
 import axios from "../../utils/axiosConf";
 import { UserContext } from "../../contexts/user.context";
-
-/** 
- * @INFO Cette partie est dans src/components/home/sectionHome/BarreLatHome.jsx  
-const Groupe = () => {
-
-  const { contexteID } = useContext(UserContext);
-  const [groupe, setGroupe] = useState([]);
-  
-  useEffect(() => {
-    axios.get("https://localhost:3000/user/get-groupes").then((res) => {
-      console.log(res);
-      setGroupe(res.data.groupes);
-    });
-  }, []);
-
-  return (
-    <>
-      <div className="container_grp">
-        <div className="LeftSide">
-        <button className="btn_base"><img className="icon_base" src="../../../images/porsche.jpg" /></button>
-          <div className="barre"></div>
-          <button className="btn_base"><img className="icon_base" src="../../../images/mp.png" /></button>
-          <div className="barre"></div>
-          <div className="box_serveur">
-          </div>
-        </div>
-        <div className="mp-groupe">
-          <input type="search" id="mp_search" placeholder="Recherche message ..."/>
-          <button className="btn_groupe" type="button">Amis</button>
-          <div className="barre2"></div>
-          <button className="btn_groupe" type="button">Tout</button>
-          <button className="btn_groupe" type="button">Privé</button>
-          <button className="btn_groupe" type="button">Groupe</button>
-          <div className="barre2"></div>
-          <div className="box_mp">
-            <button className="btn_find_groupe">
-            <div className="div_find_groupe">
-              <img className="icon_mp" src="../../../images/singe.jpg" />
-              <div className="name_mp_box">
-                <p className="name_mp">nom groupe</p>
-                <p className="name_mp">5 membres</p>
-              </div>
-            </div>
-            </button>
-            <button className="btn_find_groupe">
-            <div className="div_find_groupe">
-              <img className="icon_mp" src="../../../images/singe.jpg" />
-              <div className="name_mp_box">
-                <p className="name_mp">nom groupe</p>
-                <p className="name_mp">5 membres</p>
-              </div>
-            </div>
-            </button>
-            <button className="btn_find_groupe">
-            <div className="div_find_groupe">
-              <img className="icon_mp" src="../../../images/singe.jpg" />
-              <div className="name_mp_box">
-                <p className="name_mp">nom groupe</p>
-                <p className="name_mp">5 membres</p>
-              </div>
-            </div>
-            </button>
-            <button className="btn_find_groupe">
-            <div className="div_find_groupe">
-              <img className="icon_mp" src="../../../images/singe.jpg" />
-              <div className="name_mp_box">
-                <p className="name_mp">nom groupe</p>
-                <p className="name_mp">5 membres</p>
-              </div>
-            </div>
-            </button>
-            <button className="btn_find_groupe">
-            <div className="div_find_groupe">
-              <img className="icon_mp" src="../../../images/singe.jpg" />
-              <div className="name_mp_box">
-                <p className="name_mp">nom groupe</p>
-                <p className="name_mp">5 membres</p>
-              </div>
-            </div>
-            </button>
-            <button className="btn_find_groupe">
-            <div className="div_find_groupe">
-              <img className="icon_mp" src="../../../images/singe.jpg" />
-              <div className="name_mp_box">
-                <p className="name_mp">nom groupe</p>
-                <p className="name_mp">5 membres</p>
-              </div>
-            </div>
-            </button>
-          </div>
-        </div>
-      </div>
-    </>
-  );
-};
-*/
-
 import BarreChat from "../chat/BarreChat";
 import Conversation from "../chat/ConversationChat";
 
@@ -107,8 +10,25 @@ import Conversation from "../chat/ConversationChat";
  * @desc Affiche l'interface d'un groupe (liste des membres, liste des messages)
  */
 const Groupe = () => {
+  const { contexteID } = useContext(UserContext);
+  const [groupe, setGroupe] = useState([]);
+  const [membreListe, setMembreListe] = useState([]);
+  const [messages, setMessages] = useState([]);
+  
+  useEffect(() => {
+    axios.get("https://localhost:3000/groupe", {
+      params: {
+        idGroupe: contexteID,
+      },
+    }).then((res) => {
+      console.log(res);
+      setGroupe(res.data.groupe);
+      setMembreListe(res.data.membreListe);
+      setMessages(res.data.messages);
+    });
+  }, []);
   return (
-    <>
+    <><h3>Groupe : {groupe.nom}</h3>
       <Conversation />
       <div id="barreChatGroupe">
       <BarreChat />
