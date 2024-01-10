@@ -87,8 +87,6 @@ async function pagegroupe(req, res) {
 
     const messagegroupe = await recupererMessageGroupe(req, res, idGroupe);
 
-    console.log(messagegroupe);
-
     res.status(200).json({
       groupe: LeGroupe,
       membreListe: membres,
