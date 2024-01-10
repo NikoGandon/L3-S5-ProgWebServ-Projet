@@ -15,9 +15,9 @@ const OwnMessage = ({ message, username, lienPP, date }) => {
   return (
     <div className="own_message">
       <div className="userA">
+        <img src="../../public/image/amis.png" width="30px" height="30px"></img>
         <p className="username">{username}</p>
         <p className="dateMessage">{date}</p>
-        <img className="iconMessage" src={lienPP} />
       </div>
       <p className="own_message_text">{message}</p>
     </div>
@@ -28,8 +28,8 @@ const OtherMessage = ({ message, username, lienPP, date }) => {
   return (
     <div className="other_message">
       <div className="userB">
+        <img src="../../public/image/amis.png" width="30px" height="30px"></img>
         <p className="username">{username}</p>
-        <img className="iconMessage" src={lienPP} />
         <p className="dateMessage">{date}</p>
       </div>
       <p className="other_message_text">{message}</p>
@@ -98,6 +98,7 @@ const ConversationChat = () => {
           messages.map((message) => {
             if (message.isOwner) {
               return (
+                <div>
                 <OwnMessage
                   key={message.id}
                   message={message.contenu}
@@ -105,9 +106,11 @@ const ConversationChat = () => {
                   lienPP={message.lienPP}
                   date={message.date}
                 />
+                </div>
               );
             } else {
               return (
+                <div>
                 <OtherMessage
                   key={message.id}
                   message={message.contenu}
@@ -115,11 +118,12 @@ const ConversationChat = () => {
                   lienPP={message.lienPP}
                   date={message.date}
                 />
+                </div>
               );
             }
           })
         ) : (
-          <p>Pas de message dans {infosConv}</p>
+          <center><p>Aucun message ici</p></center>
         )}
       </div>
     </div>

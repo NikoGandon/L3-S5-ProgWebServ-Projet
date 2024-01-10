@@ -1,5 +1,6 @@
 const MembreServeur = require("../../Model/MembreServeur.model");
 const { infoToken } = require("../../Middleware/AuthToken");
+const UserModel = require("../../Model/User.model");
 
 /**
  * @description Invite un membre dans un serveur
@@ -10,12 +11,18 @@ const { infoToken } = require("../../Middleware/AuthToken");
 
 async function InviteMembre(req, res) {
   try {
-    const idUser = infoToken(req).id;
-    const idServeur = req.body.idServeur;
+    const idServer = req.body.idServer;
+    const nameUser = req.body.nom;
+    const Ami = await UserModel.findOne({
+      where: { username: nameUser }
+    })
+    if (!Ami) {
+      return res.status(404).json({ error: "Aucun utilisateur trouvé avec le nom spécifié." });
+    }
 
     const invMembre = await MembreServeur.create({
-      idUser: idUser,
-      idServeur: idServeur,
+      idUser: Ami.id,
+      idServeur: idServer,
     });
 
     return res.status(201).json(invMembre);

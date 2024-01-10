@@ -9,65 +9,73 @@ const { format } = require("date-fns");
 async function handleSocketConnection(socket, io) {
   let newMessage = null;
 
-  socket.on(
-    "sendMessage",
-    async ({ roomType, roomId, contenu, serveurId = null }) => {
-      if (!contenu.trim()) {
-        console.log("error");
-        io.emit("Error sending", {
-          message: "Le contenu du message est vide.",
+  try {
+    socket.on(
+      "sendMessage",
+      async ({ roomType, roomId, contenu, serveurId }) => {
+        console.log("--------Coucou--------");
+        if (!contenu.trim()) {
+          console.log("error");
+          io.emit("Error sending", {
+            message: "Le contenu du message est vide.",
+          });
+        }
+
+        if (roomType == null || roomId == null) {
+          console.log("error");
+          io.emit("Error sending", {
+            message: "Le type ou l'id de la room est invalide.",
+          });
+        }
+
+        console.log("--------Coucou--------");
+
+        newMessage = await MessageModele.create({
+          userId: socket.data.userId,
+          contenu: contenu,
+        });
+
+        console.log("donnée recu", roomType, roomId, contenu, serveurId);
+
+        if (roomType === "groupe") {
+          handleGroupeMessage(socket, io, roomId, newMessage);
+        } else if (roomType === "serveur") {
+          handleSalonMessage(socket, io, roomId, serveurId, newMessage);
+        }
+
+        //socket?.serveurId?.io?.emit("incomingMessage", newMessage);
+
+        const user = await UserModele.findOne({
+          where: { id: socket.data.userId },
+        });
+
+        console.log("Message envoyé from API:", {
+          message: newMessage,
+          username: user.username,
+        });
+
+        const date = format(newMessage.createdAt, "dd/MM/yyyy HH:mm");
+
+        io.in(room).emit("incomingMessage", {
+          id: newMessage.id,
+          contenu: newMessage.contenu,
+          date: date,
+          username: user.username,
         });
       }
+    );
 
-      if (roomType == null || roomId == null) {
-        console.log("error");
-        io.emit("Error sending", {
-          message: "Le type ou l'id de la room est invalide.",
-        });
-      }
+    let room = "";
 
-      newMessage = await MessageModele.create({
-        userId: socket.data.userId,
-        contenu: contenu,
-      });
-
-      console.log("donnée recu", roomType, roomId, contenu, serveurId);
-
-      if (roomType === "groupe") {
-        handleGroupeMessage(socket, io, roomId, newMessage);
-      } else if (roomType === "serveur") {
-        handleSalonMessage(socket, io, roomId, serveurId, newMessage);
-      }
-
-      //socket?.serveurId?.io?.emit("incomingMessage", newMessage);
-
-      const user = await UserModele.findOne({
-        where: { id: socket.data.userId },
-      });
-
-      console.log("Message envoyé from API:", {
-        message: newMessage,
-        username: user.username,
-      });
-
-      const date = format(newMessage.createdAt, "dd/MM/yyyy HH:mm");
-
-      io.in(room).emit("incomingMessage", {
-        id: newMessage.id,
-        contenu: newMessage.contenu,
-        date: date,
-        username: user.username,
-      });
-    }
-  );
-
-  let room = "";
-
-  socket.on("joinRoom", (contextUser, contextSalon) => {
-    room = `${contextUser}-${contextSalon}`;
-    console.log("//////////////////////////////////////user joined ", room);
-    socket.join(room);
-  });
+    socket.on("joinRoom", (contextUser, contextSalon) => {
+      room = `${contextUser}-${contextSalon}`;
+      console.log("//////////////////////////////////////user joined ", room);
+      socket.join(room);
+    });
+  } catch (error) {
+    console.log(error);
+    io.emit("Error sending", { message: error.message });
+  }
 }
 
 async function handleGroupeMessage(socket, io, idContext, newMessage) {
@@ -88,10 +96,12 @@ async function handleGroupeMessage(socket, io, idContext, newMessage) {
   }
 
   await MessageGroupeModele.create({
-    messageId: newMessage.id,
-    groupeId: idContext,
+    idMessage: newMessage.id,
+    idGroupe: idContext,
+    idAuteur: socket.data.userId,
   }).catch((error) => {
     newMessage.destroy();
+    console.log(error);
     throw new Error("Erreur lors de la création du message dans le groupe.");
   });
 }

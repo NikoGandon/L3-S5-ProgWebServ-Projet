@@ -34,6 +34,15 @@ const BarreLat = () => {
     case "amis":
       element = <BarreLatHome handleClick={handleClickGroupe}/>;
       break;
+    case "admin":
+      element = <BarreLatHome handleClick={handleClickGroupe}/>;
+      break;
+    case "groupe":
+      element = <BarreLatHome handleClick={handleClickGroupe}/>;
+      break;
+    case "paramserveur":
+      element = <BarreLatServeur handleClick={handleClickServeur}/>;
+      break;
     case "param":
       element = <BarreLatHome handleClick={handleClickGroupe}/>;
       break;
@@ -41,6 +50,8 @@ const BarreLat = () => {
       element = <BarreLatHome handleClick={handleClickGroupe}/>;
     break;
     default:
+      console.log("erreur contexteUser");
+      break;
   }
 
   return <>{element}</>;

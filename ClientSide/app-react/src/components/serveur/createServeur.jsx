@@ -54,7 +54,9 @@ const Form = ({ onSubmit }) => {
       {/* Ajouter une entrée pour l'image */}
       <input
         className="input_create_serveur"
-        type="text"
+        type="file"
+        id="upload_image_serveur"
+        accept="image/png"
         placeholder="Image du serveur"
         value={image}
         onChange={(e) => setImage(e.target.value)}

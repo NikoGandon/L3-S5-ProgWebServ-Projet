@@ -2,6 +2,8 @@ const JWT = require("jsonwebtoken");
 
 const secretKey = process.env.JWT_SECRET;
 
+const AdminModel = require("../Model/SuperAdmin.model");
+
 function createToken(user) {
   return JWT.sign(
     {
@@ -17,19 +19,17 @@ function createToken(user) {
 }
 
 /**
- * @desc Vérifie si l'utilisateur est connecté, si son token est valide et s'il est admin
+ * @desc Vérifie si l'utilisateur est connecté, si son token est valide
  * @param {*} req
- * @returns 0 s'il n'est pas connecté, -1 si le token est invalide, 1 s'il est valide, 2 si l'utilisateur est admin
+ * @returns 0 s'il n'est pas connecté, -1 si le token est invalide, 1 s'il est valide
  */
 function checkToken(req, tokenGet = null) {
   if (req == null && tokenGet != null) {
     try {
-      const decoded = JWT.verify(tokenGet, secretKey);
-      if (decoded.admin) {
-        return 2;
-      }
+      JWT.verify(tokenGet, secretKey);
       return 1;
     } catch (err) {
+      console.log(err);
       return -1;
     }
   }
@@ -39,10 +39,7 @@ function checkToken(req, tokenGet = null) {
     return 0;
   }
   try {
-    const decoded = JWT.verify(token, secretKey);
-    if (decoded.admin) {
-      return 2;
-    }
+    JWT.verify(token, secretKey);
     return 1;
   } catch (err) {
     return -1;
@@ -71,24 +68,28 @@ function verifyToken(req, res, next) {
   const token = checkToken(req);
   if (token === -1 || token === 0) {
     return res
-      .status(401)
+      .status(200)
       .json({ message: "Accès non autorisé aux non-connectés." });
   }
   next();
 }
 
-function verifyAdminToken(req, res, next) {
+async function verifyAdminToken(req, res, next) {
   const token = checkToken(req);
   if (token === -1 || token === 0) {
     return res
-      .status(401)
+      .status(200)
       .json({ message: "Accès non autorisé aux non-connectés." });
   }
-  if (token === 1) {
+  const estAdmin = await AdminModel.findByPk(infoToken(req).id);
+
+  if (!estAdmin) {
+    console.log("-------- pas admin 2");
     return res
-      .status(401)
+      .status(200)
       .json({ message: "Accès non autorisé aux non-administrateurs." });
   }
+
   next();
 }
 

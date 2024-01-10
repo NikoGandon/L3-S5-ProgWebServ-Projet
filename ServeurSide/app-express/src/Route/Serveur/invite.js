@@ -1,5 +1,6 @@
 const express = require("express");
 const InviteRoute = express();
+const MembreRoute = require("../../logic/Serveur/AddMembre");
 
 /**
  * @swagger
@@ -12,7 +13,7 @@ const InviteRoute = express();
  */
 
 InviteRoute.post("/", (req, res) => {
-  res.send("Création d'un lien d'invitation");
+  MembreRoute.InviteMembre(req, res);
 });
 
 /**

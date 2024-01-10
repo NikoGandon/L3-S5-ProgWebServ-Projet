@@ -16,9 +16,11 @@ const functionGroupe = require("../../Logic/Groupe/Groupe");
  */
 
 routerGroupe.get("/", (req, res) => {
-  if (!req.body.idGroupe) {
+  const idGroupe = req.query.idGroupe;
+
+  if (idGroupe == undefined || idGroupe == null) {
     return res.status(400).json({
-      message: "Veuillez ajouter un id",
+      message: "Erreur lors de la requête: ajoutez un idGroupe",
     });
   }
   functionGroupe.pagegroupe(req, res);

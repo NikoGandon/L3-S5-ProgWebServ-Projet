@@ -1,7 +1,8 @@
 import React, { useEffect, useState, useContext } from "react";
 import axios from "../../../../utils/axiosConf";
 import { UserContext } from "../../../../contexts/user.context";
-import Serveur from "../../../serveur/serveur";
+import CreateSalon from "../../../salon/createSalon";
+import AddMembre from "../../../serveur/addMembreServ";
 
 /**
  * @desc Récupère les salons d'un serveur
@@ -10,9 +11,10 @@ import Serveur from "../../../serveur/serveur";
 
 
 const barreLatServeur = ({ handleClick }) => {
-  const { contexteUser, contexteID, contexteSalon, handleServeurSelect } =
+  const { contexteUser, contexteID, contexteSalon, handleServeurSelect , handleParamServeur} =
     useContext(UserContext);
   const [salons, setSalons] = useState([]);
+  const idServ = contexteID;
 
   useEffect(() => {
     axios
@@ -44,15 +46,13 @@ const barreLatServeur = ({ handleClick }) => {
     <div id="nomDuServeurDiv">
       <h3 id="nomServeurTitle">Serveur</h3>
       </div>
-      <button id="bouttonMembre">
-          <img src="../../public/image/ajouterMembre.png" width="35px" height="35px"></img>
-          <p id="textMembre">Ajouter</p>
-         </button>
-         <button id="bouttonParametres">
+      <div><AddMembre idServ={idServ}/></div>
+         <button id="bouttonParametres" onClick={handleParamServeur}>
           <img src="../../public/image/Paramètres.png" width="35px" height="35px"></img>
           <p id="textParametres">Paramètres</p>
          </button>
          <p id="conversation">Salons</p>
+         <CreateSalon idServ={idServ}/>
 
       {salons.length > 0
         ? salons.map((salon) => {
@@ -70,7 +70,7 @@ const barreLatServeur = ({ handleClick }) => {
               </div>
             );
           })
-        : "Aucun salon"}
+        : <p>Aucun salon ✘</p>}
     </>
   );
 };

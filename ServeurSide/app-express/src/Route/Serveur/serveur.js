@@ -191,6 +191,8 @@ routerServeur.delete("/ban", (req, res) => {
 
 routerServeur.use("/invite", inviteRoute);
 
+routerServeur.use("/salon", salonRoute);
+
 routerServeur.get("/get-salons", (req, res) => {
   if (!req.query.idServeur) {
     return res.status(400).json({

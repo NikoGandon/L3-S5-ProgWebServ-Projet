@@ -19,7 +19,7 @@ async function CreateSalon(req, res) {
       idServeur: idServeur,
     });
 
-    return res.status(201).json({ message: "Salon créé." });
+    return res.status(201).json(NewSalon);
   } catch (error) {
     return res.status(500).json({ error: "Erreur lors de la création du salon."});
   }
