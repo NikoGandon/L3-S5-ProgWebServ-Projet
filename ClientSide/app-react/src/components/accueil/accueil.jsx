@@ -40,8 +40,8 @@ const Accueil = () => {
       <div id="zoneAccueil">
         <div id="arrierePlanFlou"></div>
         <div id="contenuAccueil">
-          <h3>Bienvenue sur discord</h3>
-          <p id="message_bienvenue">Amuse-toi bien mon ami</p>
+          <h3>Bienvenue sur DLIKE</h3>
+          <p id="message_bienvenue">Amuse-toi bien !</p>
           <button id="deconnexion" onClick={handleSubmit}>
             Déconnexion
           </button>
