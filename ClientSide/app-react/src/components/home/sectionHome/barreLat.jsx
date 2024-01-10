@@ -41,6 +41,8 @@ const BarreLat = () => {
       element = <BarreLatHome handleClick={handleClickGroupe}/>;
     break;
     default:
+      console.log("erreur contexteUser");
+      break;
   }
 
   return <>{element}</>;

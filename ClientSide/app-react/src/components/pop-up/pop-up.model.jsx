@@ -1,11 +1,20 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect, useContext } from 'react';
 import { usePopup } from '../../contexts/popup.context';
+import { UserContext } from '../../contexts/user.context';
 
 const Popup = () => {
   const { showPopup, popupComponent, closePopup } = usePopup();
   const popupRef = useRef();
 
+  const { contexteUser, contexteID } = useContext(UserContext);
+
   useEffect(() => {
+
+    console.log("-----------------")
+    console.log('contexteUser', contexteUser);
+    console.log('contexteID', contexteID);
+    console.log("-----------------")
+
     const handleClickOutside = (event) => {
       if (popupRef.current && !popupRef.current.contains(event.target)) {
         closePopup();
