@@ -1,6 +1,11 @@
 const express = require("express");
-const { modes } = require("tar");
 const banRoute = express.Router();
+
+const {
+  banUser,
+  getAllBanUser,
+  unbanUser,
+} = require("../../Logic/Admin/admin");
 
 /**
  * @swagger
@@ -13,7 +18,10 @@ const banRoute = express.Router();
  */
 
 banRoute.post("/", (req, res) => {
-  res.send("Bannissement d'un utilisateur");
+  if (!req.body.idUser)
+    return res.status(400).json({ error: "Veuillez spécifier un ID." });
+
+  banUser(req, res);
 });
 
 /**
@@ -27,7 +35,7 @@ banRoute.post("/", (req, res) => {
  */
 
 banRoute.get("/", (req, res) => {
-  res.send("Récupération de tous les bannis");
+  getAllBanUser(req, res);
 });
 
 /**
@@ -41,7 +49,10 @@ banRoute.get("/", (req, res) => {
  */
 
 banRoute.delete("/", (req, res) => {
-  res.send("Débannissement d'un utilisateur");
+  if (!req.body.idUser)
+    return res.status(400).json({ error: "Veuillez spécifier un ID." });
+
+  unbanUser(req, res);
 });
 
 module.exports = banRoute;
