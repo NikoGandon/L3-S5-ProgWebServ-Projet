@@ -4,20 +4,20 @@ const AdministrateurRoute = express();
 const BanRoute = require("./ban");
 const statsRoute = require("./stats");
 
+const { verifyAdminToken } = require("../../Middleware/AuthToken");
+
 /**
  * @swagger
- * /administrateur/AccueilAdmin:
+ * /administrateur/isAdmin:
  * get:
- * description: Utilisé pour récupérer l'accueil de l'administrateur
+ * description: Utilisé pour vérifier si l'utilisateur est admin
  * responses:
- *
- *
+ * 200:
+ * description: L'utilisateur est admin
+ * 
  */
-
-AdministrateurRoute.get("/AccueilAdmin", (req, res) => {
-  return res.status(200).json({
-    message: "Route non terminée.",
-  });
+AdministrateurRoute.get("/isAdmin", verifyAdminToken, (req, res) => {
+  return res.status(200).json({ estAdmin: true });
 });
 
 /**
@@ -30,14 +30,14 @@ AdministrateurRoute.get("/AccueilAdmin", (req, res) => {
  *
  */
 
-AdministrateurRoute.get("/", (req, res) => {
+AdministrateurRoute.get("/", verifyAdminToken, (req, res) => {
   return res.status(200).json({
     message: "Route non terminée.",
   });
 });
 
-AdministrateurRoute.use("/ban", BanRoute);
+AdministrateurRoute.use("/ban", verifyAdminToken, BanRoute);
 
-AdministrateurRoute.get("/stats", statsRoute);
+AdministrateurRoute.get("/stats", verifyAdminToken, statsRoute);
 
 module.exports = AdministrateurRoute;
