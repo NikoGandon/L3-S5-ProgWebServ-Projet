@@ -65,16 +65,27 @@ const Serveur = () => {
 
   return (
     <>
-      <h3 className="titleNameServeur">Bienvenue sur {nomServeur}</h3>
-      <div className="memberList">{/*<MemberList membres={membres} />*/}</div>
-      <div className="messageList">
-        <div class="scroll-zone">
-          <div class="content-message">
-            {contexteSalon != null && <ConversationChat />}
+    <div className="container">
+
+      <div className="zoneChat">
+        <h3 className="titleNameServeur">Bienvenue sur {nomServeur}</h3>
+          <div className="messageList">
+            <div className="scroll-zone">
+              <div className="content-message">
+                {contexteSalon != null && <ConversationChat />}
+              </div>
+            </div>
           </div>
+          <div className="barreChat">{contexteSalon != null && <BarreChat />}</div>
+          </div>
+      
+      <div className="memberZone">
+        <h3 className="titleNameServeur">Liste des membres</h3>
+        <div className="memberList">{/*<MemberList membres={membres} />*/}
         </div>
       </div>
-      <div className="barreChat">{contexteSalon != null && <BarreChat />}</div>
+
+      </div>
     </>
   );
 };

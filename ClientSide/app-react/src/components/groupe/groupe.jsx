@@ -110,7 +110,9 @@ const Groupe = () => {
   return (
     <>
       <Conversation />
+      <div id="barreChatGroupe">
       <BarreChat />
+      </div>
     </>
   );
 };
