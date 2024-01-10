@@ -46,6 +46,7 @@ const ServeurBar = () => {
         />
         <div id="barre"></div>
       </div>
+      <div id="scrollServeurBarre">
       {serveurs.length > 0
         ? serveurs.map((serveur) => (
             <div
@@ -66,9 +67,10 @@ const ServeurBar = () => {
             </div>
           ))
         : "pas de serveur"}
-      <div className="createServeur">
+           <div className="createServeur">
         <CreateServeur />
-      </div>
+        </div>
+        </div>
     </>
   );
 };
