@@ -10,7 +10,11 @@ const cors = require("cors");
 const cookieParser = require("cookie-parser");
 const { Server } = require("socket.io");
 
-const { infoToken, verifyToken, verifyAdminToken } = require("./Middleware/AuthToken");
+const {
+  infoToken,
+  verifyToken,
+  verifyAdminToken,
+} = require("./Middleware/AuthToken");
 
 app.enable("trust proxy");
 
@@ -60,6 +64,7 @@ const UserRoute = require("./Route/User/User");
 const ServeurRoute = require("./Route/Serveur/serveur");
 const GroupeRoute = require("./Route/Groupe/groupe");
 const MPRoute = require("./Route/MessagePrive/messageprive");
+const AdministrateurRoute = require("./Route/Administrateur/administrateur");
 
 app.use("/", homeRoute);
 app.use("/Auth", AuthRoute);
@@ -67,6 +72,7 @@ app.use("/User", verifyToken, UserRoute);
 app.use("/Serveur", verifyToken, ServeurRoute);
 app.use("/Groupe", verifyToken, GroupeRoute);
 app.use("/MP", verifyToken, MPRoute);
+app.use("/Administrateur", verifyAdminToken, AdministrateurRoute);
 
 const httpsServer = https.createServer(optionsSSL, app);
 const HTTPS_PORT = process.env.PORT;
