@@ -30,6 +30,7 @@ const Serveur = () => {
   const [nomServeur, setNomServeur] = useState("");
   const [nomSalon, setNomSalon] = useState("");
 
+
   const loadServeur = async () => {
     await axios
       .get("https://localhost:3000/serveur/", {
@@ -38,7 +39,7 @@ const Serveur = () => {
         },
       })
       .then((res) => {
-        setMembres(res.data.membres);
+        setMembres(res.data.serveur.membres);
         setNomServeur(res.data.serveur.nom);
         handleServeurSelect(contexteID, res.data.serveur.salons[0].id);
       });
@@ -81,7 +82,18 @@ const Serveur = () => {
       
       <div className="memberZone">
         <h3 className="titleNameServeur">Liste des membres</h3>
-        <div className="memberList">{/*<MemberList membres={membres} />*/}
+        <div className="memberList">
+          {membres.length > 0 
+          ? membres.map((memb) => {
+            return (
+              <div>
+              <p key={memb.id}>
+                - {memb.username}
+              </p>
+              </div>
+            );
+          })
+        : <p>Aucun Membre ✘</p>}
         </div>
       </div>
 
