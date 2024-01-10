@@ -4,7 +4,6 @@ import ServeurBar from "./sectionHome/serveurBar";
 import BarreLat from "./sectionHome/barreLat";
 import Logout from "../authentification/logout";
 
-import { ContextUserProvider } from "../../contexts/user.context";
 
 import "../../../src/cssGeneral.css";
 
@@ -20,7 +19,6 @@ const Home = () => {
   return (
     <>
       <div className="grid">
-        <ContextUserProvider>
           <div id="barreServeur">
             <ServeurBar />
           </div>
@@ -30,7 +28,6 @@ const Home = () => {
           <div id="content">
             <Content />
           </div>
-        </ContextUserProvider>
       </div>
     </>
   );

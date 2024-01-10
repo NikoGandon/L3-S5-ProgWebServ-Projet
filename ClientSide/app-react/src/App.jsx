@@ -8,6 +8,8 @@ import {
 } from "react-router-dom";
 import axios from "./utils/axiosConf";
 import { io } from "socket.io-client";
+import { ContextUserProvider } from "./contexts/user.context";
+
 
 const socket = io("https://localhost:3000", {
   transports: ["websocket"],
@@ -24,6 +26,7 @@ import "./App.css";
 
 import HomeUnconnected from "./components/home/homeUnconnected";
 import Home from "./components/home/home";
+
 
 import { PopupProvider } from "./contexts/popup.context";
 import Popup from "./components/pop-up/pop-up.model";
@@ -63,10 +66,12 @@ function App() {
           exact
           element={
             estConnecte ? (
-              <PopupProvider>
-                <Popup />
-                <Home />
-              </PopupProvider>
+              <ContextUserProvider>
+                <PopupProvider>
+                  <Popup />
+                  <Home />
+                </PopupProvider>
+              </ContextUserProvider>
             ) : (
               <HomeUnconnected connectionState="false" />
             )
