@@ -85,7 +85,7 @@ async function pagegroupe(req, res) {
       membres[membre].username = user.username;
     }
 
-    const messagegroupe = recupererMessageGroupe(req, res, idGroupe);
+    const messagegroupe = await recupererMessageGroupe(req, res, idGroupe);
 
     console.log(messagegroupe);
 
