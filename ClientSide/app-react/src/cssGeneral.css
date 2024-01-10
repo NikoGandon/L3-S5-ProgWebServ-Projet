@@ -36,6 +36,13 @@ body{
     color: white;
 }
 
+#scrollServeurBarre{
+  width: 100%;
+  height: 85vh;
+  overflow: auto;
+  border-radius: 10px;
+}
+
 #barreServeur #logo{
     padding-top: 10px;
     background-color: #1e2124;
@@ -236,10 +243,10 @@ body{
     left: 50%;
     transform: translate(-50%, -50%);
     background-color: #282b30;
-    padding-left: 80px;
-    padding-right: 80px;
-    padding-top: 30px;
-    padding-bottom: 30px;
+    padding-left: 9%;
+    padding-right: 9%;
+    padding-top: 4%;
+    padding-bottom: 4%;
     border-radius: 10px;
   }
 
@@ -249,7 +256,7 @@ body{
 
   #contenuAccueil #message_bienvenue{
     color: rgb(208, 208, 208);
-    padding-bottom: 20px;
+    padding-bottom: 2%;
   }
 
 
@@ -263,12 +270,12 @@ body{
     background-color: #5865f2;
     color: white;
     font-size: 15px;
-    padding-top: 10px;
-    padding-bottom: 10px;
-    padding-right: 150px;
-    padding-left: 150px;
+    padding-top: 3%;
+    padding-bottom: 3%;
+    padding-right: 20vh;
+    padding-left: 20vh;
     border-radius: 5px;
-    margin-bottom: 15px;
+    margin-bottom: 5%;
 }
 
 
